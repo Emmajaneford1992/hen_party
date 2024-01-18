@@ -1,0 +1,303 @@
+html,
+body {
+    display: block;
+    margin-top: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: sharpieFont;
+    background: transparent;
+    overflow: hidden;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-text-size-adjust: none !important;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    touch-action: none !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+* {
+    pointer-events: none;
+}
+
+button,
+input {
+    pointer-events: auto;
+}
+
+
+@font-face {
+    font-family: font1;
+    src: url('/src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
+}
+
+@font-face {
+    font-family: font2;
+    src: url('/src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
+}
+
+@font-face {
+    font-family: font3;
+    src: url('/src/assets/fonts/Ubuntu-Title.ttf');
+}
+
+
+.UI {
+    display: block;
+    position: fixed;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+
+}
+
+
+.splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 15vw;
+    text-align: center;
+    font-family:  font2;
+}
+
+.splash img {
+    display: flex;
+    height: 25vh;
+
+    align-self: center;
+
+
+}
+
+.splash strong {
+    color: #5a86aa;
+    font-size: 11vw;
+    font-family: font1;
+}
+
+.splash_button {
+    font-size: 12vw;
+    border-style: none;
+    background-color: #BFD2E3;
+    margin: 10vw;
+    padding: 2vw;
+    font-family: font2;
+    border-radius: 2vw;
+    color: black;
+}
+
+.game_title {
+    color: #5a86aa;
+    font-size: 12vw;
+    font-family: font1;
+}
+
+.game_description {
+    color: black;
+    font-size: 6vw;
+    font-family: font2;
+}
+
+.game_score {
+    color: black;
+    font-size: 6vw;
+    font-family: font2;
+}
+
+
+.game_selection {
+    display: none;
+    flex-direction: column;
+    justify-content: end;
+    align-content: center;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family:  font2;
+    font-size: 12vw;
+    padding: 1vw;
+}
+
+
+.game_selection button {
+    font-size: 9vw;
+    border-style: none;
+    background-color: #BFD2E3;
+    color: black;
+    font-family: font2;
+    border-radius: 2vw;
+    margin: 1vw;
+
+} 
+
+.game_backButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 10vw;
+    height: 10vw;
+    margin: 2vw;
+    font-size: 12vw;
+    border-style: none;
+    background-color: darkcyan;
+    font-family: font2;
+    border-radius: 2vw;
+    align-self: left;
+    box-shadow: 4px 4px 0.12em #000;
+    color: #000; 
+
+} 
+
+.game {
+    display: none;
+    flex-direction: column;
+    justify-content: start;
+    align-content: center;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    flex-direction: column;
+
+    background-color: lightblue;
+}
+
+
+.game_question, .game_answer  {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2vw;
+    font-size: 12vw;
+}
+
+.game_answer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: darkcyan;
+    border-radius: 2vw;
+    box-shadow: 4px 4px 0.12em; 
+}
+
+.game main,
+.game header {
+    display: flex;
+    flex-direction: column;
+    /* background-color: yellow; */
+    align-content: center;
+    justify-content: center;
+}
+/* 
+.game main {
+    background-color: orange;
+} */
+
+
+.game_question button,
+.game_answer button {
+    display: flex;
+    position: relative;
+    background: line,ar-gradient(#fff0bd, #d0bf88);
+	box-shadow: 4px 4px 0.12em; 
+    color: #64615b;
+    font-family: font3;
+    font-size: 7vw;
+    width: 8vw;
+    height: 8vw;
+    border: none;
+    border-radius:1vw;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    margin: 0.5vw;
+
+}
+
+.game_answer button {
+    background: linear-gradient(#f0f0f0, #b0b0b0);
+}
+
+
+.game footer{
+    display: flex;
+    justify-content: center;
+
+    width: 100vw;
+}
+
+.game_restartButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 10vw;
+    height: 10vw;
+    font-size: 12vw;
+    border-style: none;
+    background-color: darkcyan;
+    font-family: font2;
+    border-radius: 50%;
+    align-self: center;
+    box-shadow: 4px 4px 0.12em; 
+    margin: 2vw;
+
+} 
+
+.inputGroup {
+    display: block;
+    position: relative;
+    top: 0%;
+    left: 0%;
+    margin: 0%;
+    width: 95%;
+    height: 100%;
+    opacity: 0;
+
+}
+
+.game input {
+    display: block;
+    position: absolute;
+    width: 95vw;
+    height: 10vw; 
+    bottom: 95%;
+    left: 0%;
+    opacity: 0;
+}
+
+.game_question img {
+    width: 70vw;
+    height: auto
+}
+
+.game_word {
+    display: flex;
+    padding: 2vw;
+}
+
+.letterSelect {
+    opacity: 0.2;
+}

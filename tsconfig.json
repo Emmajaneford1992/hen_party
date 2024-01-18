@@ -1,0 +1,18 @@
+// tsconfig.json
+// assuming your ts sources are in ./src/
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "~*": ["./*"]
+      },
+      "resolveJsonModule": true, 
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "lib": ["dom", "ES2021.String"]
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+      "node_modules"
+    ]
+  }
