@@ -1,46 +1,24 @@
 {
- 
   "name": "hen_website",
- 
   "version": "1.0.0",
- 
   "description": "Bethany & Charlotte Hen Activities",
- 
   "source": "index.html",
- 
   "scripts": {
- 
-   
-  "start": "parcel --https -p 8080",
- 
-   
-  "dev": "parcel index.html",
- 
-   
-  "deploy": "echo\"Error no test specified\" && exit 1"
- 
+    "start": "parcel ./*.html",
+    "predeploy": "rm -rf dist && parcel build ./*.html --public-url Emmajaneford1992.github.io/hen_party",
+    "deploy": "gh-pages -d dist"
   },
  
   "homepage": "https://Emmajaneford1992.github.io/hen_party",
- 
   "author": "Emma Ford",
- 
-  "license": "ISC",
- 
+  "license": "ISC", 
   "dependencies": {
- 
-   
-  "gh-pages": "^6.1.1",
- 
-   
-  "parcel": "^2.11.0"
- 
+    "gh-pages": "^6.1.1",
+    "parcel": "^2.11.0"
   },
  
   "devDependencies": {
- 
-   
-  "@types/node": "^20.10.6"
- 
+    "@types/node": "^20.10.6"
+
   }
 }
