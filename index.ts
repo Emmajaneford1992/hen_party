@@ -5,6 +5,7 @@ import Game_selection from "./experience";
 
 let game_selection =  new Game_selection();
 initButtons();
+console.log('index here')
 
 export function triggerButton(button){
     console.log('button triggered')
