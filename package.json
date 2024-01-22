@@ -5,7 +5,8 @@
   "source": "index.html",
   "scripts": {
     "start": "parcel ./*.html",
-    "predeploy": "rm -rf dist && parcel build ./*.html --public-url Emmajaneford1992.github.io/hen_party",
+    "predeploy": "rm -rf dist && parcel build index.html --public-urlbethanyandcharlotte.co.uk && cp CNAME ./dist",
+
     "deploy": "gh-pages -d dist"
   },
  
