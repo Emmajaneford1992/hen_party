@@ -4,10 +4,8 @@
   "description": "Bethany & Charlotte Hen Activities",
   "source": "index.html",
   "scripts": {
-    "start": "parcel ./index.html",
-    "predeploy": "rm -rf dist && parcel build index.html --public-url bethanyandcharlotte.co.uk && cp CNAME ./dist",
+    "start": "parcel ./index.html"
 
-    "deploy": "gh-pages -d dist"
   },
  
   "homepage": "bethanyandcharlotte.co.uk",
