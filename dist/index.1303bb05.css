@@ -17,14 +17,6 @@ html, body {
   touch-action: none !important;
 }
 
-* {
-  pointer-events: none;
-}
-
-button, input {
-  pointer-events: auto;
-}
-
 @font-face {
   font-family: font1;
   src: url("UnicornCalligraphy-oK7B.8e9b3994.ttf");

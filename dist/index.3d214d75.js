@@ -589,9 +589,9 @@ var _buttons = require("./dom/buttons");
 var _dom = require("./dom");
 var _experience = require("./experience");
 var _experienceDefault = parcelHelpers.interopDefault(_experience);
+console.log("index here");
 let game_selection = new (0, _experienceDefault.default)();
 (0, _buttons.initButtons)();
-console.log("index here");
 function triggerButton(button) {
     console.log("button triggered");
     console.log(button, "button triggered");
