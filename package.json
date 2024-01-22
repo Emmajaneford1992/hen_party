@@ -6,17 +6,18 @@
  
   "description": "Bethany & Charlotte Hen Activities",
  
-  "source": "src/index.html",
+  "source": "index.html",
+  
  
   "scripts": {
- 
-   
-  "start": "parcel --https -p 8080",
- 
-   
-  "build": "parcel build --public-url ./"
+       
+     "start": "parcel --https -p 8080",
+     "dev":"parcel index.html",
+     "deploy": "echo\"Error no test specified\" && exit 1"
+
  
   },
+  "homepage": "https://Emmajaneford1992.github.io/hen_party",
  
   "author": "Emma Ford",
  

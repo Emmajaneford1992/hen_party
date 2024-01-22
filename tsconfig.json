@@ -2,7 +2,7 @@
 // assuming your ts sources are in ./src/
 {
     "compilerOptions": {
-      "baseUrl": "./src",
+      "baseUrl": ".",
       "paths": {
         "~*": ["./*"]
       },
@@ -11,7 +11,7 @@
       "allowSyntheticDefaultImports": true,
       "lib": ["dom", "ES2021.String"]
     },
-    "include": ["src/**/*"],
+    "include": ["/**/*"],
     "exclude": [
       "node_modules"
     ]
