@@ -628,11 +628,13 @@ let buttonNames = [
     "photo_challenge_button"
 ];
 function initButtons() {
+    console.log("init buttons");
     buttonNames.forEach((buttonName)=>{
         let button = document.querySelector("." + buttonName);
         button.addEventListener("click", ()=>{
             console.log(buttonName, "pressed");
             if (buttonName == "splash_button") {
+                console.log("splash button pressed");
                 (0, _dom.hideSplash)();
                 (0, _dom.revealGameSelection)();
             } else {
