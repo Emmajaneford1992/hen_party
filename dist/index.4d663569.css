@@ -1,0 +1,261 @@
+html, body {
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -webkit-tap-highlight-color: #0000;
+  background: none;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: sharpieFont;
+  display: block;
+  overflow: hidden;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-text-size-adjust: none !important;
+  touch-action: none !important;
+}
+
+* {
+  pointer-events: none;
+}
+
+button, input {
+  pointer-events: auto;
+}
+
+@font-face {
+  font-family: font1;
+  src: url("UnicornCalligraphy-oK7B.ad1d5d35.ttf");
+}
+
+@font-face {
+  font-family: font2;
+  src: url("MyHappyEndingRegular-Lx7G.8fa6ed52.ttf");
+}
+
+@font-face {
+  font-family: font3;
+  src: url("Ubuntu-Title.be73b6bf.ttf");
+}
+
+.UI {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: block;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+}
+
+.splash {
+  text-align: center;
+  flex-direction: column;
+  place-content: center space-between;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: font2;
+  font-size: 15vw;
+  display: flex;
+  top: 0;
+  left: 0;
+}
+
+.splash img {
+  align-self: center;
+  height: 25vh;
+  display: flex;
+}
+
+.splash strong {
+  color: #5a86aa;
+  font-family: font1;
+  font-size: 11vw;
+}
+
+.splash_button {
+  color: #000;
+  background-color: #bfd2e3;
+  border-style: none;
+  border-radius: 2vw;
+  margin: 10vw;
+  padding: 2vw;
+  font-family: font2;
+  font-size: 12vw;
+}
+
+.game_title {
+  color: #5a86aa;
+  font-family: font1;
+  font-size: 12vw;
+}
+
+.game_description, .game_score {
+  color: #000;
+  font-family: font2;
+  font-size: 6vw;
+}
+
+.game_selection {
+  text-align: center;
+  flex-direction: column;
+  place-content: center end;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 1vw;
+  font-family: font2;
+  font-size: 12vw;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+.game_selection button {
+  color: #000;
+  background-color: #bfd2e3;
+  border-style: none;
+  border-radius: 2vw;
+  margin: 1vw;
+  font-family: font2;
+  font-size: 9vw;
+}
+
+.game_backButton {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  align-self: left;
+  color: #000;
+  background-color: #008b8b;
+  border-style: none;
+  border-radius: 2vw;
+  width: 10vw;
+  height: 10vw;
+  margin: 2vw;
+  font-family: font2;
+  font-size: 12vw;
+  display: flex;
+  box-shadow: 4px 4px .12em #000;
+}
+
+.game {
+  text-align: center;
+  background-color: #add8e6;
+  flex-direction: column;
+  place-content: center start;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+.game_question, .game_answer {
+  justify-content: space-evenly;
+  padding: 2vw;
+  font-size: 12vw;
+  display: flex;
+}
+
+.game_answer {
+  background-color: #008b8b;
+  border-radius: 2vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 4px 4px .12em;
+}
+
+.game main, .game header {
+  flex-direction: column;
+  place-content: center;
+  display: flex;
+}
+
+.game_question button, .game_answer button {
+  background: line, ar-gradient(#fff0bd, #d0bf88);
+  color: #64615b;
+  text-align: center;
+  border: none;
+  border-radius: 1vw;
+  justify-content: center;
+  align-items: center;
+  width: 8vw;
+  height: 8vw;
+  margin: .5vw;
+  padding: .5vw;
+  font-family: font3;
+  font-size: 7vw;
+  display: flex;
+  position: relative;
+  box-shadow: 4px 4px .12em;
+}
+
+.game_answer button {
+  background: linear-gradient(#f0f0f0, #b0b0b0);
+}
+
+.game footer {
+  justify-content: center;
+  width: 100vw;
+  display: flex;
+}
+
+.game_restartButton {
+  text-align: center;
+  background-color: #008b8b;
+  border-style: none;
+  border-radius: 50%;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  width: 10vw;
+  height: 10vw;
+  margin: 2vw;
+  font-family: font2;
+  font-size: 12vw;
+  display: flex;
+  box-shadow: 4px 4px .12em;
+}
+
+.inputGroup {
+  opacity: 0;
+  width: 95%;
+  height: 100%;
+  margin: 0%;
+  display: block;
+  position: relative;
+  top: 0%;
+  left: 0%;
+}
+
+.game input {
+  opacity: 0;
+  width: 95vw;
+  height: 10vw;
+  display: block;
+  position: absolute;
+  bottom: 95%;
+  left: 0%;
+}
+
+.game_question img {
+  width: 70vw;
+  height: auto;
+}
+
+.game_word {
+  padding: 2vw;
+  display: flex;
+}
+
+.letterSelect {
+  opacity: .2;
+}
+
+/*# sourceMappingURL=index.4d663569.css.map */

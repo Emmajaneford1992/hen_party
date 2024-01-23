@@ -15,9 +15,9 @@ export default class Game_selection {
 
     constructor() {
        
-        console.log('game_selection')
+       
     }
-
+   
     public triggerButton(button) {
         console.log('button triggered', button);
         this.gameName = button.replace('_button','');

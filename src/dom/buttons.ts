@@ -19,13 +19,11 @@ let buttonNames =[
     'photo_challenge_button']
 
 export function initButtons() {
-    console.log('init buttons')
     buttonNames.forEach(buttonName => {
         let button = <HTMLButtonElement>document.querySelector('.' + buttonName);
         button.addEventListener('click', () =>{
             console.log(buttonName, 'pressed') 
             if(buttonName == 'splash_button'){
-                console.log('splash button pressed')
                 hideSplash(); 
                 revealGameSelection(); 
             }

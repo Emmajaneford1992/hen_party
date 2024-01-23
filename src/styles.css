@@ -20,7 +20,7 @@ body {
     touch-action: none !important;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-/* 
+
 * {
     pointer-events: none;
 }
@@ -28,22 +28,22 @@ body {
 button,
 input {
     pointer-events: auto;
-} */
+}
 
 
 @font-face {
     font-family: font1;
-    src: url('/assets/fonts/UnicornCalligraphy-oK7B.ttf');
+    src: url('/src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
 }
 
 @font-face {
     font-family: font2;
-    src: url('/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
+    src: url('/src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
 }
 
 @font-face {
     font-family: font3;
-    src: url('/assets/fonts/Ubuntu-Title.ttf');
+    src: url('/src/assets/fonts/Ubuntu-Title.ttf');
 }
 
 
