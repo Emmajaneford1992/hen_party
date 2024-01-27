@@ -2,9 +2,9 @@
   "name": "hen_website",
   "version": "1.0.0",
   "description": "Bethany & Charlotte Hen Activities",
-  "source": "index.html",
+  "source": "src/index.html",
   "scripts": {
-    "start": "parcel .index.html"
+    "start": "parcel --https -p 8080"
 
   },
  
