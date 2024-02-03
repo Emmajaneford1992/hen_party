@@ -1,4 +1,4 @@
-import {  addLetterToScrambledWord, createGameRound,  hideGame, revealCelebration, selectScrambledLetter, setGameDescription, setGameScore, setGameTitle, setWord } from "../dom/index";
+import {  addLetterToScrambledWord, createGameRound,  hideGame, revealCelebration, roundComplete, selectScrambledLetter, setGameDescription, setGameScore, setGameTitle, setWord } from "../dom/index";
 import gameInfo  from './utils/gameInfo.json'
 
 
@@ -54,8 +54,10 @@ export default class Game {
                     for(let i = 0; i < this.question.length; i++){
                         if(this.question.charAt(i) == letter && !letterSelected){
                             this.question.replace(letter,'');
-                            this.userAnswer = this.userAnswer + letter;
-                            selectScrambledLetter(letter)
+                            selectScrambledLetter(letter).then(() =>{
+                                this.userAnswer = this.userAnswer + letter;
+                                this.updateWord();
+                            })
                             letterSelected  = true;
                         }
                     }
@@ -95,6 +97,7 @@ export default class Game {
         setWord(this.userAnswer)
         if(this.userAnswer == this.answer.replaceAll(' ','')){
             console.log('ROUND COMPLETE')
+            roundComplete()
             setTimeout(() => {
                 if(this.round < this.numOfRounds-1){
                     this.round++;
@@ -104,12 +107,13 @@ export default class Game {
                     hideGame()
                     revealCelebration();
                 }
-            }, 1000);
+            }, 2100);
         }
     }
 
     public triggerGameButton(trigger){
         if(trigger == 'restart'){
+            console.log('restart')
             this.generateRound();
         }
     }

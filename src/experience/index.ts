@@ -40,6 +40,5 @@ export default class Game_selection {
         this.game.triggerGameButton(trigger);
     }
 
-
   }
    

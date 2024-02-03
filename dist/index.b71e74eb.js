@@ -581,17 +581,26 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"h7u1C":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-//let params = getUrlParams();
 parcelHelpers.export(exports, "triggerButton", ()=>triggerButton);
 parcelHelpers.export(exports, "triggerInput", ()=>triggerInput);
 parcelHelpers.export(exports, "triggerLetter", ()=>triggerLetter);
 parcelHelpers.export(exports, "triggerGameButton", ()=>triggerGameButton);
 var _buttons = require("./dom/buttons");
+var _dom = require("./dom");
 var _experience = require("./experience");
 var _experienceDefault = parcelHelpers.interopDefault(_experience);
+var _queryString = require("../queryString");
 //import { getUrlParams } from "../queryString";
 let game_selection = new (0, _experienceDefault.default)();
 (0, _buttons.initButtons)();
+let params = (0, _queryString.getUrlParams)();
+if (params == null) {
+    console.log("splash");
+    (0, _dom.revealSplash)();
+} else {
+    console.log("found heart", params);
+    (0, _dom.revealFoundHeart)();
+}
 function triggerButton(button) {
     console.log("button triggered");
     console.log(button, "button triggered");
@@ -607,7 +616,7 @@ function triggerGameButton(trigger) {
     game_selection.triggerGameButton(trigger);
 }
 
-},{"./dom/buttons":"8Z3Vb","./experience":"47u4Z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Z3Vb":[function(require,module,exports) {
+},{"./dom/buttons":"8Z3Vb","./experience":"47u4Z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../queryString":"51Hld","./dom":"9OTgz"}],"8Z3Vb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initButtons", ()=>initButtons);
@@ -615,6 +624,7 @@ var _dom = require("../dom");
 var _index = require("../index");
 let game_backButton = document.querySelector(".game_backButton");
 let celebration_button = document.querySelector(".celebration button");
+let foundHeart_button = document.querySelector(".foundHeart button");
 let game_restartButton = document.querySelector(".game_restartButton");
 let buttonNames = [
     "splash_button",
@@ -654,11 +664,16 @@ function initButtons() {
         (0, _dom.hideCelebration)();
         (0, _dom.revealGameSelection)();
     });
+    foundHeart_button.addEventListener("click", ()=>{
+        (0, _dom.hideFoundHeart)();
+        (0, _dom.revealGameSelection)();
+    });
 }
 
 },{"../dom":"9OTgz","../index":"h7u1C","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9OTgz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "revealSplash", ()=>revealSplash);
 parcelHelpers.export(exports, "hideSplash", ()=>hideSplash);
 parcelHelpers.export(exports, "revealGameSelection", ()=>revealGameSelection);
 parcelHelpers.export(exports, "hideGameSelection", ()=>hideGameSelection);
@@ -671,33 +686,14 @@ parcelHelpers.export(exports, "setWord", ()=>setWord);
 parcelHelpers.export(exports, "addLetterToScrambledWord", ()=>addLetterToScrambledWord);
 parcelHelpers.export(exports, "selectScrambledLetter", ()=>selectScrambledLetter);
 parcelHelpers.export(exports, "setWordGreen", ()=>setWordGreen);
-// fill the blanks
-// export function createFillTheBlanksRound(str) {
-//     clearGame();
-//     console.log(createFillTheBlanksRound)
-//     let vowels =  ['a','e','i','o','u'];
-//     vowels.forEach(vowel => {
-//         let letter = document.createElement('button');
-//         letters.push(letter)
-//         letter.innerHTML = vowel;
-//         game_question.append(letter)
-//     });
-//     for(let i = 0; i < str.length; i++){
-//         let empty = document.createElement('button');
-//         tiles.push(empty)
-//         game_answer.append(empty)
-//     }
-//     letters.forEach((letter,i) => {
-//         letter.addEventListener('click', () =>{
-//             console.log('letter');
-//             triggerLetter(letter.innerHTML)
-//         })
-//     });
-// }
 parcelHelpers.export(exports, "clearGame", ()=>clearGame);
 parcelHelpers.export(exports, "createGameRound", ()=>createGameRound);
+parcelHelpers.export(exports, "roundComplete", ()=>roundComplete);
 parcelHelpers.export(exports, "revealCelebration", ()=>revealCelebration);
 parcelHelpers.export(exports, "hideCelebration", ()=>hideCelebration);
+parcelHelpers.export(exports, "revealFoundHeart", ()=>revealFoundHeart);
+parcelHelpers.export(exports, "hideFoundHeart", ()=>hideFoundHeart);
+var _lottieInteractivity = require("@lottiefiles/lottie-interactivity");
 var _index = require("../index");
 // import image1 from "../assets/images/finleys_films/1.png";
 //const image1 = new URL("../assets/images/finleys_films/1.png");
@@ -710,6 +706,9 @@ const game_title = document.querySelector(".game_title");
 const game_description = document.querySelector(".game_description");
 const game_score = document.querySelector(".game_score");
 const celebration = document.querySelector(".celebration");
+const foundHeart = document.querySelector(".foundHeart");
+const game_restartButton = document.querySelector(".game_restartButton");
+const game_tick = document.querySelector(".game_tick");
 let game_input;
 let finley_film_images = [
     require("2c24d209ee8ac650"),
@@ -743,6 +742,11 @@ let face_merge_images = [
 let letters = [];
 let tiles = [];
 let words = [];
+let qWords = [];
+function revealSplash() {
+    console.log("hide Splash");
+    splash.style.display = "flex";
+}
 function hideSplash() {
     console.log("hide Splash");
     splash.style.display = "none";
@@ -791,12 +795,15 @@ function addLetterToScrambledWord(charRemoved) {
     });
 }
 function selectScrambledLetter(char) {
-    let letterAdded = false;
-    letters.forEach((letter, i)=>{
-        if (!letter.classList.contains("letterSelect") && letter.innerHTML == char && !letterAdded) {
-            letter.classList.add("letterSelect");
-            letterAdded = true;
-        }
+    return new Promise((resolve, reject)=>{
+        let letterAdded = false;
+        letters.forEach((letter, i)=>{
+            if (!letter.classList.contains("letterSelect") && letter.innerHTML == char && !letterAdded) {
+                letter.classList.add("letterSelect");
+                letterAdded = true;
+                resolve();
+            }
+        });
     });
 }
 function setWordGreen() {
@@ -805,10 +812,14 @@ function setWordGreen() {
     });
 }
 function clearGame() {
+    game_tick.style.display = "none";
+    game_restartButton.style.display = "flex";
     while(game_answer.firstChild)game_answer.removeChild(game_answer.lastChild);
     while(game_question.firstChild)game_question.removeChild(game_question.lastChild);
     letters = [];
     tiles = [];
+    words = [];
+    qWords = [];
 }
 function createGameRound(game, question, round, answer) {
     clearGame();
@@ -831,6 +842,7 @@ function createGameRound(game, question, round, answer) {
     game_inputGroup.classList.add("inputGroup");
     game_answer.append(game_inputGroup);
     game_input = document.createElement("input");
+    game_input.style.height = words.length * 12 + "vw";
     game_input.maxLength = answer.replaceAll(" ", "").length;
     game_inputGroup.append(game_input);
     game_input.addEventListener("input", (event)=>{
@@ -839,17 +851,24 @@ function createGameRound(game, question, round, answer) {
     if (game == "scrambled_words" || game == "fill_the_blanks") {
         let questionStr = game == "scrambled_words" ? question : "aeiou";
         console.log(questionStr);
-        for(let i = 0; i < questionStr.length; i++){
+        let qWord = document.createElement("div");
+        qWords.push(qWord);
+        qWord.classList.add("game_word");
+        game_question.append(qWord);
+        for(let i = 0; i < questionStr.length; i++)if (questionStr.charAt(i) == " ") {
+            qWord = document.createElement("div");
+            qWords.push(qWord);
+            qWord.classList.add("game_word");
+            game_question.append(qWord);
+        } else {
             let letter = document.createElement("button");
             letters.push(letter);
             letter.innerHTML = questionStr.charAt(i);
-            game_question.append(letter);
+            qWord.append(letter);
         }
         letters.forEach((letter, i)=>{
-            console.log("letter", letter);
             letter.addEventListener("click", ()=>{
                 if (!letter.classList.contains("letterSelect")) {
-                    console.log("letter", letter.innerHTML);
                     letter.classList.add("letterSelect");
                     (0, _index.triggerLetter)(letter.innerHTML);
                 }
@@ -864,14 +883,37 @@ function createGameRound(game, question, round, answer) {
         game_image.src = game == "finleys_films" ? finley_film_images[round] : face_merge_images[round];
     }
 }
+function roundComplete() {
+    game_tick.style.display = "flex";
+    game_restartButton.style.display = "none";
+    let player = document.getElementById(".game_tick");
+    player.addEventListener("ready", ()=>{
+        (0, _lottieInteractivity.LottieInteractivity).create({
+            player: ".game_tick",
+            mode: "cursor",
+            actions: [
+                {
+                    type: "click",
+                    forceFlag: false
+                }
+            ]
+        });
+    });
+}
 function revealCelebration() {
     celebration.style.display = "flex";
 }
 function hideCelebration() {
     celebration.style.display = "none";
 }
+function revealFoundHeart() {
+    foundHeart.style.display = "flex";
+}
+function hideFoundHeart() {
+    foundHeart.style.display = "none";
+}
 
-},{"../index":"h7u1C","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fsvtb":[function(require,module,exports) {
+},{"../index":"h7u1C","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@lottiefiles/lottie-interactivity":"l9f7Z"}],"fsvtb":[function(require,module,exports) {
 module.exports = require("d898787985b4c17d").getBundleURL("7UhFu") + "0.61dbac3d.png" + "?" + Date.now();
 
 },{"d898787985b4c17d":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -1011,7 +1053,438 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"47u4Z":[function(require,module,exports) {
+},{}],"l9f7Z":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LottieInteractivity", ()=>l);
+parcelHelpers.export(exports, "create", ()=>M);
+function e(t) {
+    return (e = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+        return typeof e;
+    } : function(e) {
+        return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+    })(t);
+}
+function t(e, t) {
+    if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
+}
+function n(e, t) {
+    for(var n = 0; n < t.length; n++){
+        var i = t[n];
+        i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(e, i.key, i);
+    }
+}
+function i(e, t, n) {
+    return t in e ? Object.defineProperty(e, t, {
+        value: n,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+    }) : e[t] = n, e;
+}
+function a(e, t) {
+    if (null == e) return {};
+    var n, i, a = function(e, t) {
+        if (null == e) return {};
+        var n, i, a = {}, r = Object.keys(e);
+        for(i = 0; i < r.length; i++)n = r[i], t.indexOf(n) >= 0 || (a[n] = e[n]);
+        return a;
+    }(e, t);
+    if (Object.getOwnPropertySymbols) {
+        var r = Object.getOwnPropertySymbols(e);
+        for(i = 0; i < r.length; i++)n = r[i], t.indexOf(n) >= 0 || Object.prototype.propertyIsEnumerable.call(e, n) && (a[n] = e[n]);
+    }
+    return a;
+}
+function r(e, t) {
+    var n = t.get(e);
+    if (!n) throw new TypeError("attempted to get private field on non-instance");
+    return n.get ? n.get.call(e) : n.value;
+}
+var o = {
+    player: "lottie-player"
+}, s = "[lottieInteractivity]:", l = function() {
+    function l() {
+        var n = this, M = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : o, C = M.actions, A = M.container, T = M.mode, H = M.player, O = a(M, [
+            "actions",
+            "container",
+            "mode",
+            "player"
+        ]);
+        if (t(this, l), c.set(this, {
+            writable: !0,
+            value: function() {
+                if (n.player) {
+                    var e = function() {
+                        n.player.addEventListener("enterFrame", r(n, E)), n.container.addEventListener("mouseenter", r(n, g)), n.container.addEventListener("mouseleave", r(n, w)), n.container.addEventListener("touchstart", r(n, g), {
+                            passive: !0
+                        }), n.container.addEventListener("touchend", r(n, w), {
+                            passive: !0
+                        });
+                    }, t = function() {
+                        n.container.addEventListener("mouseenter", r(n, g)), n.container.addEventListener("mouseleave", r(n, w)), n.container.addEventListener("touchstart", r(n, g), {
+                            passive: !0
+                        }), n.container.addEventListener("touchend", r(n, w), {
+                            passive: !0
+                        });
+                    };
+                    n.stateHandler.set("loop", function() {
+                        n.actions[n.interactionIdx].loop ? n.player.loop = parseInt(n.actions[n.interactionIdx].loop) - 1 : n.player.loop = !0, n.player.autoplay = !0;
+                    }), n.stateHandler.set("autoplay", function() {
+                        n.player.loop = !1, n.player.autoplay = !0;
+                    }), n.stateHandler.set("click", function() {
+                        n.player.loop = !1, n.player.autoplay = !1, n.container.addEventListener("click", r(n, p));
+                    }), n.stateHandler.set("hover", function() {
+                        n.player.loop = !1, n.player.autoplay = !1, n.container.addEventListener("mouseenter", r(n, p)), n.container.addEventListener("touchstart", r(n, p), {
+                            passive: !0
+                        });
+                    }), n.stateHandler.set("hold", t), n.stateHandler.set("pauseHold", t), n.transitionHandler.set("click", function() {
+                        n.container.addEventListener("click", r(n, h));
+                    }), n.transitionHandler.set("hover", function() {
+                        n.container.addEventListener("mouseenter", r(n, h)), n.container.addEventListener("touchstart", r(n, h), {
+                            passive: !0
+                        });
+                    }), n.transitionHandler.set("hold", e), n.transitionHandler.set("pauseHold", e), n.transitionHandler.set("repeat", function() {
+                        n.player.loop = !0, n.player.autoplay = !0;
+                        n.player.addEventListener("loopComplete", function e() {
+                            r(n, f).call(n, {
+                                handler: e
+                            });
+                        });
+                    }), n.transitionHandler.set("onComplete", function() {
+                        "loop" === n.actions[n.interactionIdx].state ? n.player.addEventListener("loopComplete", r(n, m)) : n.player.addEventListener("complete", r(n, m));
+                    }), n.transitionHandler.set("seek", function() {
+                        n.player.stop(), n.player.addEventListener("enterFrame", r(n, L)), n.container.addEventListener("mousemove", r(n, y)), n.container.addEventListener("touchmove", r(n, u), {
+                            passive: !1
+                        }), n.container.addEventListener("mouseout", r(n, v));
+                    });
+                }
+            }
+        }), p.set(this, {
+            writable: !0,
+            value: function() {
+                var e = n.actions[n.interactionIdx].forceFlag;
+                e || !0 !== n.player.isPaused ? e && r(n, x).call(n, !0) : r(n, x).call(n, !0);
+            }
+        }), d.set(this, {
+            writable: !0,
+            value: function() {
+                0 === n.clickCounter ? (n.player.play(), n.clickCounter++) : (n.clickCounter++, n.player.setDirection(-1 * n.player.playDirection), n.player.play());
+            }
+        }), h.set(this, {
+            writable: !0,
+            value: function() {
+                var e = n.actions[n.interactionIdx].forceFlag, t = n.actions[n.interactionIdx].state, i = n.actions[n.interactionIdx].transition;
+                if ("chain" === n.mode) {
+                    if (n.actions[n.interactionIdx].count) {
+                        var a = parseInt(n.actions[n.interactionIdx].count);
+                        if (n.clickCounter < a - 1) return void (n.clickCounter += 1);
+                    }
+                    return n.clickCounter = 0, !e && "click" === i && "click" === t || "hover" === i && "hover" === t ? n.transitionHandler.get("onComplete").call() : n.nextInteraction(), n.container.removeEventListener("click", r(n, h)), void n.container.removeEventListener("mouseenter", r(n, h));
+                }
+                e || !0 !== n.player.isPaused ? e && n.player.goToAndPlay(0, !0) : n.player.goToAndPlay(0, !0);
+            }
+        }), y.set(this, {
+            writable: !0,
+            value: function(e) {
+                r(n, S).call(n, e.clientX, e.clientY);
+            }
+        }), u.set(this, {
+            writable: !0,
+            value: function(e) {
+                e.cancelable && e.preventDefault(), r(n, S).call(n, e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }), v.set(this, {
+            writable: !0,
+            value: function() {
+                r(n, S).call(n, -1, -1);
+            }
+        }), m.set(this, {
+            writable: !0,
+            value: function() {
+                "loop" === n.actions[n.interactionIdx].state ? n.player.removeEventListener("loopComplete", r(n, m)) : n.player.removeEventListener("complete", r(n, m)), n.nextInteraction();
+            }
+        }), f.set(this, {
+            writable: !0,
+            value: function(e) {
+                var t = e.handler, i = 1;
+                n.actions[n.interactionIdx].repeat && (i = n.actions[n.interactionIdx].repeat), n.playCounter >= i - 1 ? (n.playCounter = 0, n.player.removeEventListener("loopComplete", t), n.player.loop = !1, n.player.autoplay = !1, n.nextInteraction()) : n.playCounter += 1;
+            }
+        }), L.set(this, {
+            writable: !0,
+            value: function() {
+                var e = n.actions[n.interactionIdx].frames;
+                e && n.player.currentFrame >= parseInt(e[1]) - 1 && (n.player.removeEventListener("enterFrame", r(n, L)), n.container.removeEventListener("mousemove", r(n, y)), n.container.removeEventListener("mouseout", r(n, v)), setTimeout(n.nextInteraction, 0));
+            }
+        }), E.set(this, {
+            writable: !0,
+            value: function() {
+                var e = n.actions[n.interactionIdx].frames;
+                (e && n.player.currentFrame >= e[1] || n.player.currentFrame >= n.player.totalFrames - 1) && (n.player.removeEventListener("enterFrame", r(n, E)), n.container.removeEventListener("mouseenter", r(n, g)), n.container.removeEventListener("mouseleave", r(n, w)), n.container.removeEventListener("touchstart", r(n, g), {
+                    passive: !0
+                }), n.container.removeEventListener("touchend", r(n, w), {
+                    passive: !0
+                }), n.player.pause(), n.holdStatus = !1, n.nextInteraction()), -1 === n.player.playDirection && e && n.player.currentFrame < e[0] && n.player.pause();
+            }
+        }), g.set(this, {
+            writable: !0,
+            value: function() {
+                -1 !== n.player.playDirection && null !== n.holdStatus && n.holdStatus || (n.player.setDirection(1), n.player.play(), n.holdStatus = !0);
+            }
+        }), w.set(this, {
+            writable: !0,
+            value: function() {
+                "hold" === n.actions[n.interactionIdx].transition || "hold" === n.actions[n.interactionIdx].state || "hold" === n.actions[0].type ? (n.player.setDirection(-1), n.player.play()) : "pauseHold" !== n.actions[n.interactionIdx].transition && "pauseHold" !== n.actions[n.interactionIdx].state && "pauseHold" !== n.actions[0].type || n.player.pause(), n.holdStatus = !1;
+            }
+        }), I.set(this, {
+            writable: !0,
+            value: function() {
+                if (n.container.removeEventListener("click", r(n, h)), n.container.removeEventListener("click", r(n, p)), n.container.removeEventListener("mouseenter", r(n, h)), n.container.removeEventListener("touchstart", r(n, h)), n.container.removeEventListener("touchmove", r(n, u)), n.container.removeEventListener("mouseenter", r(n, p)), n.container.removeEventListener("touchstart", r(n, p)), n.container.removeEventListener("mouseenter", r(n, g)), n.container.removeEventListener("touchstart", r(n, g)), n.container.removeEventListener("mouseleave", r(n, w)), n.container.removeEventListener("mousemove", r(n, y)), n.container.removeEventListener("mouseout", r(n, v)), n.container.removeEventListener("touchend", r(n, w)), n.player) try {
+                    n.player.removeEventListener("loopComplete", r(n, m)), n.player.removeEventListener("complete", r(n, m)), n.player.removeEventListener("enterFrame", r(n, L)), n.player.removeEventListener("enterFrame", r(n, E));
+                } catch (e) {}
+            }
+        }), i(this, "jumpToInteraction", function(e) {
+            r(n, I).call(n), n.interactionIdx = e, n.interactionIdx < 0 ? n.interactionIdx = 0 : n.interactionIdx, n.nextInteraction(!1);
+        }), i(this, "nextInteraction", function() {
+            var e = !(arguments.length > 0 && void 0 !== arguments[0]) || arguments[0];
+            n.oldInterctionIdx = n.interactionIdx, r(n, I).call(n), n.player.loop = !1;
+            var t = n.actions[n.interactionIdx].jumpTo;
+            t ? t >= 0 && t < n.actions.length ? (n.interactionIdx = t, r(n, k).call(n, {
+                ignorePath: !1
+            })) : (n.interactionIdx = 0, n.player.goToAndStop(0, !0), r(n, k).call(n, {
+                ignorePath: !1
+            })) : (e && n.interactionIdx++, n.interactionIdx >= n.actions.length ? n.actions[n.actions.length - 1].reset ? (n.interactionIdx = 0, n.player.resetSegments(!0), n.actions[n.interactionIdx].frames ? n.player.goToAndStop(n.actions[n.interactionIdx].frames, !0) : n.player.goToAndStop(0, !0), r(n, k).call(n, {
+                ignorePath: !1
+            })) : (n.interactionIdx = n.actions.length - 1, r(n, k).call(n, {
+                ignorePath: !1
+            })) : r(n, k).call(n, {
+                ignorePath: !1
+            })), n.container.dispatchEvent(new CustomEvent("transition", {
+                bubbles: !0,
+                composed: !0,
+                detail: {
+                    oldIndex: n.oldInterctionIdx,
+                    newIndex: n.interactionIdx
+                }
+            }));
+        }), x.set(this, {
+            writable: !0,
+            value: function(e) {
+                var t = n.actions[n.interactionIdx].frames;
+                if (!t) return n.player.resetSegments(!0), void n.player.goToAndPlay(0, !0);
+                "string" == typeof t ? n.player.goToAndPlay(t, e) : n.player.playSegments(t, e);
+            }
+        }), b.set(this, {
+            writable: !0,
+            value: function() {
+                var t = n.actions[n.interactionIdx].path;
+                if (!t) {
+                    if ("object" === e(n.enteredPlayer) && "AnimationItem" === n.enteredPlayer.constructor.name) {
+                        if (t = n.enteredPlayer, n.player === t) return void r(n, k).call(n, {
+                            ignorePath: !0
+                        });
+                    } else {
+                        var i = (t = n.loadedAnimation).substr(t.lastIndexOf("/") + 1);
+                        if (i = i.substr(0, i.lastIndexOf(".json")), n.player.fileName === i) return void r(n, k).call(n, {
+                            ignorePath: !0
+                        });
+                    }
+                }
+                var a = n.container.getBoundingClientRect(), o = "width: " + a.width + "px !important; height: " + a.height + "px !important; background: " + n.container.style.background;
+                if (n.container.setAttribute("style", o), "object" !== e(n.enteredPlayer) || "AnimationItem" !== n.enteredPlayer.constructor.name) {
+                    if ("string" == typeof n.enteredPlayer) {
+                        var l = document.querySelector(n.enteredPlayer);
+                        l && "LOTTIE-PLAYER" === l.nodeName && (n.attachedListeners || (l.addEventListener("ready", function() {
+                            n.container.style.width = "", n.container.style.height = "";
+                        }), l.addEventListener("load", function() {
+                            n.player = l.getLottie(), r(n, k).call(n, {
+                                ignorePath: !0
+                            });
+                        }), n.attachedListeners = !0), l.load(t));
+                    } else n.enteredPlayer instanceof HTMLElement && "LOTTIE-PLAYER" === n.enteredPlayer.nodeName && (n.attachedListeners || (n.enteredPlayer.addEventListener("ready", function() {
+                        n.container.style.width = "", n.container.style.height = "";
+                    }), n.enteredPlayer.addEventListener("load", function() {
+                        n.player = n.enteredPlayer.getLottie(), r(n, k).call(n, {
+                            ignorePath: !0
+                        });
+                    }), n.attachedListeners = !0), n.enteredPlayer.load(t));
+                    if (!n.player) throw new Error("".concat(s, " Specified player is invalid."), n.enteredPlayer);
+                } else {
+                    if (!window.lottie) throw new Error("".concat(s, " A Lottie player is required."));
+                    n.stop(), n.container.innerHTML = "", "object" === e(t) && "AnimationItem" === t.constructor.name ? n.player = window.lottie.loadAnimation({
+                        loop: !1,
+                        autoplay: !1,
+                        animationData: t.animationData,
+                        container: n.container
+                    }) : n.player = window.lottie.loadAnimation({
+                        loop: !1,
+                        autoplay: !1,
+                        path: t,
+                        container: n.container
+                    }), n.player.addEventListener("DOMLoaded", function() {
+                        n.container.style.width = "", n.container.style.height = "", r(n, k).call(n, {
+                            ignorePath: !0
+                        });
+                    });
+                }
+                n.clickCounter = 0, n.playCounter = 0;
+            }
+        }), k.set(this, {
+            writable: !0,
+            value: function(e) {
+                var t = e.ignorePath, i = n.actions[n.interactionIdx].frames, a = n.actions[n.interactionIdx].state, o = n.actions[n.interactionIdx].transition, s = n.actions[n.interactionIdx].path, l = n.stateHandler.get(a), c = n.transitionHandler.get(o), p = n.actions[n.interactionIdx].speed ? n.actions[n.interactionIdx].speed : 1, d = n.actions[n.interactionIdx].delay ? n.actions[n.interactionIdx].delay : 0;
+                t || !(s || n.actions[n.actions.length - 1].reset && 0 === n.interactionIdx) ? setTimeout(function() {
+                    i && (n.player.autoplay = !1, n.player.resetSegments(!0), n.player.goToAndStop(i[0], !0)), l ? l.call() : "none" === a && (n.player.loop = !1, n.player.autoplay = !1), c && c.call(), n.player.autoplay && (n.player.resetSegments(!0), r(n, x).call(n, !0)), n.player.setSpeed(p);
+                }, d) : r(n, b).call(n);
+            }
+        }), S.set(this, {
+            writable: !0,
+            value: function(e, t) {
+                if (-1 !== e && -1 !== t) {
+                    var i = n.getContainerCursorPosition(e, t);
+                    e = i.x, t = i.y;
+                }
+                var a = n.actions.find(function(n) {
+                    var i = n.position;
+                    if (i) {
+                        if (Array.isArray(i.x) && Array.isArray(i.y)) return e >= i.x[0] && e <= i.x[1] && t >= i.y[0] && t <= i.y[1];
+                        if (!Number.isNaN(i.x) && !Number.isNaN(i.y)) return e === i.x && t === i.y;
+                    }
+                    return !1;
+                });
+                if (a) {
+                    if ("seek" === a.type || "seek" === a.transition) {
+                        var r = (e - a.position.x[0]) / (a.position.x[1] - a.position.x[0]), o = (t - a.position.y[0]) / (a.position.y[1] - a.position.y[0]);
+                        n.player.playSegments(a.frames, !0), a.position.y[0] < 0 && a.position.y[1] > 1 ? n.player.goToAndStop(Math.floor(r * n.player.totalFrames), !0) : n.player.goToAndStop(Math.ceil((r + o) / 2 * n.player.totalFrames), !0);
+                    } else "loop" === a.type ? n.player.playSegments(a.frames, !0) : "play" === a.type ? (!0 === n.player.isPaused && n.player.resetSegments(), n.player.playSegments(a.frames)) : "stop" === a.type && (n.player.resetSegments(!0), n.player.goToAndStop(a.frames[0], !0));
+                }
+            }
+        }), P.set(this, {
+            writable: !0,
+            value: function() {
+                var e = n.getContainerVisibility(), t = n.actions.find(function(t) {
+                    var n = t.visibility;
+                    return e >= n[0] && e <= n[1];
+                });
+                if (t) {
+                    if ("seek" === t.type) {
+                        var i = t.frames[0], a = 2 == t.frames.length ? t.frames[1] : n.player.totalFrames - 1;
+                        null !== n.assignedSegment && (n.player.resetSegments(!0), n.assignedSegment = null), n.player.goToAndStop(i + Math.round((e - t.visibility[0]) / (t.visibility[1] - t.visibility[0]) * (a - i)), !0);
+                    } else if ("loop" === t.type) n.player.loop = !0, (null === n.assignedSegment || n.assignedSegment !== t.frames || !0 === n.player.isPaused) && (n.player.playSegments(t.frames, !0), n.assignedSegment = t.frames);
+                    else if ("play" === t.type || "playOnce" === t.type) {
+                        if ("playOnce" === t.type && !n.scrolledAndPlayed) return n.scrolledAndPlayed = !0, n.player.resetSegments(!0), void (t.frames ? n.player.playSegments(t.frames, !0) : n.player.play());
+                        "play" === t.type && n.player.isPaused && (n.player.resetSegments(!0), t.frames ? n.player.playSegments(t.frames, !0) : n.player.play());
+                    } else "stop" === t.type && n.player.goToAndStop(t.frames[0], !0);
+                }
+            }
+        }), this.enteredPlayer = H, "object" !== e(H) || "AnimationItem" !== H.constructor.name) {
+            if ("string" == typeof H) {
+                var W = document.querySelector(H);
+                W && "LOTTIE-PLAYER" === W.nodeName && (H = W.getLottie());
+            } else H instanceof HTMLElement && "LOTTIE-PLAYER" === H.nodeName && (H = H.getLottie());
+            if (!H) {
+                var F = s + "Specified player:" + H + " is invalid.";
+                throw new Error(F);
+            }
+        }
+        "string" == typeof A && (A = document.querySelector(A)), A || (A = H.wrapper), this.player = H, this.loadedAnimation = this.player.path + this.player.fileName + ".json", this.attachedListeners = !1, this.container = A, this.mode = T, this.actions = C, this.options = O, this.assignedSegment = null, this.scrolledAndPlayed = !1, this.interactionIdx = 0, this.oldInterctionIdx = 0, this.clickCounter = 0, this.playCounter = 0, this.stateHandler = new Map, this.transitionHandler = new Map;
+    }
+    var M, C, A;
+    return M = l, C = [
+        {
+            key: "getContainerVisibility",
+            value: function() {
+                var e = this.container.getBoundingClientRect(), t = e.top, n = e.height;
+                return (window.innerHeight - t) / (window.innerHeight + n);
+            }
+        },
+        {
+            key: "getContainerCursorPosition",
+            value: function(e, t) {
+                var n = this.container.getBoundingClientRect(), i = n.top;
+                return {
+                    x: (e - n.left) / n.width,
+                    y: (t - i) / n.height
+                };
+            }
+        },
+        {
+            key: "initScrollMode",
+            value: function() {
+                this.player.stop(), window.addEventListener("scroll", r(this, P), !0);
+            }
+        },
+        {
+            key: "initCursorMode",
+            value: function() {
+                this.actions && 1 === this.actions.length ? "click" === this.actions[0].type ? (this.player.loop = !1, this.player.stop(), this.container.addEventListener("click", r(this, h))) : "hover" === this.actions[0].type ? (this.player.loop = !1, this.player.stop(), this.container.addEventListener("mouseenter", r(this, h)), this.container.addEventListener("touchstart", r(this, h), {
+                    passive: !0
+                })) : "toggle" === this.actions[0].type ? (this.player.loop = !1, this.player.stop(), this.container.addEventListener("click", r(this, d))) : "hold" === this.actions[0].type || "pauseHold" === this.actions[0].type ? (this.container.addEventListener("mouseenter", r(this, g)), this.container.addEventListener("mouseleave", r(this, w)), this.container.addEventListener("touchstart", r(this, g), {
+                    passive: !0
+                }), this.container.addEventListener("touchend", r(this, w), {
+                    passive: !0
+                })) : "seek" === this.actions[0].type && (this.player.loop = !0, this.player.stop(), this.container.addEventListener("mousemove", r(this, y)), this.container.addEventListener("touchmove", r(this, u), {
+                    passive: !1
+                }), this.container.addEventListener("mouseout", r(this, v))) : (this.player.loop = !0, this.player.stop(), this.container.addEventListener("mousemove", r(this, y)), this.container.addEventListener("mouseleave", r(this, v)), r(this, S).call(this, -1, -1));
+            }
+        },
+        {
+            key: "initChainMode",
+            value: function() {
+                r(this, c).call(this), this.player.loop = !1, this.player.stop(), r(this, k).call(this, {
+                    ignorePath: !1
+                });
+            }
+        },
+        {
+            key: "start",
+            value: function() {
+                var e = this;
+                "scroll" === this.mode ? this.player.isLoaded ? this.initScrollMode() : this.player.addEventListener("DOMLoaded", function() {
+                    e.initScrollMode();
+                }) : "cursor" === this.mode ? this.player.isLoaded ? this.initCursorMode() : this.player.addEventListener("DOMLoaded", function() {
+                    e.initCursorMode();
+                }) : "chain" === this.mode && (this.player.isLoaded ? this.initChainMode() : this.player.addEventListener("DOMLoaded", function() {
+                    e.initChainMode();
+                }));
+            }
+        },
+        {
+            key: "redefineOptions",
+            value: function(t) {
+                var n = t.actions, i = t.container, r = t.mode, o = t.player, l = a(t, [
+                    "actions",
+                    "container",
+                    "mode",
+                    "player"
+                ]);
+                if (this.stop(), this.enteredPlayer = o, "object" !== e(o) || "AnimationItem" !== o.constructor.name) {
+                    if ("string" == typeof o) {
+                        var c = document.querySelector(o);
+                        c && "LOTTIE-PLAYER" === c.nodeName && (o = c.getLottie());
+                    } else o instanceof HTMLElement && "LOTTIE-PLAYER" === o.nodeName && (o = o.getLottie());
+                    if (!o) throw new Error(s + "Specified player:" + o + " is invalid.", o);
+                }
+                "string" == typeof i && (i = document.querySelector(i)), i || (i = o.wrapper), this.player = o, this.loadedAnimation = this.player.path + this.player.fileName + ".json", this.attachedListeners = !1, this.container = i, this.mode = r, this.actions = n, this.options = l, this.assignedSegment = null, this.scrolledAndPlayed = !1, this.interactionIdx = 0, this.clickCounter = 0, this.playCounter = 0, this.holdStatus = null, this.stateHandler = new Map, this.transitionHandler = new Map, this.start();
+            }
+        },
+        {
+            key: "stop",
+            value: function() {
+                if ("scroll" === this.mode && window.removeEventListener("scroll", r(this, P), !0), "cursor" === this.mode && (this.container.removeEventListener("click", r(this, h)), this.container.removeEventListener("click", r(this, d)), this.container.removeEventListener("mouseenter", r(this, h)), this.container.removeEventListener("touchstart", r(this, h)), this.container.removeEventListener("touchmove", r(this, u)), this.container.removeEventListener("mousemove", r(this, y)), this.container.removeEventListener("mouseleave", r(this, v)), this.container.removeEventListener("touchstart", r(this, g)), this.container.removeEventListener("touchend", r(this, w))), "chain" === this.mode && (this.container.removeEventListener("click", r(this, h)), this.container.removeEventListener("click", r(this, p)), this.container.removeEventListener("mouseenter", r(this, h)), this.container.removeEventListener("touchstart", r(this, h)), this.container.removeEventListener("touchmove", r(this, u)), this.container.removeEventListener("mouseenter", r(this, p)), this.container.removeEventListener("touchstart", r(this, p)), this.container.removeEventListener("mouseenter", r(this, g)), this.container.removeEventListener("touchstart", r(this, g)), this.container.removeEventListener("mouseleave", r(this, w)), this.container.removeEventListener("mousemove", r(this, y)), this.container.removeEventListener("mouseout", r(this, v)), this.container.removeEventListener("touchend", r(this, w)), this.player)) try {
+                    this.player.removeEventListener("loopComplete", r(this, m)), this.player.removeEventListener("complete", r(this, m)), this.player.removeEventListener("enterFrame", r(this, L)), this.player.removeEventListener("enterFrame", r(this, E));
+                } catch (e) {}
+                this.player && (this.player.destroy(), this.player = null);
+            }
+        }
+    ], n(M.prototype, C), A && n(M, A), l;
+}(), c = new WeakMap, p = new WeakMap, d = new WeakMap, h = new WeakMap, y = new WeakMap, u = new WeakMap, v = new WeakMap, m = new WeakMap, f = new WeakMap, L = new WeakMap, E = new WeakMap, g = new WeakMap, w = new WeakMap, I = new WeakMap, x = new WeakMap, b = new WeakMap, k = new WeakMap, S = new WeakMap, P = new WeakMap, M = function(e) {
+    var t = new l(e);
+    return t.start(), t;
+};
+exports.default = M;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"47u4Z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _index = require("../dom/index");
@@ -1084,8 +1557,10 @@ class Game {
                     let letterSelected = false;
                     for(let i = 0; i < this.question.length; i++)if (this.question.charAt(i) == letter && !letterSelected) {
                         this.question.replace(letter, "");
-                        this.userAnswer = this.userAnswer + letter;
-                        (0, _index.selectScrambledLetter)(letter);
+                        (0, _index.selectScrambledLetter)(letter).then(()=>{
+                            this.userAnswer = this.userAnswer + letter;
+                            this.updateWord();
+                        });
                         letterSelected = true;
                     }
                 } else if (this.gameName == "fill_the_blanks") {
@@ -1114,6 +1589,7 @@ class Game {
         (0, _index.setWord)(this.userAnswer);
         if (this.userAnswer == this.answer.replaceAll(" ", "")) {
             console.log("ROUND COMPLETE");
+            (0, _index.roundComplete)();
             setTimeout(()=>{
                 if (this.round < this.numOfRounds - 1) {
                     this.round++;
@@ -1122,18 +1598,33 @@ class Game {
                     (0, _index.hideGame)();
                     (0, _index.revealCelebration)();
                 }
-            }, 1000);
+            }, 2100);
         }
     }
     triggerGameButton(trigger) {
-        if (trigger == "restart") this.generateRound();
+        if (trigger == "restart") {
+            console.log("restart");
+            this.generateRound();
+        }
     }
 }
 exports.default = Game;
 
 },{"../dom/index":"9OTgz","./utils/gameInfo.json":"iLiiY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iLiiY":[function(require,module,exports) {
-module.exports = JSON.parse('{"scrambled_words":{"title":"Scrambled","description":"Click on the letters to unscamble the wedding related word","rounds":{"0":{"question":"simdbdaire","answer":"bridesmaid"},"1":{"question":"ni sawl","answer":"in laws"},"2":{"question":"cxgginhean vwso","answer":"exchanging vows"},"3":{"question":"tbse anm","answer":"best man"},"4":{"question":"nmhaecpga sotta","answer":"champagne toast"},"5":{"question":"rtifs nacde","answer":"first dance"},"6":{"question":"itucgnt the caek","answer":"cutting the cake"},"7":{"question":"yhoneomon","answer":"honeymoon"},"8":{"question":"saecnpa","answer":"canapes"},"9":{"question":"dinwegd dsers","answer":"wedding dress"},"10":{"question":"ttncfeio","answer":"confetti"},"11":{"question":"togepaporhrh","answer":"photographer"},"12":{"question":"mgirraae ftcierectia","answer":"marriage certificate"},"13":{"question":"idnegewd berakftas","answer":"wedding breakfast"},"14":{"question":"enh nghit","answer":"hen night"}}},"emoji_game":{"title":"Emoji game","description":"Guess the wedding related phrase from the emoji sequence","rounds":{"0":{"question":"\uD83D\uDC69 \uD83E\uDDF9 \uD83E\uDDFC \uD83C\uDFC5","answer":"maid of honour"},"1":{"question":"\u261D\uFE0F\uD83D\uDC83","answer":"first dance"},"2":{"question":"\uD83C\uDF38 \uD83D\uDC67","answer":"flower girl"},"3":{"question":"\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7\uD83C\uDF70","answer":"three tier cake"},"4":{"question":"\uD83C\uDF6F\uD83C\uDF19","answer":"honeymoon"},"5":{"question":"\u2702\uFE0F\uD83C\uDF70","answer":"cutting the cake"},"6":{"question":"\uD83D\uDCC4\uD83D\uDC66","answer":"page boy"},"7":{"question":"\uD83D\uDC8D\uD83D\uDC3B","answer":"ring bearer"},"8":{"question":"\uD83C\uDFC6\uD83D\uDC70","answer":"trophy wife"},"9":{"question":"\uD83C\uDF7E\uD83C\uDF5E","answer":"champagne toast"},"10":{"question":"\uD83D\uDC70\u270C\uFE0F\uD83D\uDC1D","answer":"bride to be"},"11":{"question":"\uD83D\uDC70\uD83D\uDEBF","answer":"bridal shower"}}},"finleys_films":{"title":"Finley\'s Films","description":"Guess the movie finley or mabel is starring in","rounds":{"0":{"question":"","answer":"castaway"},"1":{"question":"","answer":"lady and the tramp"},"2":{"question":"","answer":"titanic"},"3":{"question":"","answer":"forest gump"},"4":{"question":"","answer":"et"},"5":{"question":"","answer":"alien"},"6":{"question":"","answer":"the lion king"},"7":{"question":"","answer":"toy story"},"8":{"question":"","answer":"american beauty"}}},"fill_the_blanks":{"title":"Fill the blanks","description":"Pick the correct vowel to fill in the blank","rounds":{"0":{"question":"_ngag_m_nt","answer":"engagement"},"1":{"question":"b_ddow p_rk","answer":"baddow park"},"2":{"question":"h_neym__n","answer":"honeymoon"},"3":{"question":"for_v_r","answer":"forever"},"4":{"question":"_nv_tat_ons","answer":"invitations"},"5":{"question":"m_rri_ge","answer":"marriage"},"6":{"question":"g_rl_nd","answer":"garland"},"7":{"question":"h_ad tabl_","answer":"head table"},"8":{"question":"bo_q_et","answer":"bouquet"},"9":{"question":"sp__ch","answer":"speech"},"10":{"question":"c_r_mony","answer":"ceremony"},"11":{"question":"r_c_ption","answer":"reception"},"12":{"question":"c_ntr_pi_c_s","answer":"centrepieces"},"13":{"question":"c_l_brat_","answer":"celebrate"},"14":{"question":"m_n_gamy","answer":"monogamy"},"15":{"question":"l_ts _f l_ve","answer":"lots of love"},"16":{"question":"j_w_ll_ry","answer":"jewellery"},"17":{"question":"vid_ograph_rs","answer":"videographers"}}},"face_merge":{"title":"Face Merge","description":"Guess the celebrity or character the beautiful brides to be\'s faces have been merged with","rounds":{"0":{"question":"","answer":"barbie"},"1":{"question":"","answer":"katniss"},"2":{"question":"","answer":"wanda"},"3":{"question":"","answer":"merida"},"4":{"question":"","answer":"adele"},"5":{"question":"","answer":"daenerys"},"6":{"question":"","answer":"princess peach"},"7":{"question":"","answer":"princess fiona"},"8":{"question":"","answer":"princess leia"},"9":{"question":"","answer":"jack sparrow"},"10":{"question":"","answer":"harley quinn"},"11":{"question":"","answer":"shakira"},"12":{"question":"","answer":"amy winehouse"},"13":{"question":"","answer":"wonder woman"},"14":{"question":"","answer":"little red riding hood"},"15":{"question":"","answer":"rapunzel"}}}}');
+module.exports = JSON.parse('{"scrambled_words":{"title":"Scrambled","description":"Click on the letters to unscamble the wedding related word","rounds":{"0":{"question":"simdbdaire","answer":"bridesmaid"},"1":{"question":"ni sawl","answer":"in laws"},"2":{"question":"cxgginhean vwso","answer":"exchanging vows"},"3":{"question":"tbse anm","answer":"best man"},"4":{"question":"nmhaecpga sotta","answer":"champagne toast"},"5":{"question":"rtifs nacde","answer":"first dance"},"6":{"question":"itucgnt the caek","answer":"cutting the cake"},"7":{"question":"yhoneomon","answer":"honeymoon"},"8":{"question":"saecnpa","answer":"canapes"},"9":{"question":"dinwegd dsers","answer":"wedding dress"},"10":{"question":"ttncfeio","answer":"confetti"},"11":{"question":"togepaporhrh","answer":"photographer"},"12":{"question":"mgirraae ftcierectia","answer":"marriage certificate"},"13":{"question":"idnegewd berakftas","answer":"wedding breakfast"},"14":{"question":"enh nghit","answer":"hen night"}}},"emoji_game":{"title":"Emoji game","description":"Guess the wedding related phrase from the emoji sequence","rounds":{"0":{"question":"\uD83D\uDC69 \uD83E\uDDF9 \uD83E\uDDFC \uD83C\uDFC5","answer":"maid of honour"},"1":{"question":"\u261D\uFE0F\uD83D\uDC83","answer":"first dance"},"2":{"question":"\uD83C\uDF38 \uD83D\uDC67","answer":"flower girl"},"3":{"question":"\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7\uD83C\uDF70","answer":"three tier cake"},"4":{"question":"\uD83C\uDF6F\uD83C\uDF19","answer":"honeymoon"},"5":{"question":"\u2702\uFE0F\uD83C\uDF70","answer":"cutting the cake"},"6":{"question":"\uD83D\uDCC4\uD83D\uDC66","answer":"page boy"},"7":{"question":"\uD83D\uDC8D\uD83D\uDC3B","answer":"ring bearer"},"8":{"question":"\uD83C\uDFC6\uD83D\uDC70","answer":"trophy wife"},"9":{"question":"\uD83C\uDF7E\uD83C\uDF5E","answer":"champagne toast"},"10":{"question":"\uD83D\uDC70\u270C\uFE0F\uD83D\uDC1D","answer":"bride to be"},"11":{"question":"\uD83D\uDC70\uD83D\uDEBF","answer":"bridal shower"}}},"finleys_films":{"title":"Finley\'s Films","description":"Guess the movie finley or mabel is starring in","rounds":{"0":{"question":"","answer":"castaway"},"1":{"question":"","answer":"lady and the tramp"},"2":{"question":"","answer":"titanic"},"3":{"question":"","answer":"forest gump"},"4":{"question":"","answer":"et"},"5":{"question":"","answer":"alien"},"6":{"question":"","answer":"the lion king"},"7":{"question":"","answer":"toy story"},"8":{"question":"","answer":"american beauty"}}},"fill_the_blanks":{"title":"Fill the blanks","description":"Pick the correct vowel to fill in the blank","rounds":{"0":{"question":"_ngag_m_nt","answer":"engagement"},"1":{"question":"b_ddow p_rk","answer":"baddow park"},"2":{"question":"h_neym__n","answer":"honeymoon"},"3":{"question":"for_v_r","answer":"forever"},"4":{"question":"_nv_tat_ons","answer":"invitations"},"5":{"question":"m_rri_ge","answer":"marriage"},"6":{"question":"g_rl_nd","answer":"garland"},"7":{"question":"h_ad tabl_","answer":"head table"},"8":{"question":"bo_q_et","answer":"bouquet"},"9":{"question":"sp__ch","answer":"speech"},"10":{"question":"c_r_mony","answer":"ceremony"},"11":{"question":"r_c_ption","answer":"reception"},"12":{"question":"c_ntr_pi_c_s","answer":"centrepieces"},"13":{"question":"c_l_brat_","answer":"celebrate"},"14":{"question":"m_n_gamy","answer":"monogamy"},"15":{"question":"l_ts _f l_ve","answer":"lots of love"},"16":{"question":"j_w_ll_ry","answer":"jewellery"},"17":{"question":"vid_ograph_rs","answer":"videographers"},"18":{"question":"b_llrop_s r_tr_at","answer":"bellropes retreat"}}},"face_merge":{"title":"Face Merge","description":"Guess the celebrity or character the beautiful brides to be\'s faces have been merged with","rounds":{"0":{"question":"","answer":"barbie"},"1":{"question":"","answer":"katniss"},"2":{"question":"","answer":"wanda"},"3":{"question":"","answer":"merida"},"4":{"question":"","answer":"adele"},"5":{"question":"","answer":"daenerys"},"6":{"question":"","answer":"princess peach"},"7":{"question":"","answer":"princess fiona"},"8":{"question":"","answer":"princess leia"},"9":{"question":"","answer":"jack sparrow"},"10":{"question":"","answer":"harley quinn"},"11":{"question":"","answer":"shakira"},"12":{"question":"","answer":"amy winehouse"},"13":{"question":"","answer":"wonder woman"},"14":{"question":"","answer":"little red riding hood"},"15":{"question":"","answer":"rapunzel"}}}}');
 
-},{}]},["bTWk8","h7u1C"], "h7u1C", "parcelRequireafef")
+},{}],"51Hld":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getUrlParams", ()=>getUrlParams);
+const getUrlParams = ()=>{
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    let id = params.get("id");
+    console.log("id", id);
+    return id;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bTWk8","h7u1C"], "h7u1C", "parcelRequireafef")
 
 //# sourceMappingURL=index.b71e74eb.js.map

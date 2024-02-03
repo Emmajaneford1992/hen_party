@@ -59,7 +59,7 @@ button, input {
   margin: 0;
   font-family: font2;
   font-size: 15vw;
-  display: flex;
+  display: none;
   top: 0;
   left: 0;
 }
@@ -93,7 +93,13 @@ button, input {
   font-size: 12vw;
 }
 
-.game_description, .game_score {
+.game_description {
+  color: #000;
+  font-family: font2;
+  font-size: 5vw;
+}
+
+.game_score {
   color: #000;
   font-family: font2;
   font-size: 6vw;
@@ -102,11 +108,10 @@ button, input {
 .game_selection {
   text-align: center;
   flex-direction: column;
-  place-content: center end;
+  place-content: center space-between;
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 1vw;
   font-family: font2;
   font-size: 12vw;
   display: none;
@@ -114,14 +119,33 @@ button, input {
   left: 0;
 }
 
+.game_selection header {
+  height: 25%;
+}
+
+.game_selection strong {
+  color: #5a86aa;
+  font-family: font1;
+  font-size: 11vw;
+}
+
+.game_selection main {
+  color: red;
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+}
+
 .game_selection button {
   color: #000;
   background-color: #bfd2e3;
   border-style: none;
   border-radius: 2vw;
-  margin: 1vw;
+  width: 100vw;
+  height: 10%;
+  margin: .5vw;
   font-family: font2;
-  font-size: 9vw;
+  font-size: 70%;
 }
 
 .game_backButton {
@@ -132,14 +156,15 @@ button, input {
   color: #000;
   background-color: #008b8b;
   border-style: none;
-  border-radius: 2vw;
-  width: 10vw;
-  height: 10vw;
+  border-radius: 50%;
   margin: 2vw;
+  padding: .3rem 0% 0%;
   font-family: font2;
-  font-size: 12vw;
+  font-size: 15vw;
   display: flex;
   box-shadow: 4px 4px .12em #000;
+  width: 12vw !important;
+  height: 12vw !important;
 }
 
 .game {
@@ -156,7 +181,9 @@ button, input {
 }
 
 .game_question, .game_answer {
+  flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
   padding: 2vw;
   font-size: 12vw;
   display: flex;
@@ -178,9 +205,9 @@ button, input {
 }
 
 .game_question button, .game_answer button {
-  background: line, ar-gradient(#fff0bd, #d0bf88);
   color: #64615b;
   text-align: center;
+  background: linear-gradient(#fff0bd, #d0bf88);
   border: none;
   border-radius: 1vw;
   justify-content: center;
@@ -208,19 +235,27 @@ button, input {
 
 .game_restartButton {
   text-align: center;
+  color: #000;
   background-color: #008b8b;
   border-style: none;
-  border-radius: 50%;
+  border-radius: 100%;
   justify-content: center;
   align-self: center;
   align-items: center;
-  width: 10vw;
-  height: 10vw;
-  margin: 2vw;
+  margin: 5vw;
+  padding: 0;
   font-family: font2;
-  font-size: 12vw;
+  font-size: 10vw;
   display: flex;
-  box-shadow: 4px 4px .12em;
+  box-shadow: 4px 4px .12em #000;
+  width: 15vw !important;
+  height: 15vw !important;
+}
+
+.game_tick {
+  display: none;
+  width: 30vw !important;
+  height: 30vw !important;
 }
 
 .inputGroup {
@@ -235,9 +270,8 @@ button, input {
 }
 
 .game input {
-  opacity: 0;
   width: 95vw;
-  height: 10vw;
+  height: 30vw;
   display: block;
   position: absolute;
   bottom: 95%;
@@ -250,12 +284,76 @@ button, input {
 }
 
 .game_word {
+  flex-direction: row;
   padding: 2vw;
   display: flex;
 }
 
 .letterSelect {
   opacity: .2;
+}
+
+.celebration {
+  text-align: center;
+  flex-direction: column;
+  place-content: center space-between;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: font2;
+  font-size: 15vw;
+  display: none;
+  top: 0;
+  left: 0;
+}
+
+.foundHeart {
+  text-align: center;
+  flex-direction: column;
+  place-content: center start;
+  width: 100%;
+  height: 100%;
+  font-family: font2;
+  font-size: 15vw;
+  display: none;
+}
+
+.foundHeart img {
+  align-self: center;
+  width: 50vw;
+}
+
+.foundHeart h1 {
+  font-size: 15vw;
+}
+
+.foundHeart p {
+  font-size: 6vw;
+}
+
+.foundHeart button {
+  background-color: #bfd2e3;
+  border: #0000;
+  border-radius: 5%;
+  align-self: center;
+  width: 50vw;
+  padding: 2vw;
+  font-size: 5vw;
+}
+
+.confetti {
+  width: 100%;
+  height: 200%;
+  display: block;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+}
+
+.heartGif {
+  place-self: center;
+  width: 70vw;
+  height: 70vw;
 }
 
 /*# sourceMappingURL=index.4d663569.css.map */

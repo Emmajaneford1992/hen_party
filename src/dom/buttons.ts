@@ -1,8 +1,9 @@
-import { hideCelebration, hideGame, hideGameSelection, hideSplash, revealGameSelection } from "../dom";
+import { hideCelebration, hideFoundHeart, hideGame, hideGameSelection, hideSplash, revealGameSelection } from "../dom";
 import  { triggerButton, triggerGameButton } from "../index";
 
 let game_backButton = <HTMLButtonElement>document.querySelector('.game_backButton');
 let celebration_button = <HTMLButtonElement>document.querySelector('.celebration button');
+let foundHeart_button = <HTMLButtonElement>document.querySelector('.foundHeart button');
 let game_restartButton = <HTMLButtonElement>document.querySelector('.game_restartButton');
 
 let buttonNames =[
@@ -40,8 +41,7 @@ export function initButtons() {
     });
 
     game_restartButton.addEventListener('click', () => {
-        triggerGameButton('restart');
-       
+        triggerGameButton('restart');  
     });
 
     celebration_button.addEventListener('click', () => {
@@ -49,8 +49,8 @@ export function initButtons() {
         revealGameSelection();
     });
 
-
-
- 
-
+    foundHeart_button.addEventListener('click', () => {
+        hideFoundHeart();
+        revealGameSelection();
+    });
 }

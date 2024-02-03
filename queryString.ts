@@ -2,23 +2,19 @@
 
 
 
-// export const getUrlParams = () => {
+export const getUrlParams = () => {
 
-//         const queryString = window.location.search;
+        const queryString = window.location.search;
 
-//         const params = new URLSearchParams(queryString);
-
-
-//         let id = params.get('id')
+        const params = new URLSearchParams(queryString);
 
 
-//         console.log('id',id)
+        let id = params.get('id')
 
-//         // urlParams = {
-//         //     paramStr,
-           
-            
-//         // };
-//         return id;
 
-//     }
+        console.log('id',id)
+
+     
+        return id;
+
+    }

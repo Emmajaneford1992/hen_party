@@ -1,13 +1,23 @@
 
 import { initButtons } from "./dom/buttons";
-import { hideSplash, revealGameSelection } from "./dom"
+import { revealFoundHeart, revealSplash } from "./dom"
 import Game_selection from "./experience";
+import { getUrlParams } from "../queryString";
 //import { getUrlParams } from "../queryString";
 
 let game_selection =  new Game_selection();
 initButtons();
 
-//let params = getUrlParams();
+let params = getUrlParams();
+
+if(params == null){
+    console.log('splash')
+    revealSplash();
+}
+else{
+    console.log('found heart', params)
+    revealFoundHeart()
+}
 
 
 export function triggerButton(button){
@@ -27,3 +37,4 @@ export function triggerLetter(letter){
 export function triggerGameButton(trigger){
     game_selection.triggerGameButton(trigger);
 }
+
