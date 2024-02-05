@@ -17,6 +17,7 @@ export default class Game_selection {
        
        
     }
+
    
     public triggerButton(button) {
         console.log('button triggered', button);

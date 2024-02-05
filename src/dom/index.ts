@@ -2,7 +2,7 @@ import { LottieInteractivity } from "@lottiefiles/lottie-interactivity";
 import { triggerInput, triggerLetter } from "../index";
 // import image1 from "../assets/images/finleys_films/1.png";
 //const image1 = new URL("../assets/images/finleys_films/1.png");
-
+import gameInfo  from '../experience/utils/gameInfo.json';
 
 const splash = <HTMLElement>document.querySelector('.splash')
 const game_selection = <HTMLElement>document.querySelector('.game_selection')
@@ -66,6 +66,9 @@ export function hideSplash(){
 
 export function revealGameSelection(){
     game_selection.style.display = 'flex';
+
+    <HTMLElement>document.querySelector('.game_selection_games')
+
 }
 
 export function hideGameSelection(){
@@ -252,15 +255,15 @@ export function roundComplete(){
     game_tick.style.display =  'flex';
     game_restartButton.style.display = 'none'
 
-    let player = document.getElementById(".game_tick");
+    //let player = document.getElementById(".game_tick");
 
-        player.addEventListener("ready", () => {
-        LottieInteractivity.create({
-            player: ".game_tick",
-            mode:"cursor", actions: [ 
-            { type: "click", forceFlag: false } ]
-            });
-        });
+        // player.addEventListener("ready", () => {
+        // LottieInteractivity.create({
+        //     player: ".game_tick",
+        //     mode:"cursor", actions: [ 
+        //     { type: "click", forceFlag: false } ]
+        //     });
+        // });
 }
 
 export function revealCelebration(){

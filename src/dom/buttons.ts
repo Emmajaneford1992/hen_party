@@ -15,9 +15,10 @@ let buttonNames =[
     'harry_hunt_button', 
     'finleys_films_button', 
     'face_merge_button', 
-    'ring_toss_button', 
-    'bra_pong_button', 
-    'photo_challenge_button']
+    'ring_toss_button'
+    // ,'bra_pong_button', 
+    // 'photo_challenge_button'
+]
 
 export function initButtons() {
     buttonNames.forEach(buttonName => {

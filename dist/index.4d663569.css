@@ -2,8 +2,8 @@ html, body {
   -webkit-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
-  -webkit-tap-highlight-color: #0000;
   background: none;
+  background: var(--blue);
   width: 100%;
   height: 100%;
   margin: 0;
@@ -21,7 +21,7 @@ html, body {
   pointer-events: none;
 }
 
-button, input {
+button, input, .game_selection_games, .game_selection_games div {
   pointer-events: auto;
 }
 
@@ -40,6 +40,22 @@ button, input {
   src: url("Ubuntu-Title.be73b6bf.ttf");
 }
 
+:root {
+  --light-blue: #eaf3f5;
+  --dark-blue: #75abb7;
+  --dark-blue: #68a6c5;
+  --blue: #cbe0e5;
+  --blue: #c8e3eb;
+  --blue-gradient: linear-gradient(45deg, #75abb7 70%, #cbe0e5);
+  --blue-gradient: linear-gradient(45deg, #68a6c5 70%, #eaf3f5);
+  --yellow-gradient: linear-gradient(#ffff9f, #ffbd42);
+  --tile-gradient: linear-gradient(#fff0bd, #d0bf88);
+  --tile-gradient: linear-gradient(#fff0bd, #f1c16a);
+  --tile-letter: #64615b;
+  --tile-grey-gradient: linear-gradient(#f0f0f0, #b0b0b0);
+  --black-transparent: #0003;
+}
+
 .UI {
   width: 100%;
   height: 100%;
@@ -52,6 +68,7 @@ button, input {
 
 .splash {
   text-align: center;
+  background-color: #fff;
   flex-direction: column;
   place-content: center space-between;
   width: 100%;
@@ -64,21 +81,34 @@ button, input {
   left: 0;
 }
 
+.splash header {
+  background: var(--blue);
+  color: #fff;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+  height: 36%;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+}
+
+.splash strong {
+  color: var(--dark-blue);
+  padding: 0%;
+  font-family: font1;
+  font-size: 11vw;
+}
+
 .splash img {
   align-self: center;
   height: 25vh;
   display: flex;
 }
 
-.splash strong {
-  color: #5a86aa;
-  font-family: font1;
-  font-size: 11vw;
-}
-
 .splash_button {
-  color: #000;
-  background-color: #bfd2e3;
+  background-color: var(--dark-blue);
+  color: #fff;
   border-style: none;
   border-radius: 2vw;
   margin: 10vw;
@@ -88,7 +118,7 @@ button, input {
 }
 
 .game_title {
-  color: #5a86aa;
+  color: var(--dark-blue);
   font-family: font1;
   font-size: 12vw;
 }
@@ -112,64 +142,250 @@ button, input {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
   font-family: font2;
-  font-size: 12vw;
+  font-size: 10vw;
   display: none;
   top: 0;
   left: 0;
 }
 
 .game_selection header {
-  height: 25%;
-}
-
-.game_selection strong {
-  color: #5a86aa;
-  font-family: font1;
-  font-size: 11vw;
-}
-
-.game_selection main {
-  color: red;
+  background-color: var(--blue);
+  color: #fff;
   flex-direction: column;
-  flex-grow: 1;
+  justify-content: end;
+  width: 100%;
+  height: 30%;
+  margin: 0;
+  padding: 0;
   display: flex;
 }
 
-.game_selection button {
-  color: #000;
-  background-color: #bfd2e3;
-  border-style: none;
-  border-radius: 2vw;
+.splash header svg {
+  height: 30%;
+}
+
+.game_selection strong {
+  color: var(--dark-blue);
+  font-family: font1;
+  font-size: 9vw;
+}
+
+.game_selection main {
+  z-index: -1;
+  background: #fff;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 70%;
+  display: flex;
+}
+
+.game_selection_main_top {
+  flex-direction: row;
+  justify-content: space-evenly;
   width: 100vw;
-  height: 10%;
-  margin: .5vw;
+  height: 50%;
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.scavenger_hunt_button {
+  background: var(--blue);
+  color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  border-style: none;
+  border-radius: 25px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-family: font1;
+  font-size: 6.7vw;
+  font-weight: bold;
+  display: flex;
+  width: 60vw !important;
+  height: 30vh !important;
+}
+
+.scavenger_hunt_button p3 {
+  color: #fff;
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  border-radius: 1rem;
+  width: 22vw;
+  margin-bottom: 3vw;
   font-family: font2;
-  font-size: 70%;
+  font-size: 6vw;
+}
+
+.clues, .hearts {
+  background-color: var(--blue);
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  display: flex;
+  box-shadow: 4px 4px .12em #0003;
+  width: 11vw !important;
+  height: 30vh !important;
+}
+
+.clues_score, .hearts_score {
+  border: 3px solid var(--dark-blue);
+  background: var(--tile-gradient);
+  border-radius: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -35px;
+  display: flex;
+  width: 7vw !important;
+  height: 27vh !important;
+}
+
+.clues_icon, .hearts_icon {
+  background: var(--blue-gradient);
+  color: #fff;
+  border-radius: 50px;
+  flex-direction: column;
+  place-content: center;
+  font-size: 7.5vw;
+  font-weight: bold;
+  display: flex;
+  box-shadow: 4px 4px .12em #0000001a;
+  width: 12vw !important;
+  height: 12vw !important;
+}
+
+.clues_icon {
+  font-size: 12vw;
+}
+
+.game_selection_games {
+  background-color: var(--light-blue);
+  border-top-left-radius: 25px;
+  justify-content: end;
+  width: 100vw;
+  height: 40vh;
+  position: relative;
+}
+
+.game_selection_games:after {
+  content: "";
+  z-index: -1;
+  box-shadow: 0 25px 0 0 var(--light-blue);
+  background-color: #fff;
+  border-bottom-right-radius: 25px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: -50px;
+  right: 0;
+}
+
+.game_selection_games div {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background-color: var(--light-blue);
+  border-top-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  flex-direction: row;
+  align-content: center;
+  height: 100%;
+  padding-top: 2vw;
+  display: flex;
+  overflow: auto;
+}
+
+.game_selection_games div button {
+  background-color: var(--blue);
+  color: var(--dark-blue);
+  border-style: none;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin: .9rem;
+  font-family: font2;
+  font-size: 8vw;
+  display: flex;
+  box-shadow: 4px 4px .12em #0003;
+  width: 48vw !important;
+  height: 48vw !important;
+}
+
+.game_selection_games div button div {
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  border-radius: 50%;
+  align-self: start;
+  margin-left: -10vw;
+  display: block;
+  position: relative;
+  top: -3vw;
+  left: auto;
+  right: auto;
+  width: 20vw !important;
+  height: 20vw !important;
+}
+
+.game_selection_games div button div img {
+  filter: invert();
+  width: 80%;
+  height: 80%;
+  display: block;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+}
+
+.game_selection_games div button p {
+  color: var(--dark-blue);
+  border-radius: 1rem;
+  width: 200px;
+  margin: 0;
+}
+
+.game_selection_games div button p2 {
+  color: #fff;
+  border-radius: 1rem;
+  margin-bottom: 3vw;
+  font-size: 6vw;
+}
+
+.game_selection_games div button p3 {
+  color: #fff;
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  border-radius: 1rem;
+  width: 22vw;
+  margin-bottom: 3vw;
+  font-size: 7vw;
 }
 
 .game_backButton {
   text-align: center;
-  justify-content: center;
-  align-items: center;
-  align-self: left;
-  color: #000;
-  background-color: #008b8b;
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  color: #fff;
   border-style: none;
   border-radius: 50%;
+  justify-content: center;
+  align-self: start;
+  align-items: center;
   margin: 2vw;
   padding: .3rem 0% 0%;
   font-family: font2;
   font-size: 15vw;
   display: flex;
-  box-shadow: 4px 4px .12em #000;
   width: 12vw !important;
   height: 12vw !important;
 }
 
 .game {
   text-align: center;
-  background-color: #add8e6;
+  background-color: var(--light-blue);
   flex-direction: column;
   place-content: center start;
   width: 100%;
@@ -184,30 +400,33 @@ button, input {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  padding: 2vw;
+  width: 90vw;
+  padding: 1.5vw;
   font-size: 12vw;
   display: flex;
 }
 
 .game_answer {
-  background-color: #008b8b;
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
   border-radius: 2vw;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 4px 4px .12em;
+  place-content: center;
 }
 
 .game main, .game header {
   flex-direction: column;
-  place-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
   display: flex;
 }
 
 .game_question button, .game_answer button {
-  color: #64615b;
+  background: var(--tile-gradient);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  color: var(--tile-letter);
   text-align: center;
-  background: linear-gradient(#fff0bd, #d0bf88);
   border: none;
   border-radius: 1vw;
   justify-content: center;
@@ -220,11 +439,10 @@ button, input {
   font-size: 7vw;
   display: flex;
   position: relative;
-  box-shadow: 4px 4px .12em;
 }
 
 .game_answer button {
-  background: linear-gradient(#f0f0f0, #b0b0b0);
+  background: var(--tile-grey-gradient);
 }
 
 .game footer {
@@ -235,8 +453,9 @@ button, input {
 
 .game_restartButton {
   text-align: center;
-  color: #000;
-  background-color: #008b8b;
+  background-color: var(--dark-blue);
+  box-shadow: 4px 4px .12em var(--black-transparent);
+  color: #fff;
   border-style: none;
   border-radius: 100%;
   justify-content: center;
@@ -247,7 +466,6 @@ button, input {
   font-family: font2;
   font-size: 10vw;
   display: flex;
-  box-shadow: 4px 4px .12em #000;
   width: 15vw !important;
   height: 15vw !important;
 }
@@ -332,7 +550,7 @@ button, input {
 }
 
 .foundHeart button {
-  background-color: #bfd2e3;
+  background-color: var(--dark-blue);
   border: #0000;
   border-radius: 5%;
   align-self: center;
@@ -354,6 +572,45 @@ button, input {
   place-self: center;
   width: 70vw;
   height: 70vw;
+}
+
+.ringGif {
+  width: 100%;
+  height: 100%;
+}
+
+.parallax > use {
+  animation: 25s cubic-bezier(.55, .5, .45, .5) infinite move-forever;
+}
+
+.parallax > use:first-child {
+  animation-duration: 7s;
+  animation-delay: -2s;
+}
+
+.parallax > use:nth-child(2) {
+  animation-duration: 10s;
+  animation-delay: -3s;
+}
+
+.parallax > use:nth-child(3) {
+  animation-duration: 13s;
+  animation-delay: -4s;
+}
+
+.parallax > use:nth-child(4) {
+  animation-duration: 20s;
+  animation-delay: -5s;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
 }
 
 /*# sourceMappingURL=index.4d663569.css.map */
