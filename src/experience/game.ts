@@ -20,7 +20,8 @@ export default class Game {
 
     public initGame(){
         console.log('init game', this.gameName)
-        this.round = 0;
+        this.round = Number(localStorage.getItem(this.gameName));
+        if( this.round == null) this.round = 0;
         setGameTitle(gameInfo[this.gameName].title);
         setGameDescription(gameInfo[this.gameName].description);
         this.generateRound()
@@ -36,18 +37,19 @@ export default class Game {
         this.userAnswer = this.gameName == 'fill_the_blanks' ? this.question : '';
     }
 
-    public triggerInput(event){
-        console.log('triggerinput')
-        if((event as InputEvent).inputType == 'deleteContentBackward'){
+    public triggerInput(letter){
+        console.log(letter)
+        if(letter == '⌫'){
             if(this.gameName == 'scrambled_words'){
                 this.triggerBackspace();
             }
-            this.userAnswer = event.target.value;
+            //this.userAnswer = event.target.value;
+            this.userAnswer = this.userAnswer.substring(0, this.userAnswer.length - 1);
             this.updateWord();
         }
 
-        let letter = (event as InputEvent).data;
-        if(letter != null){
+        // let letter = (event as InputEvent).data;
+        else if(letter != null){
             if(letter.match(/[a-z]/i)){
                 if(this.gameName == 'scrambled_words'){
                     let letterSelected = false
@@ -94,13 +96,15 @@ export default class Game {
     }
 
     public updateWord(){   
-        setWord(this.userAnswer)
+        setWord(this.userAnswer, this.answer.replaceAll(' ',''))
         if(this.userAnswer == this.answer.replaceAll(' ','')){
             console.log('ROUND COMPLETE')
             roundComplete()
             setTimeout(() => {
                 if(this.round < this.numOfRounds-1){
                     this.round++;
+                    console.log(this.gameName, this.round)
+                    localStorage.setItem(this.gameName, ''+this.round);
                     this.generateRound()
                 }
                 else{

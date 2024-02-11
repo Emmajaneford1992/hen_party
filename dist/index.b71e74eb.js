@@ -622,34 +622,25 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initButtons", ()=>initButtons);
 var _dom = require("../dom");
 var _index = require("../index");
+let splash_button = document.querySelector(".splash_button");
+let scavenger_hunt_button = document.querySelector(".scavenger_hunt_button");
+let scavenger_backButton = document.querySelector(".scavenger_backButton");
 let game_backButton = document.querySelector(".game_backButton");
 let celebration_button = document.querySelector(".celebration button");
 let foundHeart_button = document.querySelector(".foundHeart button");
 let game_restartButton = document.querySelector(".game_restartButton");
-let buttonNames = [
-    "splash_button",
-    "scavenger_hunt_button",
-    "scrambled_words_button",
-    "fill_the_blanks_button",
-    "emoji_game_button",
-    "harry_hunt_button",
-    "finleys_films_button",
-    "face_merge_button",
-    "ring_toss_button"
-];
 function initButtons() {
-    buttonNames.forEach((buttonName)=>{
-        let button = document.querySelector("." + buttonName);
-        button.addEventListener("click", ()=>{
-            console.log(buttonName, "pressed");
-            if (buttonName == "splash_button") {
-                (0, _dom.hideSplash)();
-                (0, _dom.revealGameSelection)();
-            } else {
-                (0, _dom.hideGameSelection)();
-                (0, _index.triggerButton)(buttonName);
-            }
-        });
+    splash_button.addEventListener("click", ()=>{
+        (0, _dom.hideSplash)();
+        (0, _dom.revealGameSelection)();
+    });
+    scavenger_hunt_button.addEventListener("click", ()=>{
+        (0, _dom.hideGameSelection)();
+        (0, _dom.revealScavenger)();
+    });
+    scavenger_backButton.addEventListener("click", ()=>{
+        (0, _dom.hideScavenger)();
+        (0, _dom.revealGameSelection)();
     });
     game_backButton.addEventListener("click", ()=>{
         (0, _dom.hideGame)();
@@ -672,6 +663,7 @@ function initButtons() {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "revealSplash", ()=>revealSplash);
+parcelHelpers.export(exports, "init", ()=>init);
 parcelHelpers.export(exports, "hideSplash", ()=>hideSplash);
 parcelHelpers.export(exports, "revealGameSelection", ()=>revealGameSelection);
 parcelHelpers.export(exports, "hideGameSelection", ()=>hideGameSelection);
@@ -691,20 +683,81 @@ parcelHelpers.export(exports, "revealCelebration", ()=>revealCelebration);
 parcelHelpers.export(exports, "hideCelebration", ()=>hideCelebration);
 parcelHelpers.export(exports, "revealFoundHeart", ()=>revealFoundHeart);
 parcelHelpers.export(exports, "hideFoundHeart", ()=>hideFoundHeart);
+parcelHelpers.export(exports, "createKeyboard", ()=>createKeyboard);
+parcelHelpers.export(exports, "revealScavenger", ()=>revealScavenger);
+parcelHelpers.export(exports, "hideScavenger", ()=>hideScavenger);
+parcelHelpers.export(exports, "initGameSelection", ()=>initGameSelection);
+parcelHelpers.export(exports, "initStars", ()=>initStars);
+parcelHelpers.export(exports, "initScavenger", ()=>initScavenger);
 var _index = require("../index");
+// import image1 from "../assets/images/finleys_films/1.png";
+//const image1 = new URL("../assets/images/finleys_films/1.png");
+var _gameInfoJson = require("../experience/utils/gameInfo.json");
+var _gameInfoJsonDefault = parcelHelpers.interopDefault(_gameInfoJson);
+var _scavengerInfoJson = require("../experience/utils/scavengerInfo.json");
+var _scavengerInfoJsonDefault = parcelHelpers.interopDefault(_scavengerInfoJson);
 const splash = document.querySelector(".splash");
 const game_selection = document.querySelector(".game_selection");
+const game_selection_games_div = document.querySelector(".game_selection_games div");
+const game_selection_hand = document.querySelector(".game_selection_hand");
 const game = document.querySelector(".game");
 const game_question = document.querySelector(".game_question");
 const game_answer = document.querySelector(".game_answer");
 const game_title = document.querySelector(".game_title");
 const game_description = document.querySelector(".game_description");
 const game_score = document.querySelector(".game_score");
+const scavenger = document.querySelector(".scavenger");
+const scavenger_clues = document.querySelector(".scavenger_clues");
 const celebration = document.querySelector(".celebration");
 const foundHeart = document.querySelector(".foundHeart");
+const starsIcon = document.querySelector(".stars_icon");
 const game_restartButton = document.querySelector(".game_restartButton");
 const game_tick = document.querySelector(".game_tick");
-let game_input;
+let game_keyboard = document.querySelector(".game_keyboard");
+let scores = [];
+let keyboardLetters = [
+    [
+        "q",
+        "w",
+        "e",
+        "r",
+        "t",
+        "y",
+        "u",
+        "i",
+        "o",
+        "p"
+    ],
+    [
+        "a",
+        "s",
+        "d",
+        "f",
+        "g",
+        "h",
+        "j",
+        "k",
+        "l"
+    ],
+    [
+        "z",
+        "x",
+        "c",
+        "v",
+        "b",
+        "n",
+        "m",
+        "\u232B"
+    ]
+];
+let heartIcon = require("46648d6f82545e65");
+let game_selection_button_images = [
+    require("3a55660c2e766e56"),
+    require("910c7c98b78a342f"),
+    require("8885258b0269899f"),
+    require("dbe11dd1d19bb64f"),
+    require("598ab84f88319720")
+];
 let finley_film_images = [
     require("2c24d209ee8ac650"),
     require("924dfd98a9a4afcc"),
@@ -741,6 +794,13 @@ let qWords = [];
 function revealSplash() {
     console.log("hide Splash");
     splash.style.display = "flex";
+    init();
+}
+function init() {
+    initGameSelection();
+    initScavenger();
+    initStars();
+    createKeyboard();
 }
 function hideSplash() {
     console.log("hide Splash");
@@ -748,7 +808,15 @@ function hideSplash() {
 }
 function revealGameSelection() {
     game_selection.style.display = "flex";
+    Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        let score = localStorage.getItem(key);
+        if (score == null) score = "0";
+        scores[index].innerHTML = score + "/" + Object.keys(value.rounds).length;
+    });
 }
+game_selection_games_div.addEventListener("scroll", (event)=>{
+    game_selection_hand.style.display = "none";
+});
 function hideGameSelection() {
     game_selection.style.display = "none";
 }
@@ -767,13 +835,14 @@ function setGameDescription(str) {
 function setGameScore(str) {
     game_score.innerHTML = str;
 }
-function setWord(word) {
+function setWord(word, correctWord) {
     console.log(word);
-    game_input.value = word;
+    // game_input.value = word;
     tiles.forEach((tile, i)=>{
         if (i < word.length) {
             tile.style.background = "linear-gradient(#fff0bd, #d0bf88)";
             tile.innerHTML = word.charAt(i);
+        //tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "linear-gradient(#f0f0f0, #b0b0b0)";
         } else {
             tile.style.background = "linear-gradient(#f0f0f0, #b0b0b0)";
             tile.innerHTML = "";
@@ -833,16 +902,16 @@ function createGameRound(game, question, round, answer) {
         tiles.push(empty);
     }
     game_answer.append(word);
-    let game_inputGroup = document.createElement("div");
-    game_inputGroup.classList.add("inputGroup");
-    game_answer.append(game_inputGroup);
-    game_input = document.createElement("input");
-    game_input.style.height = words.length * 12 + "vw";
-    game_input.maxLength = answer.replaceAll(" ", "").length;
-    game_inputGroup.append(game_input);
-    game_input.addEventListener("input", (event)=>{
-        (0, _index.triggerInput)(event);
-    });
+    // let game_inputGroup = document.createElement('div');
+    // game_inputGroup.classList.add('inputGroup')
+    // game_answer.append(game_inputGroup)
+    // game_input = document.createElement('input');
+    // game_input.style.height =     words.length*12 + 'vw'
+    // game_input.maxLength = answer.replaceAll(' ','').length;
+    // game_inputGroup.append(game_input)
+    // game_input.addEventListener("input", (event) => {
+    //     triggerInput(event);
+    // });
     if (game == "scrambled_words" || game == "fill_the_blanks") {
         let questionStr = game == "scrambled_words" ? question : "aeiou";
         console.log(questionStr);
@@ -902,11 +971,92 @@ function revealFoundHeart() {
 function hideFoundHeart() {
     foundHeart.style.display = "none";
 }
+function createKeyboard() {
+    keyboardLetters.forEach((row)=>{
+        let div = document.createElement("div");
+        game_keyboard.append(div);
+        row.forEach((letter)=>{
+            let button = document.createElement("button");
+            button.innerHTML = letter;
+            div.append(button);
+            button.addEventListener("click", ()=>{
+                console.log("letter", letter);
+                (0, _index.triggerInput)(letter);
+            });
+        });
+    });
+}
+function revealScavenger() {
+    scavenger.style.display = "flex";
+}
+function hideScavenger() {
+    scavenger.style.display = "none";
+}
+function initGameSelection() {
+    Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        console.log(`${key}: ${value}`);
+        //   });
+        // for (const [key, value] of Object.entries(gameInfo)) {
+        console.log(`${key}: ${value}`);
+        let button = document.createElement("button");
+        game_selection_games_div.append(button);
+        let div = document.createElement("div");
+        button.append(div);
+        let img = document.createElement("img");
+        img.src = game_selection_button_images[index];
+        div.append(img);
+        let p = document.createElement("p");
+        p.innerHTML = value.title;
+        button.append(p);
+        let p2 = document.createElement("p2");
+        scores.push(p2);
+        let score = localStorage.getItem(key);
+        if (score == null) score = "0";
+        p2.innerHTML = score + "/" + Object.keys(value.rounds).length;
+        button.append(p2);
+        let p3 = document.createElement("p3");
+        p3.innerHTML = "Play";
+        button.append(p3);
+        button.addEventListener("click", ()=>{
+            hideGameSelection();
+            (0, _index.triggerButton)(key);
+        });
+    });
+}
+function initStars() {
+    starsIcon.innerHTML = "test";
+    let totalScore = 0;
+    let numOfQuestions = 0;
+    Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        let score = localStorage.getItem(key);
+        if (score == null) score = "0";
+        scores[index].innerHTML = score + "/" + Object.keys(value.rounds).length;
+        //numOfQuestions +=  Object.keys(value.rounds).length;
+        totalScore += Number(score);
+    //starsIcon.innerHTML = totalScore.toString()  + '/ ' + numOfQuestions;
+    });
+}
+function initScavenger() {
+    Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        let clue = document.createElement("div");
+        clue.innerHTML = value.clue;
+        scavenger_clues.append(clue);
+        let heart = document.createElement("img");
+        heart.src = heartIcon;
+        clue.append(heart);
+    });
+}
 
-},{"../index":"h7u1C","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fsvtb":[function(require,module,exports) {
-module.exports = require("d898787985b4c17d").getBundleURL("7UhFu") + "0.61dbac3d.png" + "?" + Date.now();
+},{"../index":"h7u1C","../experience/utils/gameInfo.json":"iLiiY","../experience/utils/scavengerInfo.json":"j2Ma8","46648d6f82545e65":"eQ041","3a55660c2e766e56":"cGxvR","910c7c98b78a342f":"Kwe4i","8885258b0269899f":"gExVo","dbe11dd1d19bb64f":"dpCRP","598ab84f88319720":"fxns8","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iLiiY":[function(require,module,exports) {
+module.exports = JSON.parse('{"scrambled_words":{"title":"Scrambled","description":"Click on the letters to unscamble the wedding related word","rounds":{"0":{"question":"simdbdaire","answer":"bridesmaid"},"1":{"question":"ni sawl","answer":"in laws"},"2":{"question":"cxgginhean vwso","answer":"exchanging vows"},"3":{"question":"tbse anm","answer":"best man"},"4":{"question":"nmhaecpga sotta","answer":"champagne toast"},"5":{"question":"rtifs nacde","answer":"first dance"},"6":{"question":"itucgnt the caek","answer":"cutting the cake"},"7":{"question":"yhoneomon","answer":"honeymoon"},"8":{"question":"saecnpa","answer":"canapes"},"9":{"question":"dinwegd dsers","answer":"wedding dress"},"10":{"question":"ttncfeio","answer":"confetti"},"11":{"question":"togepaporhrh","answer":"photographer"},"12":{"question":"mgirraae ftcierectia","answer":"marriage certificate"},"13":{"question":"idnegewd berakftas","answer":"wedding breakfast"},"14":{"question":"enh nghit","answer":"hen night"}}},"emoji_game":{"title":"Emoji game","description":"Guess the wedding related phrase from the emoji sequence","rounds":{"0":{"question":"\uD83D\uDC69 \uD83E\uDDF9 \uD83E\uDDFC \uD83C\uDFC5","answer":"maid of honour"},"1":{"question":"\u261D\uFE0F\uD83D\uDC83","answer":"first dance"},"2":{"question":"\uD83C\uDF38 \uD83D\uDC67","answer":"flower girl"},"3":{"question":"\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7\uD83C\uDF70","answer":"three tier cake"},"4":{"question":"\uD83C\uDF6F\uD83C\uDF19","answer":"honeymoon"},"5":{"question":"\u2702\uFE0F\uD83C\uDF70","answer":"cutting the cake"},"6":{"question":"\uD83D\uDCC4\uD83D\uDC66","answer":"page boy"},"7":{"question":"\uD83D\uDC8D\uD83D\uDC3B","answer":"ring bearer"},"8":{"question":"\uD83C\uDFC6\uD83D\uDC70","answer":"trophy wife"},"9":{"question":"\uD83C\uDF7E\uD83C\uDF5E","answer":"champagne toast"},"10":{"question":"\uD83D\uDC70\u270C\uFE0F\uD83D\uDC1D","answer":"bride to be"},"11":{"question":"\uD83D\uDC70\uD83D\uDEBF","answer":"bridal shower"}}},"finleys_films":{"title":"Finley\'s Films","description":"Guess the movie finley or mabel is starring in","rounds":{"0":{"question":"","answer":"castaway"},"1":{"question":"","answer":"lady and the tramp"},"2":{"question":"","answer":"titanic"},"3":{"question":"","answer":"forest gump"},"4":{"question":"","answer":"et"},"5":{"question":"","answer":"alien"},"6":{"question":"","answer":"the lion king"},"7":{"question":"","answer":"toy story"},"8":{"question":"","answer":"american beauty"}}},"fill_the_blanks":{"title":"Fill the blanks","description":"Pick the correct vowel to fill in the blank","rounds":{"0":{"question":"_ngag_m_nt","answer":"engagement"},"1":{"question":"b_ddow p_rk","answer":"baddow park"},"2":{"question":"h_neym__n","answer":"honeymoon"},"3":{"question":"for_v_r","answer":"forever"},"4":{"question":"_nv_tat_ons","answer":"invitations"},"5":{"question":"m_rri_ge","answer":"marriage"},"6":{"question":"g_rl_nd","answer":"garland"},"7":{"question":"h_ad tabl_","answer":"head table"},"8":{"question":"bo_q_et","answer":"bouquet"},"9":{"question":"sp__ch","answer":"speech"},"10":{"question":"c_r_mony","answer":"ceremony"},"11":{"question":"r_c_ption","answer":"reception"},"12":{"question":"c_ntr_pi_c_s","answer":"centrepieces"},"13":{"question":"c_l_brat_","answer":"celebrate"},"14":{"question":"m_n_gamy","answer":"monogamy"},"15":{"question":"l_ts _f l_ve","answer":"lots of love"},"16":{"question":"j_w_ll_ry","answer":"jewellery"},"17":{"question":"vid_ograph_rs","answer":"videographers"},"18":{"question":"b_llrop_s r_tr_at","answer":"bellropes retreat"}}},"face_merge":{"title":"Face Merge","description":"Guess the celebrity or character the beautiful brides to be\'s faces have been merged with","rounds":{"0":{"question":"","answer":"barbie"},"1":{"question":"","answer":"katniss"},"2":{"question":"","answer":"wanda"},"3":{"question":"","answer":"merida"},"4":{"question":"","answer":"adele"},"5":{"question":"","answer":"daenerys"},"6":{"question":"","answer":"princess peach"},"7":{"question":"","answer":"princess fiona"},"8":{"question":"","answer":"princess leia"},"9":{"question":"","answer":"jack sparrow"},"10":{"question":"","answer":"harley quinn"},"11":{"question":"","answer":"shakira"},"12":{"question":"","answer":"amy winehouse"},"13":{"question":"","answer":"wonder woman"},"14":{"question":"","answer":"little red riding hood"},"15":{"question":"","answer":"rapunzel"}}}}');
 
-},{"d898787985b4c17d":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+},{}],"j2Ma8":[function(require,module,exports) {
+module.exports = JSON.parse('{"1":{"clue":"I dry as I get wetter.","answer":"towel","heartToken":"lewot1"},"2":{"clue":"I have hands but cannot clap?","answer":"clock","heartToken":"kcolc2"},"3":{"clue":"You cut me on a table, but I\u2019m never eaten.","answer":"cards","heartToken":"sdrac3"},"4":{"clue":"have lots of stars, but I\u2019m not the sky. I\u2019ll be sitting here quietly until you need me.","answer":"tv","heartToken":"vt4"},"5":{"clue":"I have four legs, but I don\u2019t have any feet.","answer":"table","heartToken":"elbat5"},"6":{"clue":"Adding bubbles to me is fun. You usually get in me at night before your day is done.","answer":"bath","heartToken":"thab6"},"7":{"clue":"I make two people out of one. What am I?","answer":"mirror","heartToken":"rorrim7"},"8":{"clue":"I get answered even though I never ask a question. What am I?","answer":"doorbell","heartToken":"llebroob8"},"9":{"clue":"What is full of holes but still holds water?","answer":"sponge","heartToken":"egnops9"},"10":{"clue":"If you want to eat, then take a seat","answer":"dining chair","heartToken":"riahcgninid10"},"11":{"clue":"What four-letter word begins with \'f\' and ends with \'k\'","answer":"fork","heartToken":"korf11"},"12":{"clue":"What\u2019s white, sticky, and better to spit than to swallow?","answer":"toothpaste","heartToken":"etsaphtoot12"},"13":{"clue":"What has a neck but no head","answer":"bottle","heartToken":"elttob13"},"14":{"clue":"I get bigger the more you blow me","answer":"balloon","heartToken":"noonllab14"},"15":{"clue":"I have a bark, but I have no bite. I\'m rarely still, but I never wander. What am I?","answer":"tree","heartToken":"eert15"},"16":{"clue":"I\'ve got charcoal in my belly, and metal feet. Once I am hot, it\'s time to eat. What am I?","answer":"bbq","heartToken":"qbb16"}}');
+
+},{}],"eQ041":[function(require,module,exports) {
+module.exports = require("ca0ced770eaa71a6").getBundleURL("7UhFu") + "heartIcon.5cf264b0.png" + "?" + Date.now();
+
+},{"ca0ced770eaa71a6":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
 var bundleURL = {};
 function getBundleURLCached(id) {
@@ -941,7 +1091,25 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"bwcPy":[function(require,module,exports) {
+},{}],"cGxvR":[function(require,module,exports) {
+module.exports = require("dccfbc3be714ae84").getBundleURL("7UhFu") + "letters.d6c28089.png" + "?" + Date.now();
+
+},{"dccfbc3be714ae84":"lgJ39"}],"Kwe4i":[function(require,module,exports) {
+module.exports = require("b9a62c9cae89d0ac").getBundleURL("7UhFu") + "emoji.c4435949.png" + "?" + Date.now();
+
+},{"b9a62c9cae89d0ac":"lgJ39"}],"gExVo":[function(require,module,exports) {
+module.exports = require("dbb3ce66c57cc5f6").getBundleURL("7UhFu") + "dog.74a4875f.png" + "?" + Date.now();
+
+},{"dbb3ce66c57cc5f6":"lgJ39"}],"dpCRP":[function(require,module,exports) {
+module.exports = require("b440764899da1648").getBundleURL("7UhFu") + "empties.056bbb55.png" + "?" + Date.now();
+
+},{"b440764899da1648":"lgJ39"}],"fxns8":[function(require,module,exports) {
+module.exports = require("d362c199712c9dd0").getBundleURL("7UhFu") + "faces.1f8840b9.png" + "?" + Date.now();
+
+},{"d362c199712c9dd0":"lgJ39"}],"fsvtb":[function(require,module,exports) {
+module.exports = require("d898787985b4c17d").getBundleURL("7UhFu") + "0.61dbac3d.png" + "?" + Date.now();
+
+},{"d898787985b4c17d":"lgJ39"}],"bwcPy":[function(require,module,exports) {
 module.exports = require("7ff8e40c8c3a5680").getBundleURL("7UhFu") + "1.a158ab1a.png" + "?" + Date.now();
 
 },{"7ff8e40c8c3a5680":"lgJ39"}],"dsQ2u":[function(require,module,exports) {
@@ -1049,19 +1217,14 @@ parcelHelpers.defineInteropFlag(exports);
 var _index = require("../dom/index");
 var _game = require("./game");
 var _gameDefault = parcelHelpers.interopDefault(_game);
-let scrambled_words_button = document.querySelector(".scrambled_words_button");
-scrambled_words_button.addEventListener("click", ()=>{
-    console.log("scrambled words button pressed");
-});
 class Game_selection {
     constructor(){}
-    triggerButton(button) {
-        console.log("button triggered", button);
-        this.gameName = button.replace("_button", "");
-        if (this.gameName == "scrambled_words" || this.gameName == "emoji_game" || this.gameName == "finleys_films" || this.gameName == "fill_the_blanks" || this.gameName == "face_merge") {
-            (0, _index.revealGame)();
-            this.game = new (0, _gameDefault.default)(this.gameName);
-        }
+    triggerButton(key) {
+        console.log("button triggered", key);
+        // if(this.gameName == 'scrambled_words' || this.gameName == 'emoji_game' || this.gameName == 'finleys_films' || this.gameName == 'fill_the_blanks' || this.gameName == 'face_merge'){
+        (0, _index.revealGame)();
+        this.game = new (0, _gameDefault.default)(key);
+    // } 
     }
     triggerLetter(letter) {
         this.game.triggerLetter(letter);
@@ -1089,7 +1252,8 @@ class Game {
     }
     initGame() {
         console.log("init game", this.gameName);
-        this.round = 0;
+        this.round = Number(localStorage.getItem(this.gameName));
+        if (this.round == null) this.round = 0;
         (0, _index.setGameTitle)((0, _gameInfoJsonDefault.default)[this.gameName].title);
         (0, _index.setGameDescription)((0, _gameInfoJsonDefault.default)[this.gameName].description);
         this.generateRound();
@@ -1102,15 +1266,14 @@ class Game {
         (0, _index.createGameRound)(this.gameName, this.question, this.round, this.answer);
         this.userAnswer = this.gameName == "fill_the_blanks" ? this.question : "";
     }
-    triggerInput(event) {
-        console.log("triggerinput");
-        if (event.inputType == "deleteContentBackward") {
+    triggerInput(letter) {
+        console.log(letter);
+        if (letter == "\u232B") {
             if (this.gameName == "scrambled_words") this.triggerBackspace();
-            this.userAnswer = event.target.value;
+            //this.userAnswer = event.target.value;
+            this.userAnswer = this.userAnswer.substring(0, this.userAnswer.length - 1);
             this.updateWord();
-        }
-        let letter = event.data;
-        if (letter != null) {
+        } else if (letter != null) {
             if (letter.match(/[a-z]/i)) {
                 if (this.gameName == "scrambled_words") {
                     let letterSelected = false;
@@ -1145,13 +1308,15 @@ class Game {
         console.log("charRemoved", charRemoved);
     }
     updateWord() {
-        (0, _index.setWord)(this.userAnswer);
+        (0, _index.setWord)(this.userAnswer, this.answer.replaceAll(" ", ""));
         if (this.userAnswer == this.answer.replaceAll(" ", "")) {
             console.log("ROUND COMPLETE");
             (0, _index.roundComplete)();
             setTimeout(()=>{
                 if (this.round < this.numOfRounds - 1) {
                     this.round++;
+                    console.log(this.gameName, this.round);
+                    localStorage.setItem(this.gameName, "" + this.round);
                     this.generateRound();
                 } else {
                     (0, _index.hideGame)();
@@ -1169,10 +1334,7 @@ class Game {
 }
 exports.default = Game;
 
-},{"../dom/index":"9OTgz","./utils/gameInfo.json":"iLiiY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iLiiY":[function(require,module,exports) {
-module.exports = JSON.parse('{"scrambled_words":{"title":"Scrambled","description":"Click on the letters to unscamble the wedding related word","rounds":{"0":{"question":"simdbdaire","answer":"bridesmaid"},"1":{"question":"ni sawl","answer":"in laws"},"2":{"question":"cxgginhean vwso","answer":"exchanging vows"},"3":{"question":"tbse anm","answer":"best man"},"4":{"question":"nmhaecpga sotta","answer":"champagne toast"},"5":{"question":"rtifs nacde","answer":"first dance"},"6":{"question":"itucgnt the caek","answer":"cutting the cake"},"7":{"question":"yhoneomon","answer":"honeymoon"},"8":{"question":"saecnpa","answer":"canapes"},"9":{"question":"dinwegd dsers","answer":"wedding dress"},"10":{"question":"ttncfeio","answer":"confetti"},"11":{"question":"togepaporhrh","answer":"photographer"},"12":{"question":"mgirraae ftcierectia","answer":"marriage certificate"},"13":{"question":"idnegewd berakftas","answer":"wedding breakfast"},"14":{"question":"enh nghit","answer":"hen night"}}},"emoji_game":{"title":"Emoji game","description":"Guess the wedding related phrase from the emoji sequence","rounds":{"0":{"question":"\uD83D\uDC69 \uD83E\uDDF9 \uD83E\uDDFC \uD83C\uDFC5","answer":"maid of honour"},"1":{"question":"\u261D\uFE0F\uD83D\uDC83","answer":"first dance"},"2":{"question":"\uD83C\uDF38 \uD83D\uDC67","answer":"flower girl"},"3":{"question":"\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7\uD83C\uDF70","answer":"three tier cake"},"4":{"question":"\uD83C\uDF6F\uD83C\uDF19","answer":"honeymoon"},"5":{"question":"\u2702\uFE0F\uD83C\uDF70","answer":"cutting the cake"},"6":{"question":"\uD83D\uDCC4\uD83D\uDC66","answer":"page boy"},"7":{"question":"\uD83D\uDC8D\uD83D\uDC3B","answer":"ring bearer"},"8":{"question":"\uD83C\uDFC6\uD83D\uDC70","answer":"trophy wife"},"9":{"question":"\uD83C\uDF7E\uD83C\uDF5E","answer":"champagne toast"},"10":{"question":"\uD83D\uDC70\u270C\uFE0F\uD83D\uDC1D","answer":"bride to be"},"11":{"question":"\uD83D\uDC70\uD83D\uDEBF","answer":"bridal shower"}}},"finleys_films":{"title":"Finley\'s Films","description":"Guess the movie finley or mabel is starring in","rounds":{"0":{"question":"","answer":"castaway"},"1":{"question":"","answer":"lady and the tramp"},"2":{"question":"","answer":"titanic"},"3":{"question":"","answer":"forest gump"},"4":{"question":"","answer":"et"},"5":{"question":"","answer":"alien"},"6":{"question":"","answer":"the lion king"},"7":{"question":"","answer":"toy story"},"8":{"question":"","answer":"american beauty"}}},"fill_the_blanks":{"title":"Fill the blanks","description":"Pick the correct vowel to fill in the blank","rounds":{"0":{"question":"_ngag_m_nt","answer":"engagement"},"1":{"question":"b_ddow p_rk","answer":"baddow park"},"2":{"question":"h_neym__n","answer":"honeymoon"},"3":{"question":"for_v_r","answer":"forever"},"4":{"question":"_nv_tat_ons","answer":"invitations"},"5":{"question":"m_rri_ge","answer":"marriage"},"6":{"question":"g_rl_nd","answer":"garland"},"7":{"question":"h_ad tabl_","answer":"head table"},"8":{"question":"bo_q_et","answer":"bouquet"},"9":{"question":"sp__ch","answer":"speech"},"10":{"question":"c_r_mony","answer":"ceremony"},"11":{"question":"r_c_ption","answer":"reception"},"12":{"question":"c_ntr_pi_c_s","answer":"centrepieces"},"13":{"question":"c_l_brat_","answer":"celebrate"},"14":{"question":"m_n_gamy","answer":"monogamy"},"15":{"question":"l_ts _f l_ve","answer":"lots of love"},"16":{"question":"j_w_ll_ry","answer":"jewellery"},"17":{"question":"vid_ograph_rs","answer":"videographers"},"18":{"question":"b_llrop_s r_tr_at","answer":"bellropes retreat"}}},"face_merge":{"title":"Face Merge","description":"Guess the celebrity or character the beautiful brides to be\'s faces have been merged with","rounds":{"0":{"question":"","answer":"barbie"},"1":{"question":"","answer":"katniss"},"2":{"question":"","answer":"wanda"},"3":{"question":"","answer":"merida"},"4":{"question":"","answer":"adele"},"5":{"question":"","answer":"daenerys"},"6":{"question":"","answer":"princess peach"},"7":{"question":"","answer":"princess fiona"},"8":{"question":"","answer":"princess leia"},"9":{"question":"","answer":"jack sparrow"},"10":{"question":"","answer":"harley quinn"},"11":{"question":"","answer":"shakira"},"12":{"question":"","answer":"amy winehouse"},"13":{"question":"","answer":"wonder woman"},"14":{"question":"","answer":"little red riding hood"},"15":{"question":"","answer":"rapunzel"}}}}');
-
-},{}],"51Hld":[function(require,module,exports) {
+},{"../dom/index":"9OTgz","./utils/gameInfo.json":"iLiiY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"51Hld":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getUrlParams", ()=>getUrlParams);

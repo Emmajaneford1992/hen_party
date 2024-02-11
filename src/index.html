@@ -11,6 +11,8 @@
         <title>Beth & Charlotte's Hen</title>
     </head>
 <body>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
   <section class="UI">
     <section class="splash">
 
@@ -59,19 +61,19 @@
         <div class="game_selection_main_top">
         <button class="scavenger_hunt_button">
             <p>Scavenger Hunt</p>
-            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-            <lottie-player class="mapGif" src="https://lottie.host/0ad435cd-5490-4dd0-9e2c-c0af98d6d9db/dw6M78X8F0.json"  speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
+            <lottie-player class="x" src="https://lottie.host/0ad435cd-5490-4dd0-9e2c-c0af98d6d9db/dw6M78X8F0.json"  speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
             <p3>Play</p3>
           </button>
-        <div class="clues">
-            <div class="clues_score"></div>
-            <div class="clues_icon">?</div>
+        <div class="stars">
+            <div class="stars_score"></div>
+            <div class="stars_icon">★</div>
+ 
 
         </div>
         <div class="hearts">
           <div class="hearts_score"></div>
           <div class="hearts_icon">♥</div>
-          <!-- ♡ -->
+   
 
 
         </div>
@@ -79,7 +81,7 @@
         <div class="game_selection_games">
           <!-- <h1>Games</h1> -->
           <div>
-              <button class="scrambled_words_button">
+              <!-- <button class="scrambled_words_button">
                 <div><img src="./assets/images/letters.png"></img></div>
                 <p>Scrambled Words</p>
                 <p2>★0/12</p2>
@@ -132,7 +134,7 @@
                 <p>Put a Ring on it</p>
                 <p2>★0/12</p2>
                 <p3>Play</p3>
-              </button>
+              </button> -->
               <!-- <button class="bra_pong_button">
                 <p>>Bra Pong</p>
                 <p3>Play</p3>
@@ -140,27 +142,44 @@
               <button class="photo_challenge_button">Photo Challenge</button> -->
           </div>
         </div>
+        <img class='game_selection_hand' src="./assets/images/hand.png"></img>
       </main>
     </section>
     <section class="game">
       <header>
-        <button class="game_backButton"><</button>
-        <div class='game_title'></div>
+        <div class="game_buttons">
+          <button class="game_backButton"><</button>
+          <div class='game_title'></div>
+          <button class='game_restartButton'>↻</button>
+        </div>
         <div class='game_description'></div>
         <div class='game_score'></div>
       </header>
-
       <main>
         <div class='game_question'></div>
         <div class='game_answer'></div>
       </main>
-
       <footer>
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <lottie-player class="game_tick"  src="https://lottie.host/78869975-eba4-43ad-a5af-3688ce7355ae/qOpNF4t4RS.json"  speed="1" loop autoplay direction="1" mode="normal"></lottie-player>
-        <button class='game_restartButton'>↻</button>
+        <div class="game_keyboard">
+        </div>
+      </footer>
+    </section>
+    <section class="scavenger">
+      <header>
+        <div class="scavanger_buttons">
+          <button class="scavenger_backButton"><</button>
+          <div class="scavenger_title">Scavenger Hunt</div>
+          <button class="scavenger_infoButton">i</button>
+        </div>
+        <div class="scavenger_description">
+          Play the games to get more stars the more stars you have<br>the more clues you will get for the scavenger hunt
+        </div>
+      </header>
+      <main>
+        <div class="scavenger_clues"></div>
       </main>
-
+     
     </section>
     <section class="celebration">
       <h1>Congratulations!</h1>
@@ -170,10 +189,9 @@
 
     <section class="foundHeart">
       <h1>Congratulations!</h1>
-      <!-- <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <!-- 
       <lottie-player class="confetti" src="https://lottie.host/6094f2dd-6254-4aef-82aa-0a25f1899845/zdNhWWCpd3.json"  speed="1" autoplay direction="1" mode="normal"></lottie-player>
       -->
-      <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
       <lottie-player class="heartGif" src="https://lottie.host/6fc465bf-ab9e-4117-8f2f-67d7dab5fa33/hO0knx5j9e.json"  speed="1" autoplay direction="1" mode="normal"></lottie-player>
       
       <p>You've found a heart!</br>Please place the heart back were<br>you found it for others to find.</p>

@@ -26,26 +26,27 @@ body {
 }
 
 button,
-input,
+/* input, */
 .game_selection_games,
-.game_selection_games div {
+.game_selection_games div,
+.scavenger_clues {
     pointer-events: auto;
 }
 
 
 @font-face {
     font-family: font1;
-    src: url('/src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
+    src: url('../src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
 }
 
 @font-face {
     font-family: font2;
-    src: url('/src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
+    src: url('../src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
 }
 
 @font-face {
     font-family: font3;
-    src: url('/src/assets/fonts/Ubuntu-Title.ttf');
+    src: url('../src/assets/fonts/Ubuntu-Title.ttf');
 }
 
 :root {
@@ -140,6 +141,7 @@ input,
     color: var(--dark-blue);
     font-size: 12vw;
     font-family: font1;
+    align-self: end;
 }
 
 .game_description {
@@ -207,7 +209,6 @@ input,
 } 
 
 .game_selection_main_top{
-
     display: flex;
     width: 100vw;
     height: 50%;
@@ -247,7 +248,7 @@ input,
     box-shadow: 4px 4px 0.12em var(--black-transparent)
 } 
 
-.clues,
+.stars,
 .hearts{
     display: flex;
     flex-direction: column;
@@ -260,7 +261,7 @@ input,
     box-shadow: 4px 4px 0.12em rgba(0, 0, 0, 0.2);
 }  
 
-.clues_score,
+.stars_score,
 .hearts_score {
     display: flex;
     flex-direction: column;
@@ -275,7 +276,7 @@ input,
 }  
 
 
-.clues_icon,
+.stars_icon,
 .hearts_icon {
     display: flex;
     width: 12vw !important;
@@ -411,13 +412,28 @@ input,
     box-shadow: 4px 4px 0.12em var(--black-transparent)
 } 
 
-.game_backButton {
+.game_selection_hand {
+    display: block;
+    position: fixed;
+    bottom: 15%;
+    top: auto;
+    width: 20vw;
+    animation-name: handSwipeAnim;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-direction: forwards;
+    animation-iteration-count: infinite;
+}
+
+.game_backButton,
+.game_restartButton  {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 12vw !important;
-    height: 12vw !important;
+    width: 10vw !important;
+    height: 10vw !important;
     font-size: 15vw;
     padding: 0%;
     padding-top: 0.3rem;
@@ -429,6 +445,10 @@ input,
     align-self: start;
     box-shadow: 4px 4px 0.12em var(--black-transparent);
     color: white;
+} 
+
+.game_restartButton{
+    font-size: 8vw;
 } 
 
 .game {
@@ -443,8 +463,7 @@ input,
     width: 100%;
     height: 100%;
     flex-direction: column;
-    /* background-color: lightblue; */
-    background-color: var(--light-blue);
+    background-color: var(--blue);
 }
 
 
@@ -471,10 +490,12 @@ input,
 .game header {
     display: flex;
     width: 100vw;
+    flex-grow: 1;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
+
 
 .game_question button,
 .game_answer button {
@@ -502,28 +523,65 @@ input,
 
 .game footer{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 100vw;
 }
 
-.game_restartButton{
+
+.game_keyboard{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    align-self: center;
-    width: 15vw !important;
-    height: 15vw !important;
-    font-size: 10vw;
-    border-style: none;
-    background-color: var(--dark-blue);
-    margin: 5vw;
-    font-family: font2;
-    border-radius: 100%;
+    width: 100vw;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    /* background-color: var(--light-blue); */
+    background-color: #ffffff80;
+    border: 2px solid white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.game_keyboard div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.game_keyboard div button {
+    display: flex;
+    background: var(--tile-grey-gradient);
     box-shadow: 4px 4px 0.12em  var(--black-transparent);
-    color: white;
-    padding: 0vw;
-} 
+    color: var(--tile-letter);
+    font-family: font3;
+    font-size: 7vw;
+    width: 8vw;
+    height: 8vw;
+    border: none;
+    border-radius:1vw;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    margin: 0.5vw;
+}
+
+.game_answer button {
+background: var(--tile-grey-gradient);
+}
+
+.game_buttons{
+    display: flex;
+    width: 100vw;
+    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 12vh
+}
 
 .game_tick{
     display: none;
@@ -552,8 +610,9 @@ input,
 }
 
 .game_question img {
-    width: 70vw;
+    width: 50vw;
     height: auto
+    
 }
 
 .game_word {
@@ -565,6 +624,123 @@ input,
 .letterSelect {
     opacity: 0.2;
 }
+
+.scavenger {
+    display: none;
+    flex-direction: column;
+    justify-content: start;
+    align-content: center;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: var(--blue);
+    
+}
+
+
+
+.scavanger_buttons {
+    display: flex;
+    width: 100vw;
+    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 12vh
+
+}
+
+.scavenger_title {
+    color: var(--dark-blue);
+    font-size: 12vw;
+    font-family: font1;
+    align-self: end;
+
+}
+
+.scavenger_description {
+    color: black;
+    font-size: 5vw;
+    font-family: font2;
+    text-align: center;
+}
+
+.scavenger_backButton,
+.scavenger_infoButton  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 10vw !important;
+    height: 10vw !important;
+    font-size: 15vw;
+    padding: 0%;
+    padding-top: 0.3rem;
+    margin: 2vw;
+    border-style: none;
+    background-color: var(--dark-blue);
+    font-family: font2;
+    border-radius: 50%;
+    align-self: start;
+    box-shadow: 4px 4px 0.12em var(--black-transparent);
+    color: white;
+} 
+
+.scavenger_infoButton{
+    font-size: 8vw;
+} 
+
+.scavenger main {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.scavenger_clues {
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    align-items: center;
+    
+    width:  100vw;
+
+    overflow-y: auto;
+    scrollbar-width:none;
+    -ms-overflow-style: none;
+
+    border-top-left-radius: 25px;
+    padding-top: 2vw;
+    border-bottom-right-radius: 25px;
+   
+}
+
+.scavenger_clues div  {
+    display: flex;
+    width: 90vw;
+    justify-content: space-between;
+    background-color:  var(--dark-blue);
+
+    border-radius: 10px;
+    margin: 2vw;
+    font-family: font1;
+    font-size: 5vw;
+    padding: 3vw;
+    text-align: left;
+    color: var(--blue);
+
+}
+
+
+.scavenger_clues div img  {
+    display: flex;
+    width: 10vw;
+    height: 10vw;
+    filter: drop-shadow(2px 2px 0px #0000005a);
+}
+
 
 /* celebration */
 
@@ -668,4 +844,43 @@ transform: translate3d(-90px,0,0);
 100% {
 transform: translate3d(85px,0,0);
 }
+}
+
+.handSwipe {
+    animation-name: handSwipeAnim;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-direction: forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes handSwipeAnim {
+    0% {
+        transform: rotate(40deg);
+        width: 25vw;
+    }
+
+    30% {
+        transform: rotate(70deg);
+        margin-left: 45%;
+        width: 20vw;
+    }
+
+    70% {
+
+        transform: rotate(20deg);
+        margin-left: -45%;
+        width: 20vw;
+    }
+    100% {
+        transform: rotate(40deg);
+        margin-left: 0vw;
+        width: 25vw;
+
+    }
+}
+
+.mapGif {
+    height: 40%;
 }
