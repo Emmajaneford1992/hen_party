@@ -616,7 +616,7 @@ function triggerGameButton(trigger) {
     game_selection.triggerGameButton(trigger);
 }
 
-},{"./dom/buttons":"8Z3Vb","./experience":"47u4Z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../queryString":"51Hld","./dom":"9OTgz"}],"8Z3Vb":[function(require,module,exports) {
+},{"./dom/buttons":"8Z3Vb","./dom":"9OTgz","./experience":"47u4Z","../queryString":"51Hld","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Z3Vb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initButtons", ()=>initButtons);
@@ -913,147 +913,7 @@ function hideFoundHeart() {
     foundHeart.style.display = "none";
 }
 
-},{"../index":"h7u1C","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@lottiefiles/lottie-interactivity":"l9f7Z"}],"fsvtb":[function(require,module,exports) {
-module.exports = require("d898787985b4c17d").getBundleURL("7UhFu") + "0.61dbac3d.png" + "?" + Date.now();
-
-},{"d898787985b4c17d":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-}
-// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"bwcPy":[function(require,module,exports) {
-module.exports = require("7ff8e40c8c3a5680").getBundleURL("7UhFu") + "1.a158ab1a.png" + "?" + Date.now();
-
-},{"7ff8e40c8c3a5680":"lgJ39"}],"dsQ2u":[function(require,module,exports) {
-module.exports = require("5d61b25853a2ebaa").getBundleURL("7UhFu") + "2.b7c8a3ca.png" + "?" + Date.now();
-
-},{"5d61b25853a2ebaa":"lgJ39"}],"4eDtq":[function(require,module,exports) {
-module.exports = require("3bcd0b61dda54af4").getBundleURL("7UhFu") + "3.3ca08897.png" + "?" + Date.now();
-
-},{"3bcd0b61dda54af4":"lgJ39"}],"aSkAu":[function(require,module,exports) {
-module.exports = require("bdc723a78d084410").getBundleURL("7UhFu") + "4.abd70e5f.png" + "?" + Date.now();
-
-},{"bdc723a78d084410":"lgJ39"}],"GCwAG":[function(require,module,exports) {
-module.exports = require("5ae1419c03afa968").getBundleURL("7UhFu") + "5.324dc662.png" + "?" + Date.now();
-
-},{"5ae1419c03afa968":"lgJ39"}],"dFtSE":[function(require,module,exports) {
-module.exports = require("e7672633099b5688").getBundleURL("7UhFu") + "6.96d60305.png" + "?" + Date.now();
-
-},{"e7672633099b5688":"lgJ39"}],"d33xe":[function(require,module,exports) {
-module.exports = require("1e4d3045112866e1").getBundleURL("7UhFu") + "7.16d27a0d.png" + "?" + Date.now();
-
-},{"1e4d3045112866e1":"lgJ39"}],"c4IQl":[function(require,module,exports) {
-module.exports = require("c27099df9d3fa3a2").getBundleURL("7UhFu") + "8.07ef5acd.png" + "?" + Date.now();
-
-},{"c27099df9d3fa3a2":"lgJ39"}],"9q8YV":[function(require,module,exports) {
-module.exports = require("c5f6655d3409fe62").getBundleURL("7UhFu") + "0.432a2572.png" + "?" + Date.now();
-
-},{"c5f6655d3409fe62":"lgJ39"}],"jGExb":[function(require,module,exports) {
-module.exports = require("aef654b51e21473").getBundleURL("7UhFu") + "1.1e8066b1.png" + "?" + Date.now();
-
-},{"aef654b51e21473":"lgJ39"}],"lrocG":[function(require,module,exports) {
-module.exports = require("c145b9ead3628c7b").getBundleURL("7UhFu") + "2.98eda960.png" + "?" + Date.now();
-
-},{"c145b9ead3628c7b":"lgJ39"}],"aLkx8":[function(require,module,exports) {
-module.exports = require("a0808849342353e6").getBundleURL("7UhFu") + "3.79442784.png" + "?" + Date.now();
-
-},{"a0808849342353e6":"lgJ39"}],"h9Pzi":[function(require,module,exports) {
-module.exports = require("448f5e9371c89fb6").getBundleURL("7UhFu") + "4.202fdb5e.png" + "?" + Date.now();
-
-},{"448f5e9371c89fb6":"lgJ39"}],"9Q7cN":[function(require,module,exports) {
-module.exports = require("121203e3c9e3fb5").getBundleURL("7UhFu") + "5.f4b208c0.png" + "?" + Date.now();
-
-},{"121203e3c9e3fb5":"lgJ39"}],"kty8P":[function(require,module,exports) {
-module.exports = require("d57283f4aa471dda").getBundleURL("7UhFu") + "6.7f8b8b7e.png" + "?" + Date.now();
-
-},{"d57283f4aa471dda":"lgJ39"}],"cnjwc":[function(require,module,exports) {
-module.exports = require("4c68ce1d537b96a0").getBundleURL("7UhFu") + "7.4e8316d2.png" + "?" + Date.now();
-
-},{"4c68ce1d537b96a0":"lgJ39"}],"2cXa0":[function(require,module,exports) {
-module.exports = require("6be6465404a95524").getBundleURL("7UhFu") + "8.c789e091.png" + "?" + Date.now();
-
-},{"6be6465404a95524":"lgJ39"}],"3D5fI":[function(require,module,exports) {
-module.exports = require("9ce3f771786c7f79").getBundleURL("7UhFu") + "9.b7f9c275.png" + "?" + Date.now();
-
-},{"9ce3f771786c7f79":"lgJ39"}],"gODXW":[function(require,module,exports) {
-module.exports = require("15ee6b53c7b2b3b2").getBundleURL("7UhFu") + "10.759c578e.png" + "?" + Date.now();
-
-},{"15ee6b53c7b2b3b2":"lgJ39"}],"7mnZc":[function(require,module,exports) {
-module.exports = require("d0198648e8e8aea4").getBundleURL("7UhFu") + "11.b2e2ab85.png" + "?" + Date.now();
-
-},{"d0198648e8e8aea4":"lgJ39"}],"8PWnl":[function(require,module,exports) {
-module.exports = require("2c2613314e88774f").getBundleURL("7UhFu") + "12.2017167a.png" + "?" + Date.now();
-
-},{"2c2613314e88774f":"lgJ39"}],"gpfw7":[function(require,module,exports) {
-module.exports = require("dae1071e10de9afe").getBundleURL("7UhFu") + "13.f2a0fe72.png" + "?" + Date.now();
-
-},{"dae1071e10de9afe":"lgJ39"}],"4iOu7":[function(require,module,exports) {
-module.exports = require("14c923d76a9e72fc").getBundleURL("7UhFu") + "14.bea6a23b.png" + "?" + Date.now();
-
-},{"14c923d76a9e72fc":"lgJ39"}],"lkS4c":[function(require,module,exports) {
-module.exports = require("b64ee85ed103b32f").getBundleURL("7UhFu") + "15.65df20bf.png" + "?" + Date.now();
-
-},{"b64ee85ed103b32f":"lgJ39"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"l9f7Z":[function(require,module,exports) {
+},{"@lottiefiles/lottie-interactivity":"l9f7Z","../index":"h7u1C","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"l9f7Z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LottieInteractivity", ()=>l);
@@ -1484,7 +1344,147 @@ var o = {
 };
 exports.default = M;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"47u4Z":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"fsvtb":[function(require,module,exports) {
+module.exports = require("d898787985b4c17d").getBundleURL("7UhFu") + "0.61dbac3d.png" + "?" + Date.now();
+
+},{"d898787985b4c17d":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+}
+// TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"bwcPy":[function(require,module,exports) {
+module.exports = require("7ff8e40c8c3a5680").getBundleURL("7UhFu") + "1.a158ab1a.png" + "?" + Date.now();
+
+},{"7ff8e40c8c3a5680":"lgJ39"}],"dsQ2u":[function(require,module,exports) {
+module.exports = require("5d61b25853a2ebaa").getBundleURL("7UhFu") + "2.b7c8a3ca.png" + "?" + Date.now();
+
+},{"5d61b25853a2ebaa":"lgJ39"}],"4eDtq":[function(require,module,exports) {
+module.exports = require("3bcd0b61dda54af4").getBundleURL("7UhFu") + "3.3ca08897.png" + "?" + Date.now();
+
+},{"3bcd0b61dda54af4":"lgJ39"}],"aSkAu":[function(require,module,exports) {
+module.exports = require("bdc723a78d084410").getBundleURL("7UhFu") + "4.abd70e5f.png" + "?" + Date.now();
+
+},{"bdc723a78d084410":"lgJ39"}],"GCwAG":[function(require,module,exports) {
+module.exports = require("5ae1419c03afa968").getBundleURL("7UhFu") + "5.324dc662.png" + "?" + Date.now();
+
+},{"5ae1419c03afa968":"lgJ39"}],"dFtSE":[function(require,module,exports) {
+module.exports = require("e7672633099b5688").getBundleURL("7UhFu") + "6.96d60305.png" + "?" + Date.now();
+
+},{"e7672633099b5688":"lgJ39"}],"d33xe":[function(require,module,exports) {
+module.exports = require("1e4d3045112866e1").getBundleURL("7UhFu") + "7.16d27a0d.png" + "?" + Date.now();
+
+},{"1e4d3045112866e1":"lgJ39"}],"c4IQl":[function(require,module,exports) {
+module.exports = require("c27099df9d3fa3a2").getBundleURL("7UhFu") + "8.07ef5acd.png" + "?" + Date.now();
+
+},{"c27099df9d3fa3a2":"lgJ39"}],"9q8YV":[function(require,module,exports) {
+module.exports = require("c5f6655d3409fe62").getBundleURL("7UhFu") + "0.432a2572.png" + "?" + Date.now();
+
+},{"c5f6655d3409fe62":"lgJ39"}],"jGExb":[function(require,module,exports) {
+module.exports = require("aef654b51e21473").getBundleURL("7UhFu") + "1.1e8066b1.png" + "?" + Date.now();
+
+},{"aef654b51e21473":"lgJ39"}],"lrocG":[function(require,module,exports) {
+module.exports = require("c145b9ead3628c7b").getBundleURL("7UhFu") + "2.98eda960.png" + "?" + Date.now();
+
+},{"c145b9ead3628c7b":"lgJ39"}],"aLkx8":[function(require,module,exports) {
+module.exports = require("a0808849342353e6").getBundleURL("7UhFu") + "3.79442784.png" + "?" + Date.now();
+
+},{"a0808849342353e6":"lgJ39"}],"h9Pzi":[function(require,module,exports) {
+module.exports = require("448f5e9371c89fb6").getBundleURL("7UhFu") + "4.202fdb5e.png" + "?" + Date.now();
+
+},{"448f5e9371c89fb6":"lgJ39"}],"9Q7cN":[function(require,module,exports) {
+module.exports = require("121203e3c9e3fb5").getBundleURL("7UhFu") + "5.f4b208c0.png" + "?" + Date.now();
+
+},{"121203e3c9e3fb5":"lgJ39"}],"kty8P":[function(require,module,exports) {
+module.exports = require("d57283f4aa471dda").getBundleURL("7UhFu") + "6.7f8b8b7e.png" + "?" + Date.now();
+
+},{"d57283f4aa471dda":"lgJ39"}],"cnjwc":[function(require,module,exports) {
+module.exports = require("4c68ce1d537b96a0").getBundleURL("7UhFu") + "7.4e8316d2.png" + "?" + Date.now();
+
+},{"4c68ce1d537b96a0":"lgJ39"}],"2cXa0":[function(require,module,exports) {
+module.exports = require("6be6465404a95524").getBundleURL("7UhFu") + "8.c789e091.png" + "?" + Date.now();
+
+},{"6be6465404a95524":"lgJ39"}],"3D5fI":[function(require,module,exports) {
+module.exports = require("9ce3f771786c7f79").getBundleURL("7UhFu") + "9.b7f9c275.png" + "?" + Date.now();
+
+},{"9ce3f771786c7f79":"lgJ39"}],"gODXW":[function(require,module,exports) {
+module.exports = require("15ee6b53c7b2b3b2").getBundleURL("7UhFu") + "10.759c578e.png" + "?" + Date.now();
+
+},{"15ee6b53c7b2b3b2":"lgJ39"}],"7mnZc":[function(require,module,exports) {
+module.exports = require("d0198648e8e8aea4").getBundleURL("7UhFu") + "11.b2e2ab85.png" + "?" + Date.now();
+
+},{"d0198648e8e8aea4":"lgJ39"}],"8PWnl":[function(require,module,exports) {
+module.exports = require("2c2613314e88774f").getBundleURL("7UhFu") + "12.2017167a.png" + "?" + Date.now();
+
+},{"2c2613314e88774f":"lgJ39"}],"gpfw7":[function(require,module,exports) {
+module.exports = require("dae1071e10de9afe").getBundleURL("7UhFu") + "13.f2a0fe72.png" + "?" + Date.now();
+
+},{"dae1071e10de9afe":"lgJ39"}],"4iOu7":[function(require,module,exports) {
+module.exports = require("14c923d76a9e72fc").getBundleURL("7UhFu") + "14.bea6a23b.png" + "?" + Date.now();
+
+},{"14c923d76a9e72fc":"lgJ39"}],"lkS4c":[function(require,module,exports) {
+module.exports = require("b64ee85ed103b32f").getBundleURL("7UhFu") + "15.65df20bf.png" + "?" + Date.now();
+
+},{"b64ee85ed103b32f":"lgJ39"}],"47u4Z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _index = require("../dom/index");
