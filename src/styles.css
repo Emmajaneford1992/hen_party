@@ -18,7 +18,7 @@ body {
     -moz-user-drag: none;
     -o-user-drag: none;
     touch-action: none !important;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: var(--blue);
 }
 
 * {
@@ -26,26 +26,45 @@ body {
 }
 
 button,
-input {
+/* input, */
+.game_selection_games,
+.game_selection_games div,
+.scavenger_clues {
     pointer-events: auto;
 }
 
 
 @font-face {
     font-family: font1;
-    src: url('/src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
+    src: url('../src/assets/fonts/UnicornCalligraphy-oK7B.ttf');
 }
 
 @font-face {
     font-family: font2;
-    src: url('/src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
+    src: url('../src/assets/fonts/MyHappyEndingRegular-Lx7G.ttf');
 }
 
 @font-face {
     font-family: font3;
-    src: url('/src/assets/fonts/Ubuntu-Title.ttf');
+    src: url('../src/assets/fonts/Ubuntu-Title.ttf');
 }
 
+:root {
+    /* Colors */
+    --light-blue:  #eaf3f5;
+    --dark-blue: #75abb7;
+    --dark-blue: #68a6c5;
+    --blue: #cbe0e5;
+    --blue: #c8e3eb;
+    --blue-gradient: linear-gradient(45deg,#75abb7 70%, #cbe0e5  ); 
+    --blue-gradient: linear-gradient(45deg,#68a6c5 70%, #eaf3f5 ); 
+    --yellow-gradient:  linear-gradient( rgb(255, 255, 159), rgb(255, 189, 66) );
+    --tile-gradient: linear-gradient(#fff0bd, #d0bf88);
+    --tile-gradient: linear-gradient(#fff0bd, #f1c16a);
+    --tile-letter:     #64615b;
+    --tile-grey-gradient: linear-gradient(#f0f0f0, #b0b0b0);
+    --black-transparent: rgba(0, 0, 0, 0.2);
+}
 
 .UI {
     display: block;
@@ -55,7 +74,6 @@ input {
     height: 100%;
     top: 0%;
     left: 0%;
-
 }
 
 /* splash */
@@ -73,6 +91,33 @@ input {
     font-size: 15vw;
     text-align: center;
     font-family:  font2;
+    background-color: white;
+}
+
+.splash header {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: 36%;
+    padding: 0%;
+    margin: 0%;
+
+    background: var(--blue);
+
+    color:white
+}
+
+.splash header svg  {
+    height: 30vh;
+}
+
+.splash strong {
+    color: white;
+    font-size: 11vw;
+    font-family: font1;
+    color: var(--dark-blue);
+    padding: 0%;
 }
 
 .splash img {
@@ -81,27 +126,22 @@ input {
     align-self: center;
 }
 
-.splash strong {
-    color: #5a86aa;
-    font-size: 11vw;
-    font-family: font1;
-}
-
 .splash_button {
     font-size: 12vw;
     border-style: none;
-    background-color: #BFD2E3;
+    background-color: var(--dark-blue);
     margin: 10vw;
     padding: 2vw;
     font-family: font2;
     border-radius: 2vw;
-    color: black;
+    color: white
 }
 
 .game_title {
-    color: #5a86aa;
+    color: var(--dark-blue);
     font-size: 12vw;
     font-family: font1;
+    align-self: end;
 }
 
 .game_description {
@@ -128,60 +168,287 @@ input {
     top: 0px;
     left: 0px;
     margin: 0;
+    padding: 0;
     font-family:  font2;
-    font-size: 12vw;
+    font-size: 10vw;
 }
 
 .game_selection header {
-    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
+    height: 30%;
+    padding: 0%;
+    margin: 0%;
+    background-color:  var(--blue);
+    color:white;
+    margin: 0;
+    padding: 0;
+}
+
+.splash header svg  {
+    height: 30%;
 }
 
 .game_selection strong {
-    color: #5a86aa;
-    font-size: 11vw;
+    color: var(--dark-blue);
+    font-size: 9vw;
     font-family: font1;
 }
 
 .game_selection main {
     display: flex;
+    height: 70%;
+    z-index: -1;
     flex-direction: column;
-    color: red;
-    flex-grow: 1;
-
+    justify-content: space-between;
+    align-items: center;    
+    background: white
+ 
 } 
 
-.game_selection button {
-    height: 10%;
+.game_selection_main_top{
+    display: flex;
     width: 100vw;
-    font-size:70%;
-    border-style: none;
-    background-color: #BFD2E3;
-    color: black;
-    font-family: font2;
-    border-radius: 2vw;
-    margin: 0.5vw;
+    height: 50%;
 
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+}
+
+.scavenger_hunt_button {
+    display: flex;
+    flex-direction: column;
+    width:60vw !important;
+    height: 30vh !important;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 6vw;
+    border-style: none;
+    border-radius: 25px;
+    background: var(--blue);
+    color: white;
+    box-shadow: 4px 4px 0.12em var(--black-transparent);
+    font-family: font1;
+    font-size: 6.7vw;
+    font-weight: bold;
+    color: var(--dark-blue);
+}
+
+.scavenger_hunt_button p3 {
+    width: 22vw;
+    margin-bottom: 3vw;
+    border-radius: 1rem;
+    font-size: 6vw;
+    font-family: font2;
+    color: white;
+    background-color: var(--dark-blue);
+    box-shadow: 4px 4px 0.12em var(--black-transparent)
 } 
 
+.stars,
+.hearts{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 11vw !important;
+    height: 30vh !important;
+    border-radius: 30px 30px;
+    background-color: var(--blue);
+    box-shadow: 4px 4px 0.12em rgba(0, 0, 0, 0.2);
+}  
 
-.game_backButton {
+.stars_score,
+.hearts_score {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 7vw !important;
+    height: 27vh !important;
+    border-radius: 30px;
+    border: 3px solid var(--dark-blue);
+    background: var(--tile-gradient);
+    margin-bottom: -35px;
+}  
+
+
+.stars_icon,
+.hearts_icon {
+    display: flex;
+    width: 12vw !important;
+    height: 12vw !important;
+    border-radius: 50px;
+    background: var(--blue-gradient);
+    font-size: 7.5vw;
+    font-weight: bold;
+    color: white;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    box-shadow: 4px 4px 0.12em rgba(0, 0, 0, 0.1);
+}  
+
+.clues_icon{
+    font-size: 12vw;
+}
+
+
+.game_selection_games {
+    position: relative;
+    height: 40vh;
+    width: 100vw;
+    background-color: var(--light-blue);
+    border-top-left-radius: 25px;
+    justify-content: end;
+    
+}
+
+.game_selection_games::after {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    height: 50px;
+    top: -50px;
+    right: 0px;
+    z-index: -1;
+    width: 50px;
+    background-color: white;
+    border-bottom-right-radius: 25px;
+    box-shadow: 0 25px 0 0 var(--light-blue);
+}
+
+
+.game_selection_games div  {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+
+    overflow: auto;
+    scrollbar-width:none;
+    -ms-overflow-style: none;
+    
+    background-color: var(--light-blue);
+    height: 100%;
+    border-top-left-radius: 25px;
+    padding-top: 2vw;
+    border-bottom-right-radius: 25px;
+}
+
+.game_selection_games div button {
+    display: flex;
+    flex-direction: column;
+    width: 48vw !important;
+    height: 48vw !important;
+    justify-content: start;
+    align-items: center;
+    font-family: font2;
+    font-size: 8vw;
+    border-style: none;
+    border-radius: 20px;
+    background-color: var(--blue);
+    box-shadow: 4px 4px 0.12em rgba(0, 0, 0, 0.2);
+    margin: 0.9rem;
+    color: var(--dark-blue);
+} 
+
+.game_selection_games div button div {
+    display: block;
+    position: relative;
+    margin-left: -10vw;
+    right: auto;
+    top: -3vw;
+    left: auto;
+    align-self: start;
+    
+    width: 20vw !important;
+    height: 20vw   !important;
+    border-radius: 50%;
+    background-color: var(--dark-blue);
+    box-shadow: 4px 4px 0.12em var(--black-transparent)
+}
+
+.game_selection_games div button div img{
+    display: block;
+    position: absolute;
+
+    filter: invert(1);
+    width: 80%;
+    height: 80%;
+    left: 10%;
+    top: 5%;
+
+
+}
+
+.game_selection_games div button p {
+    width: 200px;
+    border-radius: 1rem;
+    color: var(--dark-blue);   
+    margin: 0rem;
+} 
+
+.game_selection_games div button p2 {
+    margin-bottom: 3vw;
+    border-radius: 1rem;
+    font-size: 6vw;
+    color: white;
+
+
+    /* background-color: var(--dark-blue);
+    box-shadow: 4px 4px 0.12em var(--black-transparent) */
+} 
+
+.game_selection_games div button p3 {
+    width: 22vw;
+    font-size: 7vw;
+    margin-bottom: 3vw;
+    border-radius: 1rem;
+    color: white;
+    background-color: var(--dark-blue);
+    box-shadow: 4px 4px 0.12em var(--black-transparent)
+} 
+
+.game_selection_hand {
+    display: block;
+    position: fixed;
+    bottom: 15%;
+    top: auto;
+    width: 20vw;
+    animation-name: handSwipeAnim;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-direction: forwards;
+    animation-iteration-count: infinite;
+}
+
+.game_backButton,
+.game_restartButton  {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 12vw !important;
-    height: 12vw !important;
+    width: 10vw !important;
+    height: 10vw !important;
     font-size: 15vw;
     padding: 0%;
     padding-top: 0.3rem;
     margin: 2vw;
     border-style: none;
-    background-color: darkcyan;
+    background-color: var(--dark-blue);
     font-family: font2;
     border-radius: 50%;
-    align-self: left;
-    box-shadow: 4px 4px 0.12em #000;
-    color: #000; 
+    align-self: start;
+    box-shadow: 4px 4px 0.12em var(--black-transparent);
+    color: white;
+} 
+
+.game_restartButton{
+    font-size: 8vw;
 } 
 
 .game {
@@ -196,50 +463,47 @@ input {
     width: 100%;
     height: 100%;
     flex-direction: column;
-    background-color: lightblue;
+    background-color: var(--blue);
 }
 
 
 .game_question, .game_answer  {
     display: flex;
+    width: 90vw;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    padding: 2vw;
+    padding: 1.5vw;
     font-size: 12vw;
 }
 
 .game_answer {
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
-    background-color: darkcyan;
+    align-content: center;
+    background-color: var(--dark-blue);
     border-radius: 2vw;
-    box-shadow: 4px 4px 0.12em; 
+    box-shadow: 4px 4px 0.12em var(--black-transparent)
 }
 
 .game main,
 .game header {
     display: flex;
+    width: 100vw;
+    flex-grow: 1;
     flex-direction: column;
-    /* background-color: yellow; */
-    align-content: center;
-    justify-content: center;
+    align-items: center;
+    justify-content: start;
 }
-/* 
-.game main {
-    background-color: orange;
-} */
 
 
 .game_question button,
 .game_answer button {
     display: flex;
     position: relative;
-    background: linear-gradient(#fff0bd, #d0bf88);
-	box-shadow: 4px 4px 0.12em; 
-    color: #64615b;
+    background: var(--tile-gradient);
+    box-shadow: 4px 4px 0.12em  var(--black-transparent);
+    color: var(--tile-letter);
     font-family: font3;
     font-size: 7vw;
     width: 8vw;
@@ -251,39 +515,73 @@ input {
     align-items: center;
     padding: 0.5vw;
     margin: 0.5vw;
-
 }
 
 .game_answer button {
-    background: linear-gradient(#f0f0f0, #b0b0b0);
+    background: var(--tile-grey-gradient);
 }
-
 
 .game footer{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-
     width: 100vw;
 }
 
-.game_restartButton{
+
+.game_keyboard{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100vw;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    /* background-color: var(--light-blue); */
+    background-color: #ffffff80;
+    border: 2px solid white;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.game_keyboard div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.game_keyboard div button {
+    display: flex;
+    background: var(--tile-grey-gradient);
+    box-shadow: 4px 4px 0.12em  var(--black-transparent);
+    color: var(--tile-letter);
+    font-family: font3;
+    font-size: 7vw;
+    width: 8vw;
+    height: 8vw;
+    border: none;
+    border-radius:1vw;
     text-align: center;
-    align-self: center;
-    width: 15vw !important;
-    height: 15vw !important;
-    font-size: 10vw;
-    border-style: none;
-    background-color: darkcyan;
-    margin: 5vw;
-    font-family: font2;
-    border-radius: 100%;
-    box-shadow: 4px 4px 0.12em #000;
-    color: #000;
-    padding: 0vw;
-} 
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    margin: 0.5vw;
+}
+
+.game_answer button {
+background: var(--tile-grey-gradient);
+}
+
+.game_buttons{
+    display: flex;
+    width: 100vw;
+    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 12vh
+}
 
 .game_tick{
     display: none;
@@ -312,8 +610,9 @@ input {
 }
 
 .game_question img {
-    width: 70vw;
+    width: 50vw;
     height: auto
+    
 }
 
 .game_word {
@@ -325,6 +624,123 @@ input {
 .letterSelect {
     opacity: 0.2;
 }
+
+.scavenger {
+    display: none;
+    flex-direction: column;
+    justify-content: start;
+    align-content: center;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: var(--blue);
+    
+}
+
+
+
+.scavanger_buttons {
+    display: flex;
+    width: 100vw;
+    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 12vh
+
+}
+
+.scavenger_title {
+    color: var(--dark-blue);
+    font-size: 12vw;
+    font-family: font1;
+    align-self: end;
+
+}
+
+.scavenger_description {
+    color: black;
+    font-size: 5vw;
+    font-family: font2;
+    text-align: center;
+}
+
+.scavenger_backButton,
+.scavenger_infoButton  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 10vw !important;
+    height: 10vw !important;
+    font-size: 15vw;
+    padding: 0%;
+    padding-top: 0.3rem;
+    margin: 2vw;
+    border-style: none;
+    background-color: var(--dark-blue);
+    font-family: font2;
+    border-radius: 50%;
+    align-self: start;
+    box-shadow: 4px 4px 0.12em var(--black-transparent);
+    color: white;
+} 
+
+.scavenger_infoButton{
+    font-size: 8vw;
+} 
+
+.scavenger main {
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.scavenger_clues {
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    align-items: center;
+    
+    width:  100vw;
+
+    overflow-y: auto;
+    scrollbar-width:none;
+    -ms-overflow-style: none;
+
+    border-top-left-radius: 25px;
+    padding-top: 2vw;
+    border-bottom-right-radius: 25px;
+   
+}
+
+.scavenger_clues div  {
+    display: flex;
+    width: 90vw;
+    justify-content: space-between;
+    background-color:  var(--dark-blue);
+
+    border-radius: 10px;
+    margin: 2vw;
+    font-family: font1;
+    font-size: 5vw;
+    padding: 3vw;
+    text-align: left;
+    color: var(--blue);
+
+}
+
+
+.scavenger_clues div img  {
+    display: flex;
+    width: 10vw;
+    height: 10vw;
+    filter: drop-shadow(2px 2px 0px #0000005a);
+}
+
 
 /* celebration */
 
@@ -350,8 +766,6 @@ input {
     flex-direction: column;
     justify-content: start;
     align-content: center;
-
-
     width: 100%;
     height: 100%;
     font-size: 15vw;
@@ -364,7 +778,6 @@ input {
     align-self: center;
 }
 
-
 .foundHeart h1{
     font-size: 15vw;
 }
@@ -373,16 +786,14 @@ input {
     font-size: 6vw;
 }
 
-
 .foundHeart button{
     font-size: 5vw;
     align-self: center;
     width: 50vw;
-    background-color: #BFD2E3;
+    background-color:var(--dark-blue);
     border: transparent;
     border-radius: 5%;
     padding: 2vw;
-
 }
 
 .confetti {
@@ -392,8 +803,6 @@ input {
     height: 200%;
     top: 0%;
     left: 0%;
-
-
 }
 
 .heartGif {
@@ -401,4 +810,77 @@ input {
     height: 70vw;
     align-self: center;
     justify-self: center;
+} 
+
+.ringGif {
+    width: 100%;
+    height: 100%;
+} 
+
+/* Animation */
+.parallax > use {
+animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax > use:nth-child(1) {
+animation-delay: -2s;
+animation-duration: 7s;
+}
+.parallax > use:nth-child(2) {
+animation-delay: -3s;
+animation-duration: 10s;
+}
+.parallax > use:nth-child(3) {
+animation-delay: -4s;
+animation-duration: 13s;
+}
+.parallax > use:nth-child(4) {
+animation-delay: -5s;
+animation-duration: 20s;
+}
+@keyframes move-forever {
+0% {
+transform: translate3d(-90px,0,0);
+}
+100% {
+transform: translate3d(85px,0,0);
+}
+}
+
+.handSwipe {
+    animation-name: handSwipeAnim;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-direction: forwards;
+    animation-iteration-count: infinite;
+}
+
+@keyframes handSwipeAnim {
+    0% {
+        transform: rotate(40deg);
+        width: 25vw;
+    }
+
+    30% {
+        transform: rotate(70deg);
+        margin-left: 45%;
+        width: 20vw;
+    }
+
+    70% {
+
+        transform: rotate(20deg);
+        margin-left: -45%;
+        width: 20vw;
+    }
+    100% {
+        transform: rotate(40deg);
+        margin-left: 0vw;
+        width: 25vw;
+
+    }
+}
+
+.mapGif {
+    height: 40%;
 }

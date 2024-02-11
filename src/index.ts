@@ -37,4 +37,3 @@ export function triggerLetter(letter){
 export function triggerGameButton(trigger){
     game_selection.triggerGameButton(trigger);
 }
-
