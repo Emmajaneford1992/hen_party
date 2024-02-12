@@ -1257,7 +1257,7 @@ class Game {
         this.answerLength = this.answer.replaceAll(" ", "").length;
         (0, _index.setGameScore)(this.round + "/" + this.numOfRounds);
         (0, _index.createGameRound)(this.gameName, this.question, this.round, this.answer);
-        this.userAnswer = this.gameName == "fill_the_blanks" ? this.question : "";
+        this.userAnswer = this.gameName == "fill_the_blanks" ? this.question.replace(" ", "") : "";
     }
     triggerInput(letter) {
         console.log(letter);
@@ -1290,9 +1290,9 @@ class Game {
         this.updateWord();
     }
     triggerLetter(letter) {
-        console.log("triggerletter", letter);
+        console.log("triggerletter", letter, this.gameName);
         this.userAnswer = this.gameName == "scrambled_words" ? this.userAnswer + letter : this.userAnswer.replaceAll("_", letter);
-        console.log(this.userAnswer);
+        console.log("here", this.userAnswer);
         this.updateWord();
     }
     triggerBackspace() {

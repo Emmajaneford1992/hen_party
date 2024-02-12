@@ -1,4 +1,3 @@
-import { LottieInteractivity } from "@lottiefiles/lottie-interactivity";
 import { triggerButton, triggerInput, triggerLetter } from "../index";
 // import image1 from "../assets/images/finleys_films/1.png";
 //const image1 = new URL("../assets/images/finleys_films/1.png");
@@ -219,26 +218,16 @@ export function createGameRound(game: string, question : string, round: number, 
             let empty = document.createElement('button');
             words[words.length-1].append(empty)
             tiles.push(empty)
+
+            if(game == 'fill_the_blanks'){
+                if(question.charAt(i) != '_'){
+                    empty.innerHTML = question.charAt(i);
+                }
+            }
         }
     }
 
-    game_answer.append(word)
-
-    // let game_inputGroup = document.createElement('div');
-    // game_inputGroup.classList.add('inputGroup')
-    // game_answer.append(game_inputGroup)
-
-
-    // game_input = document.createElement('input');
-    // game_input.style.height =     words.length*12 + 'vw'
-    // game_input.maxLength = answer.replaceAll(' ','').length;
-    // game_inputGroup.append(game_input)
-
-
-    // game_input.addEventListener("input", (event) => {
-    //     triggerInput(event);
-    // });
-
+    game_answer.append(word);
 
     if(game == 'scrambled_words' || game == 'fill_the_blanks'){
         let questionStr = game == 'scrambled_words' ? question : 'aeiou';
@@ -320,8 +309,6 @@ export function hideFoundHeart(){
 }
 
 export function createKeyboard(){
-
-
     keyboardLetters.forEach(row => {
         let div = document.createElement('div');
         game_keyboard.append(div);

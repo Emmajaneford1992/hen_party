@@ -34,7 +34,7 @@ export default class Game {
 
         setGameScore(this.round +"/"+ this.numOfRounds)
         createGameRound(this.gameName, this.question, this.round, this.answer);
-        this.userAnswer = this.gameName == 'fill_the_blanks' ? this.question : '';
+        this.userAnswer = this.gameName == 'fill_the_blanks' ? this.question.replace(' ', '') : '';
     }
 
     public triggerInput(letter){
@@ -83,9 +83,9 @@ export default class Game {
     }
 
     public triggerLetter(letter){
-        console.log('triggerletter', letter)
+        console.log('triggerletter', letter, this.gameName)
         this.userAnswer = this.gameName == 'scrambled_words' ? this.userAnswer + letter : this.userAnswer.replaceAll('_', letter);
-        console.log(this.userAnswer)
+        console.log('here', this.userAnswer)
         this.updateWord();   
     }
 
