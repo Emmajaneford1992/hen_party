@@ -43,12 +43,10 @@ export default class Game {
             if(this.gameName == 'scrambled_words'){
                 this.triggerBackspace();
             }
-            //this.userAnswer = event.target.value;
             this.userAnswer = this.userAnswer.substring(0, this.userAnswer.length - 1);
             this.updateWord();
         }
 
-        // let letter = (event as InputEvent).data;
         else if(letter != null){
             if(letter.match(/[a-z]/i)){
                 if(this.gameName == 'scrambled_words'){
@@ -100,18 +98,18 @@ export default class Game {
         if(this.userAnswer == this.answer.replaceAll(' ','')){
             console.log('ROUND COMPLETE')
             roundComplete()
-            setTimeout(() => {
-                if(this.round < this.numOfRounds-1){
-                    this.round++;
-                    console.log(this.gameName, this.round)
-                    localStorage.setItem(this.gameName, ''+this.round);
-                    this.generateRound()
-                }
-                else{
-                    hideGame()
-                    revealCelebration();
-                }
-            }, 2100);
+            // setTimeout(() => {
+            //     if(this.round < this.numOfRounds-1){
+            //         this.round++;
+            //         console.log(this.gameName, this.round)
+            //         localStorage.setItem(this.gameName, ''+this.round);
+            //         this.generateRound()
+            //     }
+            //     else{
+            //         hideGame()
+            //         revealCelebration();
+            //     }
+            // }, 2100);
         }
     }
 

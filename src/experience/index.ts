@@ -14,10 +14,9 @@ export default class Game_selection {
    
     public triggerButton(key) {
         console.log('button triggered', key);
-        // if(this.gameName == 'scrambled_words' || this.gameName == 'emoji_game' || this.gameName == 'finleys_films' || this.gameName == 'fill_the_blanks' || this.gameName == 'face_merge'){
-            revealGame();
-            this.game =  new Game(key);
-        // } 
+        revealGame();
+        this.game =  new Game(key);
+        
     }
 
     public triggerLetter(letter){

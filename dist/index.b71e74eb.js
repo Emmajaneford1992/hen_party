@@ -581,6 +581,15 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"h7u1C":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// if(params == null){
+//     console.log('splash')
+//     revealSplash();
+// }
+// if()
+//     console.log('found heart', params)
+//     localStorage.getItem(value.heartToken);
+//     revealFoundHeart()
+// }
 parcelHelpers.export(exports, "triggerButton", ()=>triggerButton);
 parcelHelpers.export(exports, "triggerInput", ()=>triggerInput);
 parcelHelpers.export(exports, "triggerLetter", ()=>triggerLetter);
@@ -591,16 +600,21 @@ var _experience = require("./experience");
 var _experienceDefault = parcelHelpers.interopDefault(_experience);
 var _queryString = require("../queryString");
 //import { getUrlParams } from "../queryString";
+var _scavengerInfoJson = require("./experience/utils/scavengerInfo.json");
+var _scavengerInfoJsonDefault = parcelHelpers.interopDefault(_scavengerInfoJson);
 let game_selection = new (0, _experienceDefault.default)();
 (0, _buttons.initButtons)();
 let params = (0, _queryString.getUrlParams)();
-if (params == null) {
-    console.log("splash");
-    (0, _dom.revealSplash)();
-} else {
-    console.log("found heart", params);
-    (0, _dom.revealFoundHeart)();
-}
+let foundHeart = false;
+Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
+    if (value.heartToken == params) {
+        console.log("found heart", params);
+        localStorage.setItem(value.heartToken, "found");
+        foundHeart = true;
+    }
+});
+if (foundHeart) (0, _dom.revealFoundHeart)();
+else (0, _dom.revealSplash)();
 function triggerButton(button) {
     console.log("button triggered");
     console.log(button, "button triggered");
@@ -616,7 +630,7 @@ function triggerGameButton(trigger) {
     game_selection.triggerGameButton(trigger);
 }
 
-},{"./dom/buttons":"8Z3Vb","./dom":"9OTgz","./experience":"47u4Z","../queryString":"51Hld","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Z3Vb":[function(require,module,exports) {
+},{"./dom/buttons":"8Z3Vb","./dom":"9OTgz","./experience":"47u4Z","../queryString":"51Hld","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./experience/utils/scavengerInfo.json":"j2Ma8"}],"8Z3Vb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initButtons", ()=>initButtons);
@@ -637,6 +651,7 @@ function initButtons() {
     scavenger_hunt_button.addEventListener("click", ()=>{
         (0, _dom.hideGameSelection)();
         (0, _dom.revealScavenger)();
+        (0, _dom.updateScavengeScore)();
     });
     scavenger_backButton.addEventListener("click", ()=>{
         (0, _dom.hideScavenger)();
@@ -687,8 +702,11 @@ parcelHelpers.export(exports, "createKeyboard", ()=>createKeyboard);
 parcelHelpers.export(exports, "revealScavenger", ()=>revealScavenger);
 parcelHelpers.export(exports, "hideScavenger", ()=>hideScavenger);
 parcelHelpers.export(exports, "initGameSelection", ()=>initGameSelection);
-parcelHelpers.export(exports, "initStars", ()=>initStars);
+parcelHelpers.export(exports, "updateStars", ()=>updateStars);
+parcelHelpers.export(exports, "updateHearts", ()=>updateHearts);
+parcelHelpers.export(exports, "updateGameSelectionScore", ()=>updateGameSelectionScore);
 parcelHelpers.export(exports, "initScavenger", ()=>initScavenger);
+parcelHelpers.export(exports, "updateScavengeScore", ()=>updateScavengeScore);
 var _index = require("../index");
 // import image1 from "../assets/images/finleys_films/1.png";
 //const image1 = new URL("../assets/images/finleys_films/1.png");
@@ -711,6 +729,7 @@ const scavenger_clues = document.querySelector(".scavenger_clues");
 const celebration = document.querySelector(".celebration");
 const foundHeart = document.querySelector(".foundHeart");
 const starsIcon = document.querySelector(".stars_icon");
+const heartsIcon = document.querySelector(".hearts_icon");
 const game_restartButton = document.querySelector(".game_restartButton");
 const game_tick = document.querySelector(".game_tick");
 let game_keyboard = document.querySelector(".game_keyboard");
@@ -751,6 +770,9 @@ let keyboardLetters = [
     ]
 ];
 let heartIcon = require("46648d6f82545e65");
+let totalScore = 0;
+let numOfQuestions = 0;
+let totalHearts = 0;
 let game_selection_button_images = [
     require("3a55660c2e766e56"),
     require("910c7c98b78a342f"),
@@ -791,6 +813,8 @@ let letters = [];
 let tiles = [];
 let words = [];
 let qWords = [];
+let clues = [];
+let hearts = [];
 function revealSplash() {
     console.log("hide Splash");
     splash.style.display = "flex";
@@ -799,7 +823,6 @@ function revealSplash() {
 function init() {
     initGameSelection();
     initScavenger();
-    initStars();
     createKeyboard();
 }
 function hideSplash() {
@@ -808,11 +831,9 @@ function hideSplash() {
 }
 function revealGameSelection() {
     game_selection.style.display = "flex";
-    Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
-        let score = localStorage.getItem(key);
-        if (score == null) score = "0";
-        scores[index].innerHTML = score + "/" + Object.keys(value.rounds).length;
-    });
+    updateGameSelectionScore();
+    updateStars();
+    updateHearts();
 }
 game_selection_games_div.addEventListener("scroll", (event)=>{
     game_selection_hand.style.display = "none";
@@ -837,7 +858,6 @@ function setGameScore(str) {
 }
 function setWord(word, correctWord) {
     console.log(word);
-    // game_input.value = word;
     tiles.forEach((tile, i)=>{
         if (i < word.length) {
             tile.style.background = "linear-gradient(#fff0bd, #d0bf88)";
@@ -931,18 +951,22 @@ function createGameRound(game, question, round, answer) {
                 }
             });
         });
-    } else if (game == "emoji_game") {
-        console.log("create emoji game", question);
-        game_question.innerHTML = question;
-    } else if (game == "finleys_films" || game == "face_merge") {
-        let game_image = document.createElement("img");
-        game_question.append(game_image);
-        game_image.src = game == "finleys_films" ? finley_film_images[round] : face_merge_images[round];
+    } else {
+        game_keyboard.style.display = "flex";
+        if (game == "emoji_game") {
+            console.log("create emoji game", question);
+            game_question.innerHTML = question;
+        } else if (game == "finleys_films" || game == "face_merge") {
+            let game_image = document.createElement("img");
+            game_question.append(game_image);
+            game_image.src = game == "finleys_films" ? finley_film_images[round] : face_merge_images[round];
+        }
     }
 }
 function roundComplete() {
     game_tick.style.display = "flex";
     game_restartButton.style.display = "none";
+    game_keyboard.style.display = "none";
 //let player = document.getElementById(".game_tick");
 // player.addEventListener("ready", () => {
 // LottieInteractivity.create({
@@ -987,10 +1011,6 @@ function hideScavenger() {
 }
 function initGameSelection() {
     Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
-        console.log(`${key}: ${value}`);
-        //   });
-        // for (const [key, value] of Object.entries(gameInfo)) {
-        console.log(`${key}: ${value}`);
         let button = document.createElement("button");
         game_selection_games_div.append(button);
         let div = document.createElement("div");
@@ -1016,27 +1036,51 @@ function initGameSelection() {
         });
     });
 }
-function initStars() {
-    starsIcon.innerHTML = "test";
-    let totalScore = 0;
-    let numOfQuestions = 0;
+function updateStars() {
+    totalScore = 0;
+    numOfQuestions = 0;
     Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
         let score = localStorage.getItem(key);
         if (score == null) score = "0";
         scores[index].innerHTML = score + "/" + Object.keys(value.rounds).length;
-        //numOfQuestions +=  Object.keys(value.rounds).length;
+        numOfQuestions += Object.keys(value.rounds).length;
         totalScore += Number(score);
-    //starsIcon.innerHTML = totalScore.toString()  + '/ ' + numOfQuestions;
+    });
+    starsIcon.innerHTML = "\u2605<br/>" + totalScore.toString() + " / " + numOfQuestions;
+}
+function updateHearts() {
+    totalHearts = 0;
+    Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        let heart = localStorage.getItem(value.heartToken);
+        if (heart != null) totalHearts++;
+    });
+    heartsIcon.innerHTML = "\u2665<br/>" + totalHearts.toString() + " / " + Object.keys((0, _scavengerInfoJsonDefault.default)).length;
+}
+function updateGameSelectionScore() {
+    Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        let score = localStorage.getItem(key);
+        if (score == null) score = "0";
+        scores[index].innerHTML = "\u2605" + score + "/" + Object.keys(value.rounds).length;
     });
 }
 function initScavenger() {
     Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
         let clue = document.createElement("div");
-        clue.innerHTML = value.clue;
         scavenger_clues.append(clue);
+        let clueText = document.createElement("p");
+        clue.append(clueText);
+        clues.push(clueText);
         let heart = document.createElement("img");
         heart.src = heartIcon;
+        hearts.push(heart);
         clue.append(heart);
+    });
+}
+function updateScavengeScore() {
+    Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        clues[index].innerHTML = totalScore / 10 > index ? value.clue : "locked";
+        hearts[index].style.filter = "grayscale(1)";
+        hearts[index].style.opacity = "0.5";
     });
 }
 
@@ -1214,10 +1258,8 @@ class Game_selection {
     constructor(){}
     triggerButton(key) {
         console.log("button triggered", key);
-        // if(this.gameName == 'scrambled_words' || this.gameName == 'emoji_game' || this.gameName == 'finleys_films' || this.gameName == 'fill_the_blanks' || this.gameName == 'face_merge'){
         (0, _index.revealGame)();
         this.game = new (0, _gameDefault.default)(key);
-    // } 
     }
     triggerLetter(letter) {
         this.game.triggerLetter(letter);
@@ -1263,7 +1305,6 @@ class Game {
         console.log(letter);
         if (letter == "\u232B") {
             if (this.gameName == "scrambled_words") this.triggerBackspace();
-            //this.userAnswer = event.target.value;
             this.userAnswer = this.userAnswer.substring(0, this.userAnswer.length - 1);
             this.updateWord();
         } else if (letter != null) {
@@ -1305,17 +1346,18 @@ class Game {
         if (this.userAnswer == this.answer.replaceAll(" ", "")) {
             console.log("ROUND COMPLETE");
             (0, _index.roundComplete)();
-            setTimeout(()=>{
-                if (this.round < this.numOfRounds - 1) {
-                    this.round++;
-                    console.log(this.gameName, this.round);
-                    localStorage.setItem(this.gameName, "" + this.round);
-                    this.generateRound();
-                } else {
-                    (0, _index.hideGame)();
-                    (0, _index.revealCelebration)();
-                }
-            }, 2100);
+        // setTimeout(() => {
+        //     if(this.round < this.numOfRounds-1){
+        //         this.round++;
+        //         console.log(this.gameName, this.round)
+        //         localStorage.setItem(this.gameName, ''+this.round);
+        //         this.generateRound()
+        //     }
+        //     else{
+        //         hideGame()
+        //         revealCelebration();
+        //     }
+        // }, 2100);
         }
     }
     triggerGameButton(trigger) {

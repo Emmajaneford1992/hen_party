@@ -119,7 +119,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 
 .game_title {
   color: var(--dark-blue);
-  align-self: end;
+  place-self: center;
   font-family: font1;
   font-size: 12vw;
 }
@@ -251,7 +251,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   border-radius: 50px;
   flex-direction: column;
   place-content: center;
-  font-size: 7.5vw;
+  font-size: 4vw;
   font-weight: bold;
   display: flex;
   box-shadow: 4px 4px .12em #0000001a;
@@ -464,6 +464,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 .game footer {
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100vw;
   display: flex;
 }
@@ -479,7 +480,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   width: 100vw;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  display: flex;
+  display: none;
 }
 
 .game_keyboard div {
@@ -515,34 +516,17 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   justify-content: space-between;
   align-items: start;
   width: 100vw;
-  height: 12vh;
   display: flex;
+}
+
+.game_info {
+  margin-top: -12vw;
 }
 
 .game_tick {
   display: none;
   width: 30vw !important;
   height: 30vw !important;
-}
-
-.inputGroup {
-  opacity: 0;
-  width: 95%;
-  height: 100%;
-  margin: 0%;
-  display: block;
-  position: relative;
-  top: 0%;
-  left: 0%;
-}
-
-.game input {
-  width: 95vw;
-  height: 30vw;
-  display: block;
-  position: absolute;
-  bottom: 95%;
-  left: 0%;
 }
 
 .game_question img {

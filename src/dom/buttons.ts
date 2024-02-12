@@ -1,4 +1,4 @@
-import { hideCelebration, hideFoundHeart, hideGame, hideGameSelection, hideScavenger, hideSplash, revealGameSelection, revealScavenger } from "../dom";
+import { hideCelebration, hideFoundHeart, hideGame, hideGameSelection, hideScavenger, hideSplash, revealGameSelection, revealScavenger, updateScavengeScore } from "../dom";
 import  { triggerGameButton } from "../index";
 
 let splash_button = <HTMLButtonElement>document.querySelector('.splash_button');
@@ -21,6 +21,7 @@ export function initButtons() {
     scavenger_hunt_button.addEventListener('click', () =>{
         hideGameSelection(); 
         revealScavenger();
+        updateScavengeScore();
     })
 
     scavenger_backButton.addEventListener('click', () =>{

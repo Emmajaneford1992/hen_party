@@ -20,6 +20,7 @@ const celebration = <HTMLElement>document.querySelector('.celebration')
 const foundHeart = <HTMLElement>document.querySelector('.foundHeart')
 
 const starsIcon = <HTMLElement>document.querySelector('.stars_icon')
+const heartsIcon = <HTMLElement>document.querySelector('.hearts_icon')
 
 const game_restartButton = <HTMLElement>document.querySelector('.game_restartButton')
 const game_tick = <HTMLElement>document.querySelector('.game_tick')
@@ -29,6 +30,10 @@ let scores = [];
 let keyboardLetters = [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m','⌫']];
 
 let heartIcon = require("../assets/images/heartIcon.png");
+
+let totalScore = 0;
+let numOfQuestions = 0;
+let totalHearts = 0;
 
 let game_selection_button_images = [
     require("../assets/images/letters.png"), 
@@ -72,6 +77,8 @@ let letters = [];
 let tiles = [];
 let words = [];
 let qWords = [];
+let clues = [];
+let hearts = [];
 
 export function revealSplash(){
     console.log('hide Splash')
@@ -82,7 +89,6 @@ export function revealSplash(){
 export function init(){
     initGameSelection();
     initScavenger();
-    initStars();
     createKeyboard();
 }
 
@@ -94,11 +100,10 @@ export function hideSplash(){
 export function revealGameSelection(){
     game_selection.style.display = 'flex';   
 
-    Object.entries(gameInfo).forEach(([key, value], index) => {
-        let score = localStorage.getItem(key);
-        if(score == null) score = '0';
-        scores[index].innerHTML =   score +'/'+ Object.keys(value.rounds).length;
-    });
+
+    updateGameSelectionScore();
+    updateStars();
+    updateHearts();
 }
 
 
@@ -133,7 +138,6 @@ export function setGameScore(str) {
 
 export function setWord(word : string, correctWord : string){
     console.log(word);
-    // game_input.value = word;
     tiles.forEach((tile,i) => {
         if(i < word.length){
             tile.style.background = 'linear-gradient(#fff0bd, #d0bf88)';
@@ -181,7 +185,7 @@ export function setWordGreen(){
 
 export function clearGame(){
     game_tick.style.display =  'none';
-    game_restartButton.style.display = 'flex'
+    game_restartButton.style.display = 'flex
 
     while (game_answer.firstChild) {
         game_answer.removeChild(game_answer.lastChild);
@@ -253,6 +257,8 @@ export function createGameRound(game: string, question : string, round: number, 
                 qWord.append(letter);
             }
         }
+   
+
 
         letters.forEach((letter,i) => {
             letter.addEventListener('click', () =>{
@@ -263,21 +269,26 @@ export function createGameRound(game: string, question : string, round: number, 
             })
         });
     }
-    else if(game == 'emoji_game'){
-        console.log('create emoji game', question)
-        game_question.innerHTML = question;
+    else{
+    game_keyboard.style.display = 'flex';
+        if(game == 'emoji_game'){
+            console.log('create emoji game', question)
+            game_question.innerHTML = question;
+        }
+        else if(game == 'finleys_films' ||game == 'face_merge'){
+            let game_image = document.createElement('img');
+            game_question.append(game_image)
+            game_image.src = game == 'finleys_films' ? finley_film_images[round] : face_merge_images[round] ;
+        }
     }
-    else if(game == 'finleys_films' ||game == 'face_merge'){
-        let game_image = document.createElement('img');
-        game_question.append(game_image)
-        game_image.src = game == 'finleys_films' ? finley_film_images[round] : face_merge_images[round] ;
-    }
+
 }
 
 
 export function roundComplete(){
     game_tick.style.display =  'flex';
-    game_restartButton.style.display = 'none'
+    game_restartButton.style.display = 'none';
+    game_keyboard.style.display  = 'none';
 
     //let player = document.getElementById(".game_tick");
 
@@ -334,10 +345,7 @@ export function hideScavenger(){
 
 export function initGameSelection(){
     Object.entries(gameInfo).forEach(([key, value], index) => {
-        console.log(`${key}: ${value}`);
-    //   });
-    // for (const [key, value] of Object.entries(gameInfo)) {
-        console.log(`${key}: ${value}`);
+
         let button  = document.createElement('button');
         game_selection_games_div.append(button);
 
@@ -374,30 +382,64 @@ export function initGameSelection(){
 }
 
 
-export function initStars(){
-    starsIcon.innerHTML = 'test';
-
-
-    let totalScore = 0;
-    let numOfQuestions = 0;
-
+export function updateStars() {
+    totalScore = 0;
+    numOfQuestions = 0; 
     Object.entries(gameInfo).forEach(([key, value], index) => {
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
         scores[index].innerHTML =   score +'/'+ Object.keys(value.rounds).length;
-        //numOfQuestions +=  Object.keys(value.rounds).length;
-        totalScore += Number(score) 
-        //starsIcon.innerHTML = totalScore.toString()  + '/ ' + numOfQuestions;
+        numOfQuestions +=  Object.keys(value.rounds).length;
+        totalScore += Number(score); 
     })
+    starsIcon.innerHTML = '★<br/>'+totalScore.toString()  + ' / ' + numOfQuestions;
+}
+
+export function updateHearts() {
+    totalHearts = 0;
+    Object.entries(scavengerInfo).forEach(([key, value], index) => {
+        let heart = localStorage.getItem(value.heartToken);
+        if(heart != null){
+            totalHearts++; 
+        }
+    })
+    heartsIcon.innerHTML = '♥<br/>'+totalHearts.toString()  + ' / ' + Object.keys(scavengerInfo).length;
+}
+
+export function updateGameSelectionScore() {
+    Object.entries(gameInfo).forEach(([key, value], index) => {
+        let score = localStorage.getItem(key);
+        if(score == null) score = '0';
+        scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
+    });
 }
 
 export function initScavenger(){
     Object.entries(scavengerInfo).forEach(([key, value], index) => {
         let clue = document.createElement('div');
-        clue.innerHTML = value.clue;
         scavenger_clues.append(clue);
+        let clueText = document.createElement('p');
+        clue.append(clueText);
+        clues.push(clueText)
         let heart = document.createElement('img');
         heart.src = heartIcon;
+
+        hearts.push(heart);
         clue.append(heart);
+
     });
+}
+
+export function updateScavengeScore() { 
+    Object.entries(scavengerInfo).forEach(([key, value], index) => {
+
+        clues[index].innerHTML = totalScore/ 10 > index ? value.clue  : 'locked';
+
+        hearts[index].style.filter = 'grayscale(1)';
+        hearts[index].style.opacity = '0.5';
+      
+    });
+
+
+
 }
