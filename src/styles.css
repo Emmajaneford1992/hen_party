@@ -63,6 +63,7 @@ button,
     --yellow-gradient:  linear-gradient( rgb(255, 255, 159), rgb(255, 189, 66) );
     --tile-gradient: linear-gradient(#fff0bd, #d0bf88);
     --tile-gradient: linear-gradient(#fff0bd, #f1c16a);
+
     --tile-letter:     #64615b;
     --tile-grey-gradient: linear-gradient(#f0f0f0, #b0b0b0);
     --black-transparent: rgba(0, 0, 0, 0.2);
@@ -713,6 +714,7 @@ margin-top: -12vw;
     display: flex;
     width: 90vw;
     justify-content: space-between;
+    align-items: center;
     background-color:  var(--dark-blue);
 
     border-radius: 10px;

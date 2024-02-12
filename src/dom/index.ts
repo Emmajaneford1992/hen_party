@@ -20,7 +20,9 @@ const celebration = <HTMLElement>document.querySelector('.celebration')
 const foundHeart = <HTMLElement>document.querySelector('.foundHeart')
 
 const starsIcon = <HTMLElement>document.querySelector('.stars_icon')
+const starsScore = <HTMLElement>document.querySelector('.stars_score')
 const heartsIcon = <HTMLElement>document.querySelector('.hearts_icon')
+const heartsScore = <HTMLElement>document.querySelector('.hearts_score')
 
 const game_restartButton = <HTMLElement>document.querySelector('.game_restartButton')
 const game_tick = <HTMLElement>document.querySelector('.game_tick')
@@ -142,7 +144,7 @@ export function setWord(word : string, correctWord : string){
         if(i < word.length){
             tile.style.background = 'linear-gradient(#fff0bd, #d0bf88)';
             tile.innerHTML = word.charAt(i);
-            //tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "linear-gradient(#f0f0f0, #b0b0b0)";
+            tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "linear-gradient(#f0f0f0, #b0b0b0)";
         }
         else{
             tile.style.background =  'linear-gradient(#f0f0f0, #b0b0b0)';
@@ -185,7 +187,7 @@ export function setWordGreen(){
 
 export function clearGame(){
     game_tick.style.display =  'none';
-    game_restartButton.style.display = 'flex
+    game_restartButton.style.display = 'flex';
 
     while (game_answer.firstChild) {
         game_answer.removeChild(game_answer.lastChild);
@@ -204,7 +206,6 @@ export function createGameRound(game: string, question : string, round: number, 
     clearGame();
 
     let word  = document.createElement('div');
-
     words.push(word);
     word.classList.add('game_word');
     game_answer.append(word)
@@ -393,6 +394,10 @@ export function updateStars() {
         totalScore += Number(score); 
     })
     starsIcon.innerHTML = '★<br/>'+totalScore.toString()  + ' / ' + numOfQuestions;
+    let percentage =  (1 - (totalScore/numOfQuestions))*100;
+    console.log(percentage);
+    starsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+    
 }
 
 export function updateHearts() {
@@ -404,6 +409,12 @@ export function updateHearts() {
         }
     })
     heartsIcon.innerHTML = '♥<br/>'+totalHearts.toString()  + ' / ' + Object.keys(scavengerInfo).length;
+    let percentage = (1-(totalHearts/Object.keys(scavengerInfo).length))*100;
+    console.log( )
+    //heartsScore.style.background= 'linear-gradient( #f0f0f0 0%, #bbbab7 '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+    heartsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+
+
 }
 
 export function updateGameSelectionScore() {
@@ -411,6 +422,7 @@ export function updateGameSelectionScore() {
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
         scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
+        
     });
 }
 
@@ -435,11 +447,10 @@ export function updateScavengeScore() {
 
         clues[index].innerHTML = totalScore/ 10 > index ? value.clue  : 'locked';
 
-        hearts[index].style.filter = 'grayscale(1)';
-        hearts[index].style.opacity = '0.5';
+        let heartFound = localStorage.getItem(value.heartToken);
+    
+        hearts[index].style.filter = heartFound == null ? 'grayscale(1)' : 'grayscale(0)';
+        hearts[index].style.opacity = heartFound == null ? '0.5' : '1';
       
     });
-
-
-
 }

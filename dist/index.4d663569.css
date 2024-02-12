@@ -632,6 +632,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   color: var(--blue);
   border-radius: 10px;
   justify-content: space-between;
+  align-items: center;
   width: 90vw;
   margin: 2vw;
   padding: 3vw;

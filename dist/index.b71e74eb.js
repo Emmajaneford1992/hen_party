@@ -729,7 +729,9 @@ const scavenger_clues = document.querySelector(".scavenger_clues");
 const celebration = document.querySelector(".celebration");
 const foundHeart = document.querySelector(".foundHeart");
 const starsIcon = document.querySelector(".stars_icon");
+const starsScore = document.querySelector(".stars_score");
 const heartsIcon = document.querySelector(".hearts_icon");
+const heartsScore = document.querySelector(".hearts_score");
 const game_restartButton = document.querySelector(".game_restartButton");
 const game_tick = document.querySelector(".game_tick");
 let game_keyboard = document.querySelector(".game_keyboard");
@@ -862,7 +864,7 @@ function setWord(word, correctWord) {
         if (i < word.length) {
             tile.style.background = "linear-gradient(#fff0bd, #d0bf88)";
             tile.innerHTML = word.charAt(i);
-        //tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "linear-gradient(#f0f0f0, #b0b0b0)";
+            tile.style.color = word.charAt(i) == correctWord.charAt(i) ? "green" : "linear-gradient(#f0f0f0, #b0b0b0)";
         } else {
             tile.style.background = "linear-gradient(#f0f0f0, #b0b0b0)";
             tile.innerHTML = "";
@@ -1047,6 +1049,9 @@ function updateStars() {
         totalScore += Number(score);
     });
     starsIcon.innerHTML = "\u2605<br/>" + totalScore.toString() + " / " + numOfQuestions;
+    let percentage = (1 - totalScore / numOfQuestions) * 100;
+    console.log(percentage);
+    starsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #fff0bd " + (percentage + 1) + "%, #f1c16a 100%)";
 }
 function updateHearts() {
     totalHearts = 0;
@@ -1055,6 +1060,10 @@ function updateHearts() {
         if (heart != null) totalHearts++;
     });
     heartsIcon.innerHTML = "\u2665<br/>" + totalHearts.toString() + " / " + Object.keys((0, _scavengerInfoJsonDefault.default)).length;
+    let percentage = (1 - totalHearts / Object.keys((0, _scavengerInfoJsonDefault.default)).length) * 100;
+    console.log();
+    //heartsScore.style.background= 'linear-gradient( #f0f0f0 0%, #bbbab7 '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+    heartsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #fff0bd " + (percentage + 1) + "%, #f1c16a 100%)";
 }
 function updateGameSelectionScore() {
     Object.entries((0, _gameInfoJsonDefault.default)).forEach(([key, value], index)=>{
@@ -1079,8 +1088,9 @@ function initScavenger() {
 function updateScavengeScore() {
     Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
         clues[index].innerHTML = totalScore / 10 > index ? value.clue : "locked";
-        hearts[index].style.filter = "grayscale(1)";
-        hearts[index].style.opacity = "0.5";
+        let heartFound = localStorage.getItem(value.heartToken);
+        hearts[index].style.filter = heartFound == null ? "grayscale(1)" : "grayscale(0)";
+        hearts[index].style.opacity = heartFound == null ? "0.5" : "1";
     });
 }
 
