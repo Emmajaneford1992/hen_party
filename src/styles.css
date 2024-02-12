@@ -29,7 +29,9 @@ button,
 /* input, */
 .game_selection_games,
 .game_selection_games div,
-.scavenger_clues {
+.scavenger_clues,
+.scavenger_clues div,
+.scavenger main {
     pointer-events: auto;
 }
 
@@ -642,6 +644,9 @@ background: var(--tile-grey-gradient);
 }
 
 
+.scavenger header {
+    height: 25%;
+}
 
 .scavanger_buttons {
     display: flex;
@@ -696,19 +701,21 @@ background: var(--tile-grey-gradient);
 .scavenger main {
     display: flex;
     width: 100%;
-    flex-grow: 1;
+    height: 75%;
 }
 
 .scavenger_clues {
     display: flex;
+
     flex-direction: column;
     justify-content:start;
     align-items: center;
     
     width:  100vw;
 
-    overflow-y: auto;
-    scrollbar-width:none;
+    overflow: scroll;
+    /* overflow-y: hidden; */
+    /* scrollbar-width:none; */
     -ms-overflow-style: none;
 
     border-top-left-radius: 25px;

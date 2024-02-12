@@ -900,18 +900,11 @@ function createGameRound(game, question, round, answer) {
         let empty = document.createElement("button");
         words[words.length - 1].append(empty);
         tiles.push(empty);
+        if (game == "fill_the_blanks") {
+            if (question.charAt(i) != "_") empty.innerHTML = question.charAt(i);
+        }
     }
     game_answer.append(word);
-    // let game_inputGroup = document.createElement('div');
-    // game_inputGroup.classList.add('inputGroup')
-    // game_answer.append(game_inputGroup)
-    // game_input = document.createElement('input');
-    // game_input.style.height =     words.length*12 + 'vw'
-    // game_input.maxLength = answer.replaceAll(' ','').length;
-    // game_inputGroup.append(game_input)
-    // game_input.addEventListener("input", (event) => {
-    //     triggerInput(event);
-    // });
     if (game == "scrambled_words" || game == "fill_the_blanks") {
         let questionStr = game == "scrambled_words" ? question : "aeiou";
         console.log(questionStr);
