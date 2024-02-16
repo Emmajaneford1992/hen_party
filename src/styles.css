@@ -775,18 +775,33 @@ margin-top: -12vw;
 .celebration {
     display: none;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     align-content: center;
-    top: 0px;
-    left: 0px;
-    margin: 0;
     width: 100%;
     height: 100%;
     font-size: 15vw;
     text-align: center;
     font-family:  font2;
+    background-color: white;
 }
 
+.celebration h1{
+    font-size: 15vw;
+}
+
+.celebration p{
+    font-size: 6vw;
+}
+
+.celebration button{
+    font-size: 5vw;
+    align-self: center;
+    width: 50vw;
+    background-color:var(--dark-blue);
+    border: transparent;
+    border-radius: 5%;
+    padding: 2vw;
+}
 /* found heart */
 
 .foundHeart {
@@ -834,7 +849,8 @@ margin-top: -12vw;
     left: 0%;
 }
 
-.heartGif {
+.heartGif,
+.celbrationGif {
     width: 70vw;
     height: 70vw;
     align-self: center;

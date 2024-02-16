@@ -235,7 +235,7 @@ export function clearGame(){
 
 
 export function createGameRound(game: string, question : string, round: number, answer : string) {
-
+    clearGame();
 
     let word  = document.createElement('div');
     words.push(word);
@@ -422,9 +422,8 @@ export function updateStars() {
         console.log('website',totalScore)
     })
 
-
-
-        Object.entries(irlGameInfo).forEach(([key, value], index) => {
+    Object.entries(irlGameInfo).forEach(([key, value], index) => {
+        console.log(key)
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
         numOfQuestions += 10;

@@ -1,10 +1,11 @@
 
 import { initButtons } from "./dom/buttons";
-import { revealFoundHeart, revealSplash } from "./dom"
+import { init, revealCelebration, revealFoundHeart, revealSplash } from "./dom"
 import Game_selection from "./experience";
 import { getUrlParams } from "../queryString";
 //import { getUrlParams } from "../queryString";
 import scavengerInfo  from './experience/utils/scavengerInfo.json';
+import irlGameInfo  from './experience/utils/irlGameInfo.json';
 
 let game_selection =  new Game_selection();
 initButtons();
@@ -12,6 +13,7 @@ initButtons();
 let params = getUrlParams();
 
 let foundHeart = false
+let gameComplete = false
 
 
 
@@ -21,27 +23,30 @@ Object.entries(scavengerInfo).forEach(([key, value], index) => {
         localStorage.setItem(value.heartToken, 'found');
         foundHeart = true;
     }
-  
 })
+
+
+Object.entries(irlGameInfo).forEach(([key, value], index) => {
+    if(value.token == params){
+        console.log('game complete, token:', params)
+        localStorage.setItem(key, '10');
+        gameComplete = true;
+    }
+})
+
 
 if(foundHeart){
     revealFoundHeart()
 }
+else if(gameComplete){
+    revealCelebration();
+}
 else{
     revealSplash();
 }
+init();
 
 
-
-// if(params == null){
-//     console.log('splash')
-//     revealSplash();
-// }
-// if()
-//     console.log('found heart', params)
-//     localStorage.getItem(value.heartToken);
-//     revealFoundHeart()
-// }
 
 
 export function triggerButton(button, game){

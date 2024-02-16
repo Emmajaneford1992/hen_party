@@ -12,7 +12,6 @@ let game_restartButton = <HTMLButtonElement>document.querySelector('.game_restar
 export function initButtons() {
 
     splash_button.addEventListener('click', () =>{
-        init();
         hideSplash(); 
         revealGameSelection();
     })
@@ -44,7 +43,6 @@ export function initButtons() {
     });
 
     foundHeart_button.addEventListener('click', () => {
-        init();
         hideFoundHeart();
         revealGameSelection();
 
