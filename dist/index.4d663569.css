@@ -699,6 +699,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 
 .celebration button {
   background-color: var(--dark-blue);
+  color: #000;
   border: #0000;
   border-radius: 5%;
   align-self: center;

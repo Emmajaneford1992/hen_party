@@ -842,6 +842,7 @@ let scavengerImgs = [];
 function revealSplash() {
     console.log("hide Splash");
     splash.style.display = "flex";
+    document.body.style.backgroundColor = "#c8e3eb";
 }
 function init() {
     initGameSelection();
@@ -854,6 +855,7 @@ function hideSplash() {
 }
 function revealGameSelection() {
     game_selection.style.display = "flex";
+    document.body.style.backgroundColor = "#c8e3eb";
     updateStars();
     updateHearts();
 }
@@ -865,6 +867,7 @@ function hideGameSelection() {
 }
 function revealGame() {
     game.style.display = "flex";
+    document.body.style.backgroundColor = "#68a6c5";
 }
 function hideGame() {
     game.style.display = "none";
@@ -1011,12 +1014,14 @@ function roundComplete() {
 }
 function revealCelebration() {
     celebration.style.display = "flex";
+    document.body.style.backgroundColor = "white";
 }
 function hideCelebration() {
     celebration.style.display = "none";
 }
 function revealFoundHeart() {
     foundHeart.style.display = "flex";
+    document.body.style.backgroundColor = "white";
 }
 function hideFoundHeart() {
     foundHeart.style.display = "none";
@@ -1038,6 +1043,7 @@ function createKeyboard() {
 }
 function revealScavenger() {
     scavenger.style.display = "flex";
+    document.body.style.backgroundColor = "#c8e3eb";
 }
 function hideScavenger() {
     scavenger.style.display = "none";

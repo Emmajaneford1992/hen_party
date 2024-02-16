@@ -107,6 +107,7 @@ let scavengerImgs = [];
 export function revealSplash(){
     console.log('hide Splash')
     splash.style.display = 'flex';
+    document.body.style.backgroundColor = '#c8e3eb';
 }
 
 export function init(){
@@ -122,7 +123,7 @@ export function hideSplash(){
 
 export function revealGameSelection(){
     game_selection.style.display = 'flex';   
-
+    document.body.style.backgroundColor = '#c8e3eb'
     updateStars();
     updateHearts();
 }
@@ -137,6 +138,7 @@ export function hideGameSelection(){
 
 export function revealGame() {
     game.style.display = 'flex';
+    document.body.style.backgroundColor = '#68a6c5';
 }
 
 export function hideGame() {
@@ -328,6 +330,7 @@ export function roundComplete(){
 
 export function revealCelebration(){
     celebration.style.display = 'flex';
+    document.body.style.backgroundColor = 'white';
 }
 
 export function hideCelebration(){
@@ -335,7 +338,8 @@ export function hideCelebration(){
 }
 
 export function revealFoundHeart(){
-    foundHeart.style.display = 'flex'
+    foundHeart.style.display = 'flex';
+    document.body.style.backgroundColor = 'white';
 }
 
 export function hideFoundHeart(){
@@ -360,6 +364,7 @@ export function createKeyboard(){
 
 export function revealScavenger(){
     scavenger.style.display = 'flex';
+    document.body.style.backgroundColor = '#c8e3eb';
 }
 
 export function hideScavenger(){
