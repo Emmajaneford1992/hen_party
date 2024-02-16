@@ -10,12 +10,11 @@ export default class Game_selection {
        
        
     }
-
    
-    public triggerButton(key) {
+    public triggerButton(key, game) {
         console.log('button triggered', key);
         revealGame();
-        this.game =  new Game(key);
+        this.game =  new Game(key, game);
         
     }
 

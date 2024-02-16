@@ -28,7 +28,7 @@
                 "answer" : "first dance"
             },
             "6" : {
-                "question" : "itucgnt the caek",
+                "question" : "itucgnt eht caek",
                 "answer" : "cutting the cake"
             },
             "7" : {
@@ -56,7 +56,7 @@
                 "answer" : "marriage certificate"
             },
             "13" : {
-                "question" : "idnegewd berakftas",
+                "question" : "idnegwd berakftas",
                 "answer" : "wedding breakfast"
             },
             "14" : {
@@ -236,10 +236,6 @@
                 "answer" : "jewellery"
             },
             "17" : {
-                "question" : "vid_ograph_rs",
-                "answer" : "videographers"
-            },
-            "18" : {
                 "question" : "b_llrop_s r_tr_at",
                 "answer" : "bellropes retreat"
             }

@@ -2,6 +2,7 @@ import { triggerButton, triggerInput, triggerLetter } from "../index";
 // import image1 from "../assets/images/finleys_films/1.png";
 //const image1 = new URL("../assets/images/finleys_films/1.png");
 import gameInfo  from '../experience/utils/gameInfo.json';
+import irlGameInfo  from '../experience/utils/irlGameInfo.json';
 import scavengerInfo  from '../experience/utils/scavengerInfo.json';
 
 const splash = <HTMLElement>document.querySelector('.splash')
@@ -9,6 +10,7 @@ const game_selection = <HTMLElement>document.querySelector('.game_selection')
 const game_selection_games_div = <HTMLElement>document.querySelector('.game_selection_games div')
 const game_selection_hand = <HTMLElement>document.querySelector('.game_selection_hand')
 const game = <HTMLElement>document.querySelector('.game')
+const game_main = <HTMLElement>document.querySelector('.game main')
 const game_question = <HTMLElement>document.querySelector('.game_question')
 const game_answer = <HTMLElement>document.querySelector('.game_answer')
 const game_title = <HTMLElement>document.querySelector('.game_title')
@@ -18,6 +20,8 @@ const scavenger = <HTMLElement>document.querySelector('.scavenger')
 const scavenger_clues = <HTMLElement>document.querySelector('.scavenger_clues')
 const celebration = <HTMLElement>document.querySelector('.celebration')
 const foundHeart = <HTMLElement>document.querySelector('.foundHeart')
+
+
 
 const starsIcon = <HTMLElement>document.querySelector('.stars_icon')
 const starsScore = <HTMLElement>document.querySelector('.stars_score')
@@ -29,6 +33,7 @@ const game_tick = <HTMLElement>document.querySelector('.game_tick')
 let game_keyboard = <HTMLButtonElement>document.querySelector('.game_keyboard');
 
 let scores = [];
+let irlScores = [];
 let keyboardLetters = [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m','⌫']];
 
 let heartIcon = require("../assets/images/heartIcon.png");
@@ -45,6 +50,11 @@ let game_selection_button_images = [
     require("../assets/images/faces.png")
 ]
 
+let game_selection_irl_button_images = [
+    require("../assets/images/bra.png"), 
+    require("../assets/images/microphone.png"),
+    require("../assets/images/rings.png"),
+]
 
 let finley_film_images = [
 require("../assets/images/finleys_films/0.png"), 
@@ -75,6 +85,13 @@ require("../assets/images/face_merge/13.png"),
 require("../assets/images/face_merge/14.png"),
 require("../assets/images/face_merge/15.png")]
 
+let irl_images = [
+    require("../assets/images/braPhoto.png"), 
+    require("../assets/images/harry.png"),
+    require("../assets/images/prossecoHeadband.png")
+]
+
+
 let letters = [];
 let tiles = [];
 let words = [];
@@ -85,7 +102,6 @@ let hearts = [];
 export function revealSplash(){
     console.log('hide Splash')
     splash.style.display = 'flex';
-    init();
 }
 
 export function init(){
@@ -102,12 +118,9 @@ export function hideSplash(){
 export function revealGameSelection(){
     game_selection.style.display = 'flex';   
 
-
-    updateGameSelectionScore();
     updateStars();
     updateHearts();
 }
-
 
 game_selection_games_div.addEventListener("scroll", (event) => {
     game_selection_hand.style.display ='none';
@@ -126,6 +139,29 @@ export function hideGame() {
 }
 
 
+export function setGame(game) {
+
+    if(game == 'irl'){
+        game_restartButton.style.display = 'none';
+        game_description.style.fontSize = '8vw';
+        game_description.style.fontSize = '8vw';
+        game_answer.style.display = 'none';
+    } 
+    else{
+        game_restartButton.style.display = 'flex';
+        game_answer.style.display = 'flex';
+        game_description.style.fontSize = '5vw';
+    }
+}
+
+export function createIrl(name){
+    clearGame();
+    let image = document.createElement('img');
+    image.src = name == 'Bra Pong' ?  irl_images[0] : name == 'Style Harry' ? irl_images[1] : irl_images[2]
+    game_question.append(image);
+}
+
+
 export function setGameTitle(str) {
     game_title.innerHTML = str;     
 }
@@ -133,7 +169,6 @@ export function setGameTitle(str) {
 export function setGameDescription(str) {
     game_description.innerHTML = str;     
 }
-
 export function setGameScore(str) {
     game_score.innerHTML = str;     
 }
@@ -182,9 +217,6 @@ export function setWordGreen(){
     });
 }
 
-
-
-
 export function clearGame(){
     game_tick.style.display =  'none';
     game_restartButton.style.display = 'flex';
@@ -203,7 +235,7 @@ export function clearGame(){
 
 
 export function createGameRound(game: string, question : string, round: number, answer : string) {
-    clearGame();
+
 
     let word  = document.createElement('div');
     words.push(word);
@@ -259,8 +291,6 @@ export function createGameRound(game: string, question : string, round: number, 
             }
         }
    
-
-
         letters.forEach((letter,i) => {
             letter.addEventListener('click', () =>{
                 if(!letter.classList.contains('letterSelect')){
@@ -269,9 +299,10 @@ export function createGameRound(game: string, question : string, round: number, 
                 }
             })
         });
+        game_keyboard.style.display = 'none';
     }
     else{
-    game_keyboard.style.display = 'flex';
+        game_keyboard.style.display = 'flex';
         if(game == 'emoji_game'){
             console.log('create emoji game', question)
             game_question.innerHTML = question;
@@ -282,30 +313,17 @@ export function createGameRound(game: string, question : string, round: number, 
             game_image.src = game == 'finleys_films' ? finley_film_images[round] : face_merge_images[round] ;
         }
     }
-
 }
-
 
 export function roundComplete(){
     game_tick.style.display =  'flex';
     game_restartButton.style.display = 'none';
     game_keyboard.style.display  = 'none';
-
-    //let player = document.getElementById(".game_tick");
-
-        // player.addEventListener("ready", () => {
-        // LottieInteractivity.create({
-        //     player: ".game_tick",
-        //     mode:"cursor", actions: [ 
-        //     { type: "click", forceFlag: false } ]
-        //     });
-        // });
 }
 
 export function revealCelebration(){
     celebration.style.display = 'flex'
 }
-
 
 export function hideCelebration(){
     celebration.style.display = 'none'
@@ -314,7 +332,6 @@ export function hideCelebration(){
 export function revealFoundHeart(){
     foundHeart.style.display = 'flex'
 }
-
 
 export function hideFoundHeart(){
     foundHeart.style.display = 'none'
@@ -346,42 +363,52 @@ export function hideScavenger(){
 
 export function initGameSelection(){
     Object.entries(gameInfo).forEach(([key, value], index) => {
+        createGameSelectionButton(value, index, key, 'website')
+    });
 
-        let button  = document.createElement('button');
-        game_selection_games_div.append(button);
-
-        let div = document.createElement('div');
-        button.append(div);
-
-        let img = document.createElement('img');
-        img.src = game_selection_button_images[index];
-        div.append(img);
-
-        let p  = document.createElement('p');
-        p.innerHTML =  value.title;
-        button.append(p);
-
-        let p2  = document.createElement('p2');
-        scores.push(p2);
-        let score = localStorage.getItem(key);
-        if(score == null) score = '0';
-        p2.innerHTML =  score +'/'+ Object.keys(value.rounds).length;
-
-        button.append(p2);
-
-        let p3  = document.createElement('p3');
-        p3.innerHTML =  'Play';
-        button.append(p3);
-
-        button.addEventListener('click', () =>{
-            hideGameSelection(); 
-            triggerButton(key);
-        })
-
-
+    Object.entries(irlGameInfo).forEach(([key, value], index) => {
+        createGameSelectionButton(value, index, key, 'irl')
     });
 }
+function createGameSelectionButton(value, index, key, game){
+    let button  = document.createElement('button');
+    game_selection_games_div.append(button);
 
+    let div = document.createElement('div');
+    button.append(div);
+
+    let img = document.createElement('img');
+    img.src =  game == 'irl' ? game_selection_irl_button_images[index] : game_selection_button_images[index];
+    div.append(img);
+
+    let p  = document.createElement('p');
+    p.innerHTML =  value.title;
+    button.append(p);
+
+    let p2  = document.createElement('p2');
+    if(game == 'irl'){
+        irlScores.push(p2)
+    }
+    else{
+        scores.push(p2);
+    }
+
+    let score = localStorage.getItem(key);
+    if(score == null) score = '0';
+    p2.innerHTML =  score +'/'+ 10;
+
+    button.append(p2);
+
+    let p3  = document.createElement('p3');
+    p3.innerHTML =  'Play';
+    button.append(p3);
+
+    button.addEventListener('click', () =>{
+        hideGameSelection(); 
+        triggerButton(key, game);
+    })
+
+}
 
 export function updateStars() {
     totalScore = 0;
@@ -389,10 +416,22 @@ export function updateStars() {
     Object.entries(gameInfo).forEach(([key, value], index) => {
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
-        scores[index].innerHTML =   score +'/'+ Object.keys(value.rounds).length;
+        scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
         numOfQuestions +=  Object.keys(value.rounds).length;
         totalScore += Number(score); 
+        console.log('website',totalScore)
     })
+
+
+
+        Object.entries(irlGameInfo).forEach(([key, value], index) => {
+        let score = localStorage.getItem(key);
+        if(score == null) score = '0';
+        numOfQuestions += 10;
+        totalScore += Number(score); 
+        irlScores[index].innerHTML =   '★'+score +'/10'; 
+    });
+
     starsIcon.innerHTML = '★<br/>'+totalScore.toString()  + ' / ' + numOfQuestions;
     let percentage =  (1 - (totalScore/numOfQuestions))*100;
     console.log(percentage);
@@ -409,21 +448,8 @@ export function updateHearts() {
         }
     })
     heartsIcon.innerHTML = '♥<br/>'+totalHearts.toString()  + ' / ' + Object.keys(scavengerInfo).length;
-    let percentage = (1-(totalHearts/Object.keys(scavengerInfo).length))*100;
-    console.log( )
-    //heartsScore.style.background= 'linear-gradient( #f0f0f0 0%, #bbbab7 '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
-    heartsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
-
-
-}
-
-export function updateGameSelectionScore() {
-    Object.entries(gameInfo).forEach(([key, value], index) => {
-        let score = localStorage.getItem(key);
-        if(score == null) score = '0';
-        scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
-        
-    });
+    let percentage = (1-(totalHearts/Object.keys(scavengerInfo).length))*100
+    heartsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)'
 }
 
 export function initScavenger(){

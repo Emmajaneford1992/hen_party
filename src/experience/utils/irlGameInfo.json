@@ -1,0 +1,17 @@
+{
+    "bra_pong" : {
+        "title" : "Bra Pong",
+        "description" : "Go to the Bra Pong Game, Throw the ping pong balls in the bra win",
+        "token": "gnoparb1"
+    },
+    "style_harry" : {
+        "title" : "Style Harry",
+        "description" : "Go to the lifsize Harry, this game is similar to the classic pin the tail on the donkey game. Get ready to be blindfolded and spun before you attempt to style Harry Styles.",
+        "token": "yrrahelyts2"
+    },
+    "put_a_ring_it" : {
+        "title" : "Put a ring on it",
+        "description" : "Find Emma or Karly and attempt to toss rings onto their prosscco headbands.",
+        "token": "tinogniratup3"
+    }
+}

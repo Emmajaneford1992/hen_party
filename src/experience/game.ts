@@ -1,5 +1,6 @@
-import {  addLetterToScrambledWord, createGameRound,  hideGame, revealCelebration, roundComplete, selectScrambledLetter, setGameDescription, setGameScore, setGameTitle, setWord } from "../dom/index";
+import {  addLetterToScrambledWord, createGameRound,  createIrl,  hideGame, revealCelebration, roundComplete, selectScrambledLetter, setGame, setGameDescription, setGameScore, setGameTitle, setWord } from "../dom/index";
 import gameInfo  from './utils/gameInfo.json'
+import irlInfo  from './utils/irlGameInfo.json'
 
 
 export default class Game {
@@ -12,19 +13,28 @@ export default class Game {
     private answerLength : number;
     
 
-    constructor(gameName) {
+    constructor(gameName, game) {
         this.gameName = gameName
-        this.numOfRounds = Object.keys(gameInfo[this.gameName].rounds).length;
-        this.initGame();
+        if(game != 'irl') this.numOfRounds =  Object.keys(gameInfo[this.gameName].rounds).length;
+        this.initGame(game);
     }
 
-    public initGame(){
+    public initGame(game){
         console.log('init game', this.gameName)
         this.round = Number(localStorage.getItem(this.gameName));
         if( this.round == null) this.round = 0;
-        setGameTitle(gameInfo[this.gameName].title);
-        setGameDescription(gameInfo[this.gameName].description);
-        this.generateRound()
+        let info = game == 'irl' ? irlInfo : gameInfo;
+        console.log(info)
+        setGameTitle(info[this.gameName].title);
+        setGameDescription(info[this.gameName].description);
+        setGame(game)
+        if(game =='irl'){
+            createIrl(info[this.gameName].title)
+        }
+        else{
+            this.generateRound()
+        }
+
     }
 
     public generateRound() {
@@ -34,7 +44,7 @@ export default class Game {
 
         setGameScore(this.round +"/"+ this.numOfRounds)
         createGameRound(this.gameName, this.question, this.round, this.answer);
-        this.userAnswer = this.gameName == 'fill_the_blanks' ? this.question.replace(' ', '') : '';
+        this.userAnswer = this.gameName == 'fill_the_blanks' ? this.question.replaceAll(' ', '') : '';
     }
 
     public triggerInput(letter){
@@ -98,18 +108,18 @@ export default class Game {
         if(this.userAnswer == this.answer.replaceAll(' ','')){
             console.log('ROUND COMPLETE')
             roundComplete()
-            // setTimeout(() => {
-            //     if(this.round < this.numOfRounds-1){
-            //         this.round++;
-            //         console.log(this.gameName, this.round)
-            //         localStorage.setItem(this.gameName, ''+this.round);
-            //         this.generateRound()
-            //     }
-            //     else{
-            //         hideGame()
-            //         revealCelebration();
-            //     }
-            // }, 2100);
+            setTimeout(() => {
+                if(this.round < this.numOfRounds-1){
+                    this.round++;
+                    console.log(this.gameName, this.round)
+                    localStorage.setItem(this.gameName, ''+this.round);
+                    this.generateRound()
+                }
+                else{
+                    hideGame()
+                    revealCelebration();
+                }
+            }, 2100);
         }
     }
 

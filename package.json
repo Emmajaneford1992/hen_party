@@ -4,7 +4,7 @@
   "description": "Bethany & Charlotte Hen Activities",
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel --https -p 8080"
+    "start": "parcel --https -p 8081"
   },
   "homepage": "bethanyandcharlotte.co.uk",
   "author": "Emma Ford",

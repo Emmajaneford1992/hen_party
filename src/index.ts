@@ -44,10 +44,10 @@ else{
 // }
 
 
-export function triggerButton(button){
+export function triggerButton(button, game){
     console.log('button triggered')
     console.log(button, 'button triggered')
-    game_selection.triggerButton(button);
+    game_selection.triggerButton(button, game);
 }
 
 export function triggerInput(input){
