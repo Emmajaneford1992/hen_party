@@ -1123,7 +1123,8 @@ function updateStars() {
     starsIcon.innerHTML = "\u2605<br/>" + totalScore.toString() + " / " + numOfQuestions;
     let percentage = (1 - totalScore / numOfQuestions) * 100;
     console.log(percentage);
-    starsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #fff0bd " + (percentage + 1) + "%, #f1c16a 100%)";
+    //starsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+    starsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #c8e3eb " + (percentage + 1) + "%, #ffffff 100%)";
 }
 function updateHearts() {
     totalHearts = 0;
@@ -1133,7 +1134,7 @@ function updateHearts() {
     });
     heartsIcon.innerHTML = "\u2665<br/>" + totalHearts.toString() + " / " + Object.keys((0, _scavengerInfoJsonDefault.default)).length;
     let percentage = (1 - totalHearts / Object.keys((0, _scavengerInfoJsonDefault.default)).length) * 100;
-    heartsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #fff0bd " + (percentage + 1) + "%, #f1c16a 100%)";
+    heartsScore.style.background = "linear-gradient( #ddd " + (percentage - 1) + "%,  #68a6c5 " + percentage + "%, #c8e3eb " + (percentage + 1) + "%, #ffffff 100%)";
 }
 function initScavenger() {
     Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{

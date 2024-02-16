@@ -474,9 +474,10 @@ export function updateStars() {
 
     starsIcon.innerHTML = '★<br/>'+totalScore.toString()  + ' / ' + numOfQuestions;
     let percentage =  (1 - (totalScore/numOfQuestions))*100;
-    console.log(percentage);
-    starsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
-    
+    console.log(percentage); 
+    //starsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)';
+    starsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #c8e3eb '+(percentage+1)+'%, #ffffff 100%)';
+
 }
 
 export function updateHearts() {
@@ -489,7 +490,7 @@ export function updateHearts() {
     })
     heartsIcon.innerHTML = '♥<br/>'+totalHearts.toString()  + ' / ' + Object.keys(scavengerInfo).length;
     let percentage = (1-(totalHearts/Object.keys(scavengerInfo).length))*100
-    heartsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #fff0bd '+(percentage+1)+'%, #f1c16a 100%)'
+    heartsScore.style.background= 'linear-gradient( #ddd '+(percentage-1)+'%,  #68a6c5 '+percentage+'%, #c8e3eb '+(percentage+1)+'%, #ffffff 100%)';
 }
 
 export function initScavenger(){

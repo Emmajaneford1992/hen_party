@@ -497,7 +497,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   justify-content: center;
   align-items: center;
   width: 100vw;
-  min-height: 20%;
+  min-height: 22%;
   display: flex;
 }
 
