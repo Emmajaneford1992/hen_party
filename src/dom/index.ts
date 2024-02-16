@@ -34,9 +34,14 @@ let game_keyboard = <HTMLButtonElement>document.querySelector('.game_keyboard');
 
 let scores = [];
 let irlScores = [];
+let buttonTexts = [];
+let irlButtonTexts = [];
+
 let keyboardLetters = [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m','⌫']];
 
 let heartIcon = require("../assets/images/heartIcon.png");
+let lockIcon = require("../assets/images/lockIcon.png");
+let heartOutline = require("../assets/images/heartIconOutline.png");
 
 let totalScore = 0;
 let numOfQuestions = 0;
@@ -97,7 +102,7 @@ let tiles = [];
 let words = [];
 let qWords = [];
 let clues = [];
-let hearts = [];
+let scavengerImgs = [];
 
 export function revealSplash(){
     console.log('hide Splash')
@@ -322,7 +327,7 @@ export function roundComplete(){
 }
 
 export function revealCelebration(){
-    celebration.style.display = 'flex'
+    celebration.style.display = 'flex';
 }
 
 export function hideCelebration(){
@@ -372,6 +377,7 @@ export function initGameSelection(){
 }
 function createGameSelectionButton(value, index, key, game){
     let button  = document.createElement('button');
+ 
     game_selection_games_div.append(button);
 
     let div = document.createElement('div');
@@ -398,10 +404,17 @@ function createGameSelectionButton(value, index, key, game){
     p2.innerHTML =  score +'/'+ 10;
 
     button.append(p2);
+  
 
     let p3  = document.createElement('p3');
-    p3.innerHTML =  'Play';
+    p3.innerHTML = 'Play';
     button.append(p3);
+    if(game == 'irl'){
+        irlButtonTexts.push(p3)
+    }
+    else{
+        buttonTexts.push(p3);
+    }
 
     button.addEventListener('click', () =>{
         hideGameSelection(); 
@@ -413,22 +426,45 @@ function createGameSelectionButton(value, index, key, game){
 export function updateStars() {
     totalScore = 0;
     numOfQuestions = 0; 
+
     Object.entries(gameInfo).forEach(([key, value], index) => {
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
-        scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
         numOfQuestions +=  Object.keys(value.rounds).length;
         totalScore += Number(score); 
-        console.log('website',totalScore)
+
+        scores[index].innerHTML =   '★'+score +'/'+ Object.keys(value.rounds).length;
+        if(Object.keys(value.rounds).length == Number(score)){
+            buttonTexts[index].innerHTML = 'Complete';
+            buttonTexts[index].style.backgroundColor = '#c8e3eb';
+            buttonTexts[index].style.border = '2px solid white';
+            buttonTexts[index].parentElement.style.pointerEvents = 'none';
+        }
+        else{
+            buttonTexts[index].innerHTML = 'Play';
+            buttonTexts[index].style.backgrounColor = '#68a6c5';
+        }        
+
     })
 
     Object.entries(irlGameInfo).forEach(([key, value], index) => {
-        console.log(key)
         let score = localStorage.getItem(key);
         if(score == null) score = '0';
         numOfQuestions += 10;
         totalScore += Number(score); 
         irlScores[index].innerHTML =   '★'+score +'/10'; 
+        irlButtonTexts[index].innerHTML = 0 == Number(score) ? 'Complete' : 'Play';
+
+        if(10 == Number(score)){
+            irlButtonTexts[index].innerHTML = 'Complete';
+            irlButtonTexts[index].style.backgroundColor = '#c8e3eb';
+            irlButtonTexts[index].style.border = '2px solid white';
+            irlButtonTexts[index].parentElement.style.pointerEvents = 'none';
+        }
+        else{
+            irlButtonTexts[index].innerHTML = 'Play';
+            irlButtonTexts[index].style.backgrounColor = '#68a6c5';
+        }        
     });
 
     starsIcon.innerHTML = '★<br/>'+totalScore.toString()  + ' / ' + numOfQuestions;
@@ -461,7 +497,7 @@ export function initScavenger(){
         let heart = document.createElement('img');
         heart.src = heartIcon;
 
-        hearts.push(heart);
+        scavengerImgs.push(heart);
         clue.append(heart);
 
     });
@@ -470,12 +506,14 @@ export function initScavenger(){
 export function updateScavengeScore() { 
     Object.entries(scavengerInfo).forEach(([key, value], index) => {
 
-        clues[index].innerHTML = totalScore/ 10 > index ? value.clue  : 'locked';
+        clues[index].innerHTML = totalScore > (index+1)*5 ? value.clue  :   '★ '+(index+1)*5 + '/100 to unlock';
 
         let heartFound = localStorage.getItem(value.heartToken);
     
-        hearts[index].style.filter = heartFound == null ? 'grayscale(1)' : 'grayscale(0)';
-        hearts[index].style.opacity = heartFound == null ? '0.5' : '1';
+        // scavengerImgs[index].style.filter = heartFound == null ? 'grayscale(1)' : 'grayscale(0)';
+
       
+        scavengerImgs[index].src =  totalScore > (index+1)*5 ?  heartFound == null ? heartOutline : heartIcon:  lockIcon ;
+        scavengerImgs[index].style.opacity = heartFound != null ? '1' : '0.4';
     });
 }

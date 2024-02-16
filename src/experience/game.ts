@@ -117,6 +117,7 @@ export default class Game {
                 }
                 else{
                     hideGame()
+                    localStorage.setItem(this.gameName, ''+this.numOfRounds);
                     revealCelebration();
                 }
             }, 2100);
