@@ -679,16 +679,32 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 
 .celebration {
   text-align: center;
+  background-color: #fff;
   flex-direction: column;
-  place-content: center space-between;
+  place-content: center start;
   width: 100%;
   height: 100%;
-  margin: 0;
   font-family: font2;
   font-size: 15vw;
   display: none;
-  top: 0;
-  left: 0;
+}
+
+.celebration h1 {
+  font-size: 15vw;
+}
+
+.celebration p {
+  font-size: 6vw;
+}
+
+.celebration button {
+  background-color: var(--dark-blue);
+  border: #0000;
+  border-radius: 5%;
+  align-self: center;
+  width: 50vw;
+  padding: 2vw;
+  font-size: 5vw;
 }
 
 .foundHeart {
@@ -735,7 +751,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
   left: 0%;
 }
 
-.heartGif {
+.heartGif, .celbrationGif {
   place-self: center;
   width: 70vw;
   height: 70vw;

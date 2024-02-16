@@ -581,15 +581,6 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"h7u1C":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-// if(params == null){
-//     console.log('splash')
-//     revealSplash();
-// }
-// if()
-//     console.log('found heart', params)
-//     localStorage.getItem(value.heartToken);
-//     revealFoundHeart()
-// }
 parcelHelpers.export(exports, "triggerButton", ()=>triggerButton);
 parcelHelpers.export(exports, "triggerInput", ()=>triggerInput);
 parcelHelpers.export(exports, "triggerLetter", ()=>triggerLetter);
@@ -602,10 +593,13 @@ var _queryString = require("../queryString");
 //import { getUrlParams } from "../queryString";
 var _scavengerInfoJson = require("./experience/utils/scavengerInfo.json");
 var _scavengerInfoJsonDefault = parcelHelpers.interopDefault(_scavengerInfoJson);
+var _irlGameInfoJson = require("./experience/utils/irlGameInfo.json");
+var _irlGameInfoJsonDefault = parcelHelpers.interopDefault(_irlGameInfoJson);
 let game_selection = new (0, _experienceDefault.default)();
 (0, _buttons.initButtons)();
 let params = (0, _queryString.getUrlParams)();
 let foundHeart = false;
+let gameComplete = false;
 Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], index)=>{
     if (value.heartToken == params) {
         console.log("found heart", params);
@@ -613,8 +607,17 @@ Object.entries((0, _scavengerInfoJsonDefault.default)).forEach(([key, value], in
         foundHeart = true;
     }
 });
+Object.entries((0, _irlGameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+    if (value.token == params) {
+        console.log("game complete, token:", params);
+        localStorage.setItem(key, "10");
+        gameComplete = true;
+    }
+});
 if (foundHeart) (0, _dom.revealFoundHeart)();
+else if (gameComplete) (0, _dom.revealCelebration)();
 else (0, _dom.revealSplash)();
+(0, _dom.init)();
 function triggerButton(button, game) {
     console.log("button triggered");
     console.log(button, "button triggered");
@@ -630,7 +633,7 @@ function triggerGameButton(trigger) {
     game_selection.triggerGameButton(trigger);
 }
 
-},{"./dom/buttons":"8Z3Vb","./dom":"9OTgz","./experience":"47u4Z","../queryString":"51Hld","./experience/utils/scavengerInfo.json":"j2Ma8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8Z3Vb":[function(require,module,exports) {
+},{"./dom/buttons":"8Z3Vb","./dom":"9OTgz","./experience":"47u4Z","../queryString":"51Hld","./experience/utils/scavengerInfo.json":"j2Ma8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./experience/utils/irlGameInfo.json":"gu766"}],"8Z3Vb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initButtons", ()=>initButtons);
@@ -645,7 +648,6 @@ let foundHeart_button = document.querySelector(".foundHeart button");
 let game_restartButton = document.querySelector(".game_restartButton");
 function initButtons() {
     splash_button.addEventListener("click", ()=>{
-        (0, _dom.init)();
         (0, _dom.hideSplash)();
         (0, _dom.revealGameSelection)();
     });
@@ -670,7 +672,6 @@ function initButtons() {
         (0, _dom.revealGameSelection)();
     });
     foundHeart_button.addEventListener("click", ()=>{
-        (0, _dom.init)();
         (0, _dom.hideFoundHeart)();
         (0, _dom.revealGameSelection)();
     });
@@ -941,6 +942,7 @@ function clearGame() {
     qWords = [];
 }
 function createGameRound(game, question, round, answer) {
+    clearGame();
     let word = document.createElement("div");
     words.push(word);
     word.classList.add("game_word");
@@ -1082,6 +1084,7 @@ function updateStars() {
         console.log("website", totalScore);
     });
     Object.entries((0, _irlGameInfoJsonDefault.default)).forEach(([key, value], index)=>{
+        console.log(key);
         let score = localStorage.getItem(key);
         if (score == null) score = "0";
         numOfQuestions += 10;
