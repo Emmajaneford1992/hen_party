@@ -783,10 +783,12 @@ margin-top: -12vw;
     text-align: center;
     font-family:  font2;
     background-color: white;
+    color: #000;
 }
 
 .celebration h1{
     font-size: 15vw;
+    color: #000;
 }
 
 .celebration p{
@@ -802,6 +804,7 @@ margin-top: -12vw;
     border-radius: 5%;
     padding: 2vw;
     color: black;
+    color: #000;
 }
 /* found heart */
 

@@ -811,22 +811,22 @@ let finley_film_images = [
     require("d2803ab0b4d9bc52")
 ];
 let face_merge_images = [
-    require("6fab4ab8cf3ac61f"),
-    require("d3789ea8b7715083"),
-    require("85f158f0d7f77e5e"),
-    require("f46ce4f095d41820"),
-    require("2bbfa46d810b2fe3"),
-    require("b62f4ee0b522f245"),
-    require("6991d8ecf6927def"),
-    require("52f7863484617a87"),
-    require("a971fa284d22359b"),
-    require("4baec8a8fbe7a309"),
-    require("325b5779367d5d68"),
-    require("33a669443db921cd"),
-    require("6bd45606d8e4817"),
-    require("679f3d22db7e728b"),
-    require("31ac1d91d9cfb6e9"),
-    require("9fb802b9f1c36158")
+    require("2d4e25286703ca1b"),
+    require("38fc7dabbad6879c"),
+    require("9342442eac11bbcf"),
+    require("a4e77f26cc9473cf"),
+    require("d494fac70e471d25"),
+    require("a8b94377611316e5"),
+    require("45bfde4a2100ff57"),
+    require("e5aaef54c386f032"),
+    require("f73f4bc618ec6347"),
+    require("651abf224196bf7b"),
+    require("f107705bbde98a48"),
+    require("384f974aa0738671"),
+    require("1600f214e28d491c"),
+    require("cd62aebf1b247da9"),
+    require("ed739f75de7c4e00"),
+    require("d30c6c408573af1e")
 ];
 let irl_images = [
     require("e581651ce9707bfb"),
@@ -873,7 +873,9 @@ function hideGame() {
     game.style.display = "none";
 }
 function setGame(game) {
+    document.body.style.backgroundColor = "#eaf3f5";
     if (game == "irl") {
+        game_keyboard.style.display = "none";
         game_restartButton.style.display = "none";
         game_description.style.fontSize = "8vw";
         game_description.style.fontSize = "8vw";
@@ -1159,7 +1161,7 @@ function updateScavengeScore() {
     });
 }
 
-},{"../index":"h7u1C","../experience/utils/gameInfo.json":"iLiiY","../experience/utils/irlGameInfo.json":"gu766","../experience/utils/scavengerInfo.json":"j2Ma8","46648d6f82545e65":"eQ041","516216dd920f6846":"bIQW2","81cdc96679bd7a8b":"JCMq4","3a55660c2e766e56":"cGxvR","910c7c98b78a342f":"Kwe4i","8885258b0269899f":"gExVo","dbe11dd1d19bb64f":"dpCRP","598ab84f88319720":"fxns8","543b2c61a6b7bb4b":"51pXX","5678469a466ca804":"f8HYg","140840353ee94c32":"eZzuG","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","6fab4ab8cf3ac61f":"9q8YV","d3789ea8b7715083":"jGExb","85f158f0d7f77e5e":"lrocG","f46ce4f095d41820":"aLkx8","2bbfa46d810b2fe3":"h9Pzi","b62f4ee0b522f245":"9Q7cN","6991d8ecf6927def":"kty8P","52f7863484617a87":"cnjwc","a971fa284d22359b":"2cXa0","4baec8a8fbe7a309":"3D5fI","325b5779367d5d68":"gODXW","33a669443db921cd":"7mnZc","6bd45606d8e4817":"8PWnl","679f3d22db7e728b":"gpfw7","31ac1d91d9cfb6e9":"4iOu7","9fb802b9f1c36158":"lkS4c","e581651ce9707bfb":"4i1hS","21fa55e47bb15cb5":"3lMSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","a301ff3420151816":"6J2xB"}],"iLiiY":[function(require,module,exports) {
+},{"../index":"h7u1C","../experience/utils/gameInfo.json":"iLiiY","../experience/utils/irlGameInfo.json":"gu766","../experience/utils/scavengerInfo.json":"j2Ma8","46648d6f82545e65":"eQ041","516216dd920f6846":"bIQW2","81cdc96679bd7a8b":"JCMq4","3a55660c2e766e56":"cGxvR","910c7c98b78a342f":"Kwe4i","8885258b0269899f":"gExVo","dbe11dd1d19bb64f":"dpCRP","598ab84f88319720":"fxns8","543b2c61a6b7bb4b":"51pXX","5678469a466ca804":"f8HYg","140840353ee94c32":"eZzuG","2c24d209ee8ac650":"fsvtb","924dfd98a9a4afcc":"bwcPy","1bb0b31733ecd07d":"dsQ2u","eafc87c2d4398b6b":"4eDtq","6fac3df1f4af5d41":"aSkAu","6ebcf8f404f1f0d5":"GCwAG","5d7fa836a86bafd5":"dFtSE","6d102d914c64c55f":"d33xe","d2803ab0b4d9bc52":"c4IQl","e581651ce9707bfb":"4i1hS","21fa55e47bb15cb5":"3lMSV","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","a301ff3420151816":"6J2xB","2d4e25286703ca1b":"1M6l0","38fc7dabbad6879c":"4GAlF","9342442eac11bbcf":"dyVUE","a4e77f26cc9473cf":"fiIjE","d494fac70e471d25":"3BRui","a8b94377611316e5":"bTb3z","45bfde4a2100ff57":"YarpM","e5aaef54c386f032":"l1eLv","f73f4bc618ec6347":"2vKdX","651abf224196bf7b":"ev70c","f107705bbde98a48":"5bzV3","384f974aa0738671":"k2bWL","1600f214e28d491c":"jqWDy","cd62aebf1b247da9":"fh8JF","ed739f75de7c4e00":"a95wo","d30c6c408573af1e":"6XHqv"}],"iLiiY":[function(require,module,exports) {
 module.exports = JSON.parse('{"scrambled_words":{"title":"Scrambled","description":"Click on the letters to unscamble the wedding related word","rounds":{"0":{"question":"simdbdaire","answer":"bridesmaid"},"1":{"question":"ni sawl","answer":"in laws"},"2":{"question":"cxgginhean vwso","answer":"exchanging vows"},"3":{"question":"tbse anm","answer":"best man"},"4":{"question":"nmhaecpga sotta","answer":"champagne toast"},"5":{"question":"rtifs nacde","answer":"first dance"},"6":{"question":"itucgnt eht caek","answer":"cutting the cake"},"7":{"question":"yhoneomon","answer":"honeymoon"},"8":{"question":"saecnpa","answer":"canapes"},"9":{"question":"dinwegd dsers","answer":"wedding dress"},"10":{"question":"ttncfeio","answer":"confetti"},"11":{"question":"togepaporhrh","answer":"photographer"},"12":{"question":"mgirraae ftcierectia","answer":"marriage certificate"},"13":{"question":"idnegwd berakftas","answer":"wedding breakfast"},"14":{"question":"enh nghit","answer":"hen night"}}},"emoji_game":{"title":"Emoji game","description":"Guess the wedding related phrase from the emoji sequence","rounds":{"0":{"question":"\uD83D\uDC69 \uD83E\uDDF9 \uD83E\uDDFC \uD83C\uDFC5","answer":"maid of honour"},"1":{"question":"\u261D\uFE0F\uD83D\uDC83","answer":"first dance"},"2":{"question":"\uD83C\uDF38 \uD83D\uDC67","answer":"flower girl"},"3":{"question":"\uD83D\uDCA7\uD83D\uDCA7\uD83D\uDCA7\uD83C\uDF70","answer":"three tier cake"},"4":{"question":"\uD83C\uDF6F\uD83C\uDF19","answer":"honeymoon"},"5":{"question":"\u2702\uFE0F\uD83C\uDF70","answer":"cutting the cake"},"6":{"question":"\uD83D\uDCC4\uD83D\uDC66","answer":"page boy"},"7":{"question":"\uD83D\uDC8D\uD83D\uDC3B","answer":"ring bearer"},"8":{"question":"\uD83C\uDFC6\uD83D\uDC70","answer":"trophy wife"},"9":{"question":"\uD83C\uDF7E\uD83C\uDF5E","answer":"champagne toast"},"10":{"question":"\uD83D\uDC70\u270C\uFE0F\uD83D\uDC1D","answer":"bride to be"},"11":{"question":"\uD83D\uDC70\uD83D\uDEBF","answer":"bridal shower"}}},"finleys_films":{"title":"Finley\'s Films","description":"Guess the movie finley or mabel is starring in","rounds":{"0":{"question":"","answer":"castaway"},"1":{"question":"","answer":"lady and the tramp"},"2":{"question":"","answer":"titanic"},"3":{"question":"","answer":"forest gump"},"4":{"question":"","answer":"et"},"5":{"question":"","answer":"alien"},"6":{"question":"","answer":"the lion king"},"7":{"question":"","answer":"toy story"},"8":{"question":"","answer":"american beauty"}}},"fill_the_blanks":{"title":"Fill the blanks","description":"Pick the correct vowel to fill in the blank","rounds":{"0":{"question":"_ngag_m_nt","answer":"engagement"},"1":{"question":"b_ddow p_rk","answer":"baddow park"},"2":{"question":"h_neym__n","answer":"honeymoon"},"3":{"question":"for_v_r","answer":"forever"},"4":{"question":"_nv_tat_ons","answer":"invitations"},"5":{"question":"m_rri_ge","answer":"marriage"},"6":{"question":"g_rl_nd","answer":"garland"},"7":{"question":"h_ad tabl_","answer":"head table"},"8":{"question":"bo_q_et","answer":"bouquet"},"9":{"question":"sp__ch","answer":"speech"},"10":{"question":"c_r_mony","answer":"ceremony"},"11":{"question":"r_c_ption","answer":"reception"},"12":{"question":"c_ntr_pi_c_s","answer":"centrepieces"},"13":{"question":"c_l_brat_","answer":"celebrate"},"14":{"question":"m_n_gamy","answer":"monogamy"},"15":{"question":"l_ts _f l_ve","answer":"lots of love"},"16":{"question":"j_w_ll_ry","answer":"jewellery"},"17":{"question":"b_llrop_s r_tr_at","answer":"bellropes retreat"}}},"face_merge":{"title":"Face Merge","description":"Guess the celebrity or character the beautiful brides to be\'s faces have been merged with","rounds":{"0":{"question":"","answer":"barbie"},"1":{"question":"","answer":"katniss"},"2":{"question":"","answer":"wanda"},"3":{"question":"","answer":"merida"},"4":{"question":"","answer":"adele"},"5":{"question":"","answer":"daenerys"},"6":{"question":"","answer":"princess peach"},"7":{"question":"","answer":"princess fiona"},"8":{"question":"","answer":"princess leia"},"9":{"question":"","answer":"jack sparrow"},"10":{"question":"","answer":"harley quinn"},"11":{"question":"","answer":"shakira"},"12":{"question":"","answer":"amy winehouse"},"13":{"question":"","answer":"wonder woman"},"14":{"question":"","answer":"little red riding hood"},"15":{"question":"","answer":"rapunzel"}}}}');
 
 },{}],"gu766":[function(require,module,exports) {
@@ -1263,55 +1265,7 @@ module.exports = require("1e4d3045112866e1").getBundleURL("7UhFu") + "7.16d27a0d
 },{"1e4d3045112866e1":"lgJ39"}],"c4IQl":[function(require,module,exports) {
 module.exports = require("c27099df9d3fa3a2").getBundleURL("7UhFu") + "8.07ef5acd.png" + "?" + Date.now();
 
-},{"c27099df9d3fa3a2":"lgJ39"}],"9q8YV":[function(require,module,exports) {
-module.exports = require("c5f6655d3409fe62").getBundleURL("7UhFu") + "0.432a2572.png" + "?" + Date.now();
-
-},{"c5f6655d3409fe62":"lgJ39"}],"jGExb":[function(require,module,exports) {
-module.exports = require("aef654b51e21473").getBundleURL("7UhFu") + "1.1e8066b1.png" + "?" + Date.now();
-
-},{"aef654b51e21473":"lgJ39"}],"lrocG":[function(require,module,exports) {
-module.exports = require("c145b9ead3628c7b").getBundleURL("7UhFu") + "2.98eda960.png" + "?" + Date.now();
-
-},{"c145b9ead3628c7b":"lgJ39"}],"aLkx8":[function(require,module,exports) {
-module.exports = require("a0808849342353e6").getBundleURL("7UhFu") + "3.79442784.png" + "?" + Date.now();
-
-},{"a0808849342353e6":"lgJ39"}],"h9Pzi":[function(require,module,exports) {
-module.exports = require("448f5e9371c89fb6").getBundleURL("7UhFu") + "4.202fdb5e.png" + "?" + Date.now();
-
-},{"448f5e9371c89fb6":"lgJ39"}],"9Q7cN":[function(require,module,exports) {
-module.exports = require("121203e3c9e3fb5").getBundleURL("7UhFu") + "5.f4b208c0.png" + "?" + Date.now();
-
-},{"121203e3c9e3fb5":"lgJ39"}],"kty8P":[function(require,module,exports) {
-module.exports = require("d57283f4aa471dda").getBundleURL("7UhFu") + "6.7f8b8b7e.png" + "?" + Date.now();
-
-},{"d57283f4aa471dda":"lgJ39"}],"cnjwc":[function(require,module,exports) {
-module.exports = require("4c68ce1d537b96a0").getBundleURL("7UhFu") + "7.4e8316d2.png" + "?" + Date.now();
-
-},{"4c68ce1d537b96a0":"lgJ39"}],"2cXa0":[function(require,module,exports) {
-module.exports = require("6be6465404a95524").getBundleURL("7UhFu") + "8.c789e091.png" + "?" + Date.now();
-
-},{"6be6465404a95524":"lgJ39"}],"3D5fI":[function(require,module,exports) {
-module.exports = require("9ce3f771786c7f79").getBundleURL("7UhFu") + "9.b7f9c275.png" + "?" + Date.now();
-
-},{"9ce3f771786c7f79":"lgJ39"}],"gODXW":[function(require,module,exports) {
-module.exports = require("15ee6b53c7b2b3b2").getBundleURL("7UhFu") + "10.759c578e.png" + "?" + Date.now();
-
-},{"15ee6b53c7b2b3b2":"lgJ39"}],"7mnZc":[function(require,module,exports) {
-module.exports = require("d0198648e8e8aea4").getBundleURL("7UhFu") + "11.b2e2ab85.png" + "?" + Date.now();
-
-},{"d0198648e8e8aea4":"lgJ39"}],"8PWnl":[function(require,module,exports) {
-module.exports = require("2c2613314e88774f").getBundleURL("7UhFu") + "12.2017167a.png" + "?" + Date.now();
-
-},{"2c2613314e88774f":"lgJ39"}],"gpfw7":[function(require,module,exports) {
-module.exports = require("dae1071e10de9afe").getBundleURL("7UhFu") + "13.f2a0fe72.png" + "?" + Date.now();
-
-},{"dae1071e10de9afe":"lgJ39"}],"4iOu7":[function(require,module,exports) {
-module.exports = require("14c923d76a9e72fc").getBundleURL("7UhFu") + "14.bea6a23b.png" + "?" + Date.now();
-
-},{"14c923d76a9e72fc":"lgJ39"}],"lkS4c":[function(require,module,exports) {
-module.exports = require("b64ee85ed103b32f").getBundleURL("7UhFu") + "15.65df20bf.png" + "?" + Date.now();
-
-},{"b64ee85ed103b32f":"lgJ39"}],"4i1hS":[function(require,module,exports) {
+},{"c27099df9d3fa3a2":"lgJ39"}],"4i1hS":[function(require,module,exports) {
 module.exports = require("d4fea57f18b3374c").getBundleURL("7UhFu") + "braPhoto.7c3787dc.png" + "?" + Date.now();
 
 },{"d4fea57f18b3374c":"lgJ39"}],"3lMSV":[function(require,module,exports) {
@@ -1350,7 +1304,55 @@ exports.export = function(dest, destName, get) {
 },{}],"6J2xB":[function(require,module,exports) {
 module.exports = require("c5de4ebf08fd5c4f").getBundleURL("7UhFu") + "harry.5a0c83fe.png" + "?" + Date.now();
 
-},{"c5de4ebf08fd5c4f":"lgJ39"}],"47u4Z":[function(require,module,exports) {
+},{"c5de4ebf08fd5c4f":"lgJ39"}],"1M6l0":[function(require,module,exports) {
+module.exports = require("a11dfc9883a4836e").getBundleURL("7UhFu") + "0.220d6165.jpg" + "?" + Date.now();
+
+},{"a11dfc9883a4836e":"lgJ39"}],"4GAlF":[function(require,module,exports) {
+module.exports = require("b07779d60f4e453b").getBundleURL("7UhFu") + "1.9bde745f.jpg" + "?" + Date.now();
+
+},{"b07779d60f4e453b":"lgJ39"}],"dyVUE":[function(require,module,exports) {
+module.exports = require("17a00983e6512fb3").getBundleURL("7UhFu") + "2.3851d6f7.jpg" + "?" + Date.now();
+
+},{"17a00983e6512fb3":"lgJ39"}],"fiIjE":[function(require,module,exports) {
+module.exports = require("62841b3e8603f5a8").getBundleURL("7UhFu") + "3.8d32340d.jpg" + "?" + Date.now();
+
+},{"62841b3e8603f5a8":"lgJ39"}],"3BRui":[function(require,module,exports) {
+module.exports = require("f992f7db1b848828").getBundleURL("7UhFu") + "4.21d2de26.jpg" + "?" + Date.now();
+
+},{"f992f7db1b848828":"lgJ39"}],"bTb3z":[function(require,module,exports) {
+module.exports = require("16994c11330a4961").getBundleURL("7UhFu") + "5.0aace4c4.jpg" + "?" + Date.now();
+
+},{"16994c11330a4961":"lgJ39"}],"YarpM":[function(require,module,exports) {
+module.exports = require("3c3f949e34e70986").getBundleURL("7UhFu") + "6.11eb6da9.jpg" + "?" + Date.now();
+
+},{"3c3f949e34e70986":"lgJ39"}],"l1eLv":[function(require,module,exports) {
+module.exports = require("b8ba62ba620073aa").getBundleURL("7UhFu") + "7.b19d5300.jpg" + "?" + Date.now();
+
+},{"b8ba62ba620073aa":"lgJ39"}],"2vKdX":[function(require,module,exports) {
+module.exports = require("5ba68868e3c49e51").getBundleURL("7UhFu") + "8.93eab6b0.jpg" + "?" + Date.now();
+
+},{"5ba68868e3c49e51":"lgJ39"}],"ev70c":[function(require,module,exports) {
+module.exports = require("e4a410fe78184e47").getBundleURL("7UhFu") + "9.268e0599.jpg" + "?" + Date.now();
+
+},{"e4a410fe78184e47":"lgJ39"}],"5bzV3":[function(require,module,exports) {
+module.exports = require("2f7ffefc4ace2c70").getBundleURL("7UhFu") + "10.ce00b8d6.jpg" + "?" + Date.now();
+
+},{"2f7ffefc4ace2c70":"lgJ39"}],"k2bWL":[function(require,module,exports) {
+module.exports = require("68abfa6235569b6c").getBundleURL("7UhFu") + "11.b61388d2.jpg" + "?" + Date.now();
+
+},{"68abfa6235569b6c":"lgJ39"}],"jqWDy":[function(require,module,exports) {
+module.exports = require("b69ccb87e91e6adc").getBundleURL("7UhFu") + "12.a3dc092b.jpg" + "?" + Date.now();
+
+},{"b69ccb87e91e6adc":"lgJ39"}],"fh8JF":[function(require,module,exports) {
+module.exports = require("3e29144e6e7e973c").getBundleURL("7UhFu") + "13.91d948de.jpg" + "?" + Date.now();
+
+},{"3e29144e6e7e973c":"lgJ39"}],"a95wo":[function(require,module,exports) {
+module.exports = require("1f50f6d8f6d353ef").getBundleURL("7UhFu") + "14.90a9ff44.jpg" + "?" + Date.now();
+
+},{"1f50f6d8f6d353ef":"lgJ39"}],"6XHqv":[function(require,module,exports) {
+module.exports = require("28d8c243f8bbc5ea").getBundleURL("7UhFu") + "15.56a2fe15.jpg" + "?" + Date.now();
+
+},{"28d8c243f8bbc5ea":"lgJ39"}],"47u4Z":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _index = require("../dom/index");

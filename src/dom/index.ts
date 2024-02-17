@@ -73,22 +73,22 @@ require("../assets/images/finleys_films/7.png"),
 require("../assets/images/finleys_films/8.png")]
 
 let face_merge_images = [
-require("../assets/images/face_merge/0.png"), 
-require("../assets/images/face_merge/1.png"), 
-require("../assets/images/face_merge/2.png"), 
-require("../assets/images/face_merge/3.png"),
-require("../assets/images/face_merge/4.png"),
-require("../assets/images/face_merge/5.png"),
-require("../assets/images/face_merge/6.png"),
-require("../assets/images/face_merge/7.png"),
-require("../assets/images/face_merge/8.png"),
-require("../assets/images/face_merge/9.png"),
-require("../assets/images/face_merge/10.png"),
-require("../assets/images/face_merge/11.png"),
-require("../assets/images/face_merge/12.png"),
-require("../assets/images/face_merge/13.png"),
-require("../assets/images/face_merge/14.png"),
-require("../assets/images/face_merge/15.png")]
+require("../assets/images/face_merge/0.jpg"), 
+require("../assets/images/face_merge/1.jpg"), 
+require("../assets/images/face_merge/2.jpg"), 
+require("../assets/images/face_merge/3.jpg"),
+require("../assets/images/face_merge/4.jpg"),
+require("../assets/images/face_merge/5.jpg"),
+require("../assets/images/face_merge/6.jpg"),
+require("../assets/images/face_merge/7.jpg"),
+require("../assets/images/face_merge/8.jpg"),
+require("../assets/images/face_merge/9.jpg"),
+require("../assets/images/face_merge/10.jpg"),
+require("../assets/images/face_merge/11.jpg"),
+require("../assets/images/face_merge/12.jpg"),
+require("../assets/images/face_merge/13.jpg"),
+require("../assets/images/face_merge/14.jpg"),
+require("../assets/images/face_merge/15.jpg")]
 
 let irl_images = [
     require("../assets/images/braPhoto.png"), 
@@ -147,8 +147,9 @@ export function hideGame() {
 
 
 export function setGame(game) {
-
+    document.body.style.backgroundColor = '#eaf3f5';
     if(game == 'irl'){
+        game_keyboard.style.display = 'none';
         game_restartButton.style.display = 'none';
         game_description.style.fontSize = '8vw';
         game_description.style.fontSize = '8vw';
