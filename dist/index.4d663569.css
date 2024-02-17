@@ -701,13 +701,13 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 
 .celebration button {
   background-color: var(--dark-blue);
-  color: #000;
   border: #0000;
   border-radius: 5%;
   align-self: center;
   width: 50vw;
   padding: 2vw;
   font-size: 5vw;
+  color: #fff !important;
 }
 
 .foundHeart {
@@ -737,6 +737,7 @@ button, .game_selection_games, .game_selection_games div, .scavenger_clues, .sca
 
 .foundHeart button {
   background-color: var(--dark-blue);
+  color: #fff;
   border: #0000;
   border-radius: 5%;
   align-self: center;

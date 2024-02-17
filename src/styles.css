@@ -803,8 +803,8 @@ margin-top: -12vw;
     border: transparent;
     border-radius: 5%;
     padding: 2vw;
-    color: black;
-    color: #000;
+    color: white !important;
+
 }
 /* found heart */
 
@@ -842,6 +842,7 @@ margin-top: -12vw;
     border: transparent;
     border-radius: 5%;
     padding: 2vw;
+    color: white;
 }
 
 .confetti {

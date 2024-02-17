@@ -147,18 +147,20 @@ export function hideGame() {
 
 
 export function setGame(game) {
-    document.body.style.backgroundColor = '#eaf3f5';
+    document.body.style.backgroundColor = '#c8e3eb';
     if(game == 'irl'){
+        game_restartButton.style.display = 'none';
         game_keyboard.style.display = 'none';
         game_restartButton.style.display = 'none';
         game_description.style.fontSize = '8vw';
-        game_description.style.fontSize = '8vw';
         game_answer.style.display = 'none';
+        game_score.style.display = 'none';
     } 
     else{
         game_restartButton.style.display = 'flex';
         game_answer.style.display = 'flex';
         game_description.style.fontSize = '5vw';
+        game_score.style.display = 'block';
     }
 }
 
@@ -187,7 +189,14 @@ export function setWord(word : string, correctWord : string){
         if(i < word.length){
             tile.style.background = 'linear-gradient(#fff0bd, #d0bf88)';
             tile.innerHTML = word.charAt(i);
-            tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "linear-gradient(#f0f0f0, #b0b0b0)";
+            if(word.charAt(i) == correctWord.charAt(i)){
+                console.log(word.charAt(i), correctWord.charAt(i), 'green')
+            }
+            else{
+                console.log(word.charAt(i), correctWord.charAt(i), 'wrong')
+            }
+          
+            tile.style.color = word.charAt(i) == correctWord.charAt(i) ? 'green' :  "#64615b";
         }
         else{
             tile.style.background =  'linear-gradient(#f0f0f0, #b0b0b0)';
@@ -227,7 +236,7 @@ export function setWordGreen(){
 
 export function clearGame(){
     game_tick.style.display =  'none';
-    game_restartButton.style.display = 'flex';
+
 
     while (game_answer.firstChild) {
         game_answer.removeChild(game_answer.lastChild);
@@ -269,7 +278,10 @@ export function createGameRound(game: string, question : string, round: number, 
                     empty.innerHTML = question.charAt(i);
                 }
             }
+
         }
+
+        
     }
 
     game_answer.append(word);
