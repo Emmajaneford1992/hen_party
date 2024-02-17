@@ -92,7 +92,7 @@ require("../assets/images/face_merge/15.png")]
 
 let irl_images = [
     require("../assets/images/braPhoto.png"), 
-    require("https://www.partyrama.co.uk/wp-content/plugins/partyrama-ecommerce-pro/includes/pro-images/prod-img/default/harry-styles-dungarees-lifesize-cardboard-cutout-185cm-product-image.jpg"),
+    require("../assets/images/harry.png"),
     require("../assets/images/prossecoHeadband.png")
 ]
 
